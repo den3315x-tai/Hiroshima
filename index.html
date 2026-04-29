@@ -104,6 +104,7 @@
         <!-- 1. Overview Section -->
         <section id="content-overview" class="tab-content active space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Main Journey Table -->
                 <div class="lg:col-span-2 card p-8">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="bg-[#8c7b6c] p-3 rounded-full text-white">
@@ -136,7 +137,24 @@
                     </div>
                 </div>
 
+                <!-- Side Cards Stack -->
                 <div class="space-y-6">
+                    <!-- NEW Expense Summary Card -->
+                    <div class="card p-6 bg-white border-l-4 border-emerald-500 cursor-pointer hover:bg-neutral-50 transition-colors" onclick="document.getElementById('tab-expenses').click()">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-lg text-neutral-800">費用概算</h3>
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">查看詳情</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <svg id="overview-mini-chart" width="80" height="80"></svg>
+                            <div>
+                                <p class="text-xs text-neutral-400 font-bold uppercase tracking-wide">預計總花費</p>
+                                <p class="text-2xl font-bold text-neutral-800">NT$ 26,568</p>
+                                <p class="text-xs text-neutral-500">每人平均預算</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card p-6 border-t-4 border-[#8c7b6c]">
                         <h3 class="font-bold text-lg mb-4 text-neutral-800">旅遊重點</h3>
                         <ul class="space-y-4 text-sm">
@@ -266,7 +284,6 @@
                 </div>
                 <div class="collapsible-content px-6 pb-6 border-t border-neutral-50">
                     <div class="mt-4 space-y-4 text-neutral-700 font-medium">
-                        <!-- 依據最新指令更新 Day 4 內容 -->
                         <div class="flex gap-4"><span class="itinerary-time">08:11 - 09:39</span><span>廣島站前往尾道站</span></div>
                         <div class="flex gap-4"><span class="itinerary-time">10:00 - 12:00</span><span>搭乘纜車上山 (千光寺公園、展望台)</span></div>
                         <div class="flex gap-4"><span class="itinerary-time">12:00 - 13:30</span><span>午餐：尾道拉麵</span></div>
@@ -439,7 +456,7 @@
                 if (activeTab && activeContent) {
                     activeTab.classList.add('active');
                     activeContent.classList.add('active');
-                    if (tabId === 'tab-expenses') drawChart();
+                    if (tabId === 'tab-expenses') drawChart("#expense-chart", "#expense-legend", 280, 75);
                 }
             }
 
@@ -463,30 +480,43 @@
                 });
             });
 
-            function drawChart() {
+            function drawChart(containerId, legendId, size, innerRadius) {
                 const data = [
                     { label: "機票", value: 11297, color: "#8c7b6c" },
                     { label: "住宿總計", value: 8780, color: "#d8c8b8" },
                     { label: "交通票券", value: 6131, color: "#e5dcd1" },
                     { label: "網路/雜項", value: 360, color: "#f1ede7" }
                 ];
-                const width = 280, height = 280, radius = 140;
-                const svg = d3.select("#expense-chart");
+                const radius = size / 2;
+                const svg = d3.select(containerId);
                 svg.selectAll("*").remove();
-                const g = svg.append("g").attr("transform", `translate(${width/2},${height/2})`);
-                const pie = d3.pie().value(d => d.value);
-                const arc = d3.arc().innerRadius(75).outerRadius(radius);
-                g.selectAll("path").data(pie(data)).enter().append("path").attr("d", arc).attr("fill", d => d.data.color).attr("stroke", "#fff").style("stroke-width", "3px");
-                const legend = d3.select("#expense-legend");
-                legend.selectAll("*").remove();
-                data.forEach(d => {
-                    const row = legend.append("div").attr("class", "flex items-center justify-between text-sm py-2 border-b border-neutral-50 last:border-0 px-2");
-                    const left = row.append("div").attr("class", "flex items-center");
-                    left.append("div").attr("class", "legend-color").style("background-color", d.color);
-                    left.append("span").attr("class", "text-neutral-500 font-medium").text(d.label);
-                    row.append("span").attr("class", "font-bold text-neutral-700").text(`$${d.value.toLocaleString()}`);
-                });
+                const g = svg.append("g").attr("transform", `translate(${size/2},${size/2})`);
+                const pie = d3.pie().sort(null).value(d => d.value);
+                const arc = d3.arc().innerRadius(innerRadius).outerRadius(radius);
+                
+                g.selectAll("path")
+                    .data(pie(data))
+                    .enter().append("path")
+                    .attr("d", arc)
+                    .attr("fill", d => d.data.color)
+                    .attr("stroke", "#fff")
+                    .style("stroke-width", "2px");
+
+                if (legendId) {
+                    const legend = d3.select(legendId);
+                    legend.selectAll("*").remove();
+                    data.forEach(d => {
+                        const row = legend.append("div").attr("class", "flex items-center justify-between text-sm py-2 border-b border-neutral-50 last:border-0 px-2");
+                        const left = row.append("div").attr("class", "flex items-center");
+                        left.append("div").attr("class", "legend-color").style("background-color", d.color);
+                        left.append("span").attr("class", "text-neutral-500 font-medium").text(d.label);
+                        row.append("span").attr("class", "font-bold text-neutral-700").text(`$${d.value.toLocaleString()}`);
+                    });
+                }
             }
+
+            // Initial call for the mini chart in overview
+            drawChart("#overview-mini-chart", null, 80, 25);
         });
     </script>
 </body>
