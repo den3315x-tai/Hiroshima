@@ -9,47 +9,68 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
         
+        :root {
+            --primary-bg: #f8fafc;
+            --primary-text: #1e293b;
+            --accent-blue: #2563eb;
+            --accent-orange: #f59e0b;
+            --card-white: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
         body {
-            font-family: 'Noto Sans TC', 'Inter', sans-serif;
-            background-color: #f7f6f2;
-            color: #3f3d3d;
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
             margin: 0;
             padding: 0;
         }
+
         .tab-content {
             display: none;
         }
         .tab-content.active {
             display: block;
         }
+
         .card {
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-            background-color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            background-color: var(--card-white);
             border-radius: 1rem;
             overflow: hidden;
+            border: 1px solid var(--border-color);
         }
+
         .pill-tab-button {
-            border-radius: 9999px;
+            border-radius: 0.5rem;
             padding: 10px 24px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            transition: all 0.2s ease-in-out;
-            border: 1px solid #e5dcd1;
-            white-space: nowrap;
+            transition: all 0.2s ease;
+            background-color: transparent;
+            color: #64748b;
+            border: 1px solid transparent;
         }
+
+        .pill-tab-button:hover {
+            background-color: #e2e8f0;
+            color: var(--accent-blue);
+        }
+
         .pill-tab-button.active {
-            background-color: #d8c8b8;
-            color: #4a3f35;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border-color: #d8c8b8;
+            background-color: var(--accent-blue);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
+
         .collapsible-header {
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
         .collapsible-header:hover {
-            background-color: #f9f8f4;
+            background-color: #f8fafc;
         }
+
         .collapsible-content {
             max-height: 0;
             overflow: hidden;
@@ -58,43 +79,52 @@
         .collapsible-content.open {
             max-height: 2000px; 
         }
+
         .chevron {
             transition: transform 0.3s ease;
         }
         .chevron.rotated {
             transform: rotate(180deg);
         }
+
         .itinerary-time {
-            font-weight: 600;
-            color: #8c7b6c;
-            min-width: 115px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            min-width: 110px;
             flex-shrink: 0;
         }
+
         .summary-table td {
             padding: 1.25rem 0.5rem;
-            border-bottom: 1px solid #f1f1f1;
+            border-bottom: 1px solid #f1f5f9;
         }
-        .summary-table tr:last-child td {
-            border-bottom: none;
-        }
+
         .legend-color {
             width: 12px;
             height: 12px;
-            border-radius: 2px;
+            border-radius: 3px;
             margin-right: 8px;
+        }
+
+        .no-italic {
+            font-style: normal !important;
         }
     </style>
 </head>
 <body class="p-4 md:p-8">
     <div class="max-w-5xl mx-auto">
         <!-- Header -->
-        <header class="mb-8 text-center">
-            <h1 class="text-4xl font-bold mb-2 tracking-tight text-neutral-800">2026 廣島七天六夜</h1>
-            <p class="text-neutral-500 italic">2026.10.19 - 10.25 | 高雄出發</p>
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-3 tracking-tight text-slate-900">2026 廣島七天六夜</h1>
+            <div class="flex items-center justify-center gap-3">
+                <span class="h-1 w-12 bg-blue-600 rounded-full"></span>
+                <p class="text-slate-500 font-medium no-italic">2026.10.19 - 10.25 | 高雄出發</p>
+                <span class="h-1 w-12 bg-amber-500 rounded-full"></span>
+            </div>
         </header>
 
         <!-- Tabs -->
-        <nav class="flex flex-wrap justify-center gap-3 mb-10 overflow-x-auto pb-2">
+        <nav class="flex flex-wrap justify-center gap-2 mb-12">
             <button id="tab-overview" class="pill-tab-button active">概覽</button>
             <button id="tab-itinerary" class="pill-tab-button">行程規劃</button>
             <button id="tab-expenses" class="pill-tab-button">費用統計</button>
@@ -103,107 +133,142 @@
 
         <!-- 1. Overview Section -->
         <section id="content-overview" class="tab-content active space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Main Journey Table -->
-                <div class="lg:col-span-2 card p-8">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="bg-[#8c7b6c] p-3 rounded-full text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Content Col -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="card p-8">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="bg-blue-600 p-3 rounded-xl text-white shadow-lg shadow-blue-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800">旅程總覽</h2>
                         </div>
-                        <h2 class="text-2xl font-semibold text-neutral-800">旅程總覽</h2>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full summary-table">
+                                <thead>
+                                    <tr class="text-left text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                                        <th class="pb-4 px-2">日期</th>
+                                        <th class="pb-4 px-2">主要行程</th>
+                                        <th class="pb-4 px-2">交通備註</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm">
+                                    <tr><td class="font-bold text-blue-600">Day 1</td><td class="font-bold text-slate-700">高雄 → 岡山 → 廣島</td><td class="text-slate-500 no-italic">✈️ 虎航 IT262 / 🚅 新幹線</td></tr>
+                                    <tr><td class="font-bold text-blue-600">Day 2</td><td class="font-bold text-slate-700">宮島一日遊</td><td class="text-slate-500 no-italic">⛴️ JR 渡輪</td></tr>
+                                    <tr><td class="font-bold text-blue-600">Day 3</td><td class="font-bold text-slate-700">廣島市區探索</td><td class="text-slate-500 no-italic">🚃 廣島路面電車</td></tr>
+                                    <tr><td class="font-bold text-blue-600">Day 4</td><td class="font-bold text-slate-700">廣島 → 尾道</td><td class="text-slate-500 no-italic">🚃 JR 山陽本線</td></tr>
+                                    <tr><td class="font-bold text-blue-600">Day 5</td><td class="font-bold text-slate-700">尾道 → 姬路 → 岡山</td><td class="text-slate-500 no-italic">🚅 新幹線</td></tr>
+                                    <tr><td class="font-bold text-blue-600">Day 6</td><td class="font-bold text-slate-700">吉備津神社 → 後樂園</td><td class="text-slate-500 no-italic">🚃 桃太郎線 / 岡山路面電車</td></tr>
+                                    <tr><td class="font-bold text-blue-600">Day 7</td><td class="font-bold text-slate-700">岡山採買 → 賦歸</td><td class="text-slate-500 no-italic">✈️ 虎航 IT215</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="w-full summary-table">
-                            <thead>
-                                <tr class="text-left text-xs font-bold text-neutral-400 uppercase tracking-wider border-b border-neutral-100">
-                                    <th class="pb-3 px-2">日期</th>
-                                    <th class="pb-3 px-2">主要行程</th>
-                                    <th class="pb-3 px-2">交通備註</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-sm">
-                                <tr><td class="font-medium text-neutral-500">Day 1</td><td class="font-semibold text-neutral-700">高雄 → 岡山 → 廣島</td><td class="text-neutral-500">✈️ 虎航 IT262 / 🚅 新幹線</td></tr>
-                                <tr><td class="font-medium text-neutral-500">Day 2</td><td class="font-semibold text-neutral-700">宮島一日遊</td><td class="text-neutral-500">⛴️ JR 渡輪</td></tr>
-                                <tr><td class="font-medium text-neutral-500">Day 3</td><td class="font-semibold text-neutral-700">廣島市區探索</td><td class="text-neutral-500">🚃 廣島路面電車</td></tr>
-                                <tr><td class="font-medium text-neutral-500">Day 4</td><td class="font-semibold text-neutral-700">廣島 → 尾道</td><td class="text-neutral-500">🚃 JR 山陽本線</td></tr>
-                                <tr><td class="font-medium text-neutral-500">Day 5</td><td class="font-semibold text-neutral-700">尾道 → 姬路 → 岡山</td><td class="text-neutral-500">🚅 新幹線</td></tr>
-                                <tr><td class="font-medium text-neutral-500">Day 6</td><td class="font-semibold text-neutral-700">吉備津神社 → 後樂園</td><td class="text-neutral-500">🚃 桃太郎線 / 岡山路面電車</td></tr>
-                                <tr><td class="font-medium text-neutral-500">Day 7</td><td class="font-semibold text-neutral-700">岡山採買 → 賦歸</td><td class="text-neutral-500">✈️ 虎航 IT215</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
-                <!-- Side Cards Stack -->
-                <div class="space-y-6">
-                    <!-- NEW Expense Summary Card -->
-                    <div class="card p-6 bg-white border-l-4 border-emerald-500 cursor-pointer hover:bg-neutral-50 transition-colors" onclick="document.getElementById('tab-expenses').click()">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-bold text-lg text-neutral-800">費用概算</h3>
-                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">查看詳情</span>
+                    <!-- 航班資訊卡片 -->
+                    <div class="card p-8">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="bg-amber-500 p-3 rounded-xl text-white shadow-lg shadow-amber-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800">航班資訊</h2>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <svg id="overview-mini-chart" width="80" height="80"></svg>
-                            <div>
-                                <p class="text-xs text-neutral-400 font-bold uppercase tracking-wide">預計總花費</p>
-                                <p class="text-2xl font-bold text-neutral-800">NT$ 26,568</p>
-                                <p class="text-xs text-neutral-500">每人平均預算</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                                <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">Departure 出發</p>
+                                <p class="font-bold text-slate-700">虎航 IT262</p>
+                                <p class="text-sm text-slate-500 mt-2">10/19 (一) 12:40 高雄(KHH) <br> → 16:30 岡山(OKJ)</p>
+                            </div>
+                            <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                                <p class="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">Return 結束</p>
+                                <p class="font-bold text-slate-700">虎航 IT215</p>
+                                <p class="text-sm text-slate-500 mt-2">10/25 (日) 15:25 岡山(OKJ) <br> → 17:30 高雄(KHH)</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card p-6 border-t-4 border-[#8c7b6c]">
-                        <h3 class="font-bold text-lg mb-4 text-neutral-800">旅遊重點</h3>
-                        <ul class="space-y-4 text-sm">
-                            <li class="flex gap-3">
-                                <span class="bg-blue-50 text-blue-600 p-2 rounded-lg h-fit">🌤️</span>
-                                <div><p class="font-semibold text-neutral-700">預計天氣</p><p class="text-neutral-500">秋季 15°C - 22°C</p></div>
+                    <!-- 住宿細節卡片 -->
+                    <div class="card p-8">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="bg-emerald-500 p-3 rounded-xl text-white shadow-lg shadow-emerald-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800">住宿地點</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 p-4 hover:bg-slate-50 rounded-xl transition-colors cursor-pointer" onclick="document.getElementById('tab-lodging').click()">
+                                <div class="bg-emerald-50 text-emerald-600 p-2 rounded-lg font-bold text-xs">3晚</div>
+                                <div>
+                                    <p class="font-bold text-slate-700 text-sm">東橫INN 廣島站前店2號 (10/19-10/22)</p>
+                                    <p class="text-xs text-slate-400 no-italic">靠近廣島站，交通便利</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 hover:bg-slate-50 rounded-xl transition-colors cursor-pointer" onclick="document.getElementById('tab-lodging').click()">
+                                <div class="bg-emerald-50 text-emerald-600 p-2 rounded-lg font-bold text-xs">1晚</div>
+                                <div>
+                                    <p class="font-bold text-slate-700 text-sm">尾道綠丘飯店 (10/22-10/23)</p>
+                                    <p class="text-xs text-slate-400 no-italic">尾道站前，海景與交通兼備</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 hover:bg-slate-50 rounded-xl transition-colors cursor-pointer" onclick="document.getElementById('tab-lodging').click()">
+                                <div class="bg-emerald-50 text-emerald-600 p-2 rounded-lg font-bold text-xs">2晚</div>
+                                <div>
+                                    <p class="font-bold text-slate-700 text-sm">東橫INN 岡山站前店 (10/23-10/25)</p>
+                                    <p class="text-xs text-slate-400 no-italic">岡山站旁，方便最後採買</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Col -->
+                <div class="space-y-6">
+                    <div class="card p-6 border-l-4 border-amber-500 cursor-pointer hover:bg-slate-50 transition-all" onclick="document.getElementById('tab-expenses').click()">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-extrabold text-lg text-slate-800">費用概算</h3>
+                            <span class="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-1 rounded-full uppercase tracking-tighter">VIEW DETAILS</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <svg id="overview-mini-chart" width="80" height="80"></svg>
+                            <div>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Estimated Total</p>
+                                <p class="text-2xl font-black text-slate-800">NT$ 26,568</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 border-t-4 border-blue-600">
+                        <h3 class="font-bold text-lg mb-5 text-slate-800">旅遊重點</h3>
+                        <ul class="space-y-5 text-sm">
+                            <li class="flex gap-4">
+                                <span class="bg-blue-50 text-blue-600 p-2 rounded-xl h-fit">🌤️</span>
+                                <div><p class="font-bold text-slate-700">預計天氣</p><p class="text-slate-500 no-italic">秋季 15°C - 22°C</p></div>
                             </li>
-                            <li class="flex gap-3">
-                                <span class="bg-orange-50 text-orange-600 p-2 rounded-lg h-fit">🍱</span>
-                                <div><p class="font-semibold text-neutral-700">必吃美食</p><p class="text-neutral-500">廣島燒、牡蠣、尾道拉麵</p></div>
+                            <li class="flex gap-4">
+                                <span class="bg-orange-50 text-orange-600 p-2 rounded-xl h-fit">🍱</span>
+                                <div><p class="font-bold text-slate-700">必吃美食</p><p class="text-slate-500 no-italic">廣島燒、牡蠣、尾道拉麵</p></div>
                             </li>
                         </ul>
                     </div>
-                    <div class="card p-6 bg-[#f9f8f4] border border-[#e5dcd1]">
-                        <h3 class="font-bold text-neutral-800 mb-2">使用票券</h3>
-                        <p class="text-xs text-neutral-600 font-medium">岡山 & 廣島 & 山口地區 5日券</p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-                <div class="card p-8">
-                    <h3 class="text-xl font-bold mb-6 text-neutral-800">住宿概覽</h3>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between p-3 border border-neutral-100 rounded-xl">
-                            <span class="text-xs font-bold text-neutral-400">10/19-22</span>
-                            <span class="font-bold text-neutral-700 text-sm">東橫INN 廣島站前店2號</span>
+                    <!-- 使用票券卡片樣式更新：改為淺色背景與頁面視覺一致 -->
+                    <div class="card p-5 border-l-4 border-blue-600 bg-white">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="bg-blue-50 p-2 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest">使用票券 PASS</h3>
                         </div>
-                        <div class="flex items-center justify-between p-3 border border-neutral-100 rounded-xl">
-                            <span class="text-xs font-bold text-neutral-400">10/22-23</span>
-                            <span class="font-bold text-neutral-700 text-sm">尾道綠丘飯店</span>
-                        </div>
-                        <div class="flex items-center justify-between p-3 border border-neutral-100 rounded-xl">
-                            <span class="text-xs font-bold text-neutral-400">10/23-25</span>
-                            <span class="font-bold text-neutral-700 text-sm">東橫INN 岡山站前店</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card p-8">
-                    <h3 class="text-xl font-bold mb-6 text-neutral-800">航班資訊</h3>
-                    <div class="space-y-4 text-sm">
-                        <div class="flex justify-between items-center pb-3 border-b border-neutral-50">
-                            <div><p class="text-xs font-bold text-blue-500">去程 IT262</p><p class="font-bold">12:40 - 16:30</p></div>
-                            <div class="text-right"><p class="text-neutral-400">高雄 KHH</p><p class="text-neutral-400">岡山 OKJ</p></div>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div><p class="text-xs font-bold text-orange-500">回程 IT215</p><p class="font-bold">15:25 - 17:30</p></div>
-                            <div class="text-right"><p class="text-neutral-400">岡山 OKJ</p><p class="text-neutral-400">高雄 KHH</p></div>
-                        </div>
+                        <p class="text-sm font-bold text-slate-800">岡山 & 廣島 & 山口地區 5日券</p>
                     </div>
                 </div>
             </div>
@@ -212,186 +277,209 @@
         <!-- 2. Itinerary Section -->
         <section id="content-itinerary" class="tab-content space-y-4">
             <!-- Day 1 -->
-            <div class="card text-sm md:text-base">
+            <div class="card">
                 <div class="collapsible-header p-6 flex justify-between items-center">
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-neutral-400">Day 1 | 10/19 (一)</span>
-                        <h3 class="text-xl font-semibold text-neutral-800">高雄 > 岡山 > 廣島</h3>
+                    <div class="flex items-center gap-5">
+                        <div class="bg-blue-600 text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center shadow-lg shadow-blue-100">
+                            <span class="text-[10px] font-black uppercase leading-none mb-1">Oct</span>
+                            <span class="text-xl font-black leading-none">19</span>
+                        </div>
+                        <div><span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Day 1 | Monday</span><h3 class="text-xl font-bold text-slate-800">高雄 > 岡山 > 廣島</h3></div>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 chevron text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    <div class="bg-slate-100 p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" /></svg></div>
                 </div>
-                <div class="collapsible-content px-6 pb-6 border-t border-neutral-50">
-                    <div class="mt-4 space-y-4">
-                        <div class="flex gap-4"><span class="itinerary-time">08:30</span><span>坐計程車去高雄機場</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">12:40 - 16:30</span><span>高雄 > 岡山 (虎航 IT262)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">17:05 - 17:35</span><span>搭乘「機場接駁巴士」前往岡山車站</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">18:30 - 19:10</span><span>岡山車站 > 廣島車站 (新幹線)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">19:20</span><span>入住東橫INN 廣島站前店2號</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">19:30</span><span>車站附近覓食</span></div>
+                <div class="collapsible-content px-6 pb-8 border-t border-slate-50">
+                    <div class="mt-6 space-y-5 text-sm">
+                        <div class="flex gap-4"><span class="itinerary-time">08:30</span><span class="text-slate-700 font-medium">坐計程車去高雄機場</span></div>
+                        <div class="flex gap-4 items-start"><span class="itinerary-time">12:40 - 16:30</span><div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-600 w-full font-bold text-blue-900">高雄 ✈️ 岡山 (虎航 IT262)</div></div>
+                        <div class="flex gap-4"><span class="itinerary-time">17:05 - 17:35</span><span class="text-slate-700 font-medium">搭乘「機場接駁巴士」前往岡山車站</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">18:30 - 19:10</span><span class="text-slate-700 font-medium">岡山車站 > 廣島車站 (新幹線)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">19:20</span><span class="text-slate-700 font-medium">入住東橫INN 廣島站前店2號</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">19:30</span><span class="text-slate-700 font-medium">車站附近覓食</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- Day 2 -->
-            <div class="card text-sm md:text-base">
+            <div class="card">
                 <div class="collapsible-header p-6 flex justify-between items-center">
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-neutral-400">Day 2 | 10/20 (二)</span>
-                        <h3 class="text-xl font-semibold text-neutral-800">宮島一日遊</h3>
+                    <div class="flex items-center gap-5">
+                        <div class="bg-blue-600 text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center shadow-lg shadow-blue-100">
+                            <span class="text-[10px] font-black uppercase leading-none mb-1">Oct</span>
+                            <span class="text-xl font-black leading-none">20</span>
+                        </div>
+                        <div><span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Day 2 | Tuesday</span><h3 class="text-xl font-bold text-slate-800">宮島一日遊</h3></div>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 chevron text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    <div class="bg-slate-100 p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" /></svg></div>
                 </div>
-                <div class="collapsible-content px-6 pb-6 border-t border-neutral-50">
-                    <div class="mt-4 space-y-4">
-                        <div class="flex gap-4"><span class="itinerary-time">08:06 - 08:34</span><span>廣島車站前往宮島口車站</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">08:40 - 08:50</span><span>坐渡輪前往宮島</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">09:00 - 12:00</span><span>嚴島神社、商店街散步 (吃牡蠣、炸楓葉饅頭)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">12:00 - 13:00</span><span>午餐：牡蠣屋、梅山</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">13:15 - 15:30</span><span>搭紅葉谷纜車前往彌山</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">16:00 - 17:30</span><span>最後採買、搭船回廣島</span></div>
+                <div class="collapsible-content px-6 pb-8 border-t border-slate-50">
+                    <div class="mt-6 space-y-5 text-sm">
+                        <div class="flex gap-4"><span class="itinerary-time">08:06 - 08:34</span><span class="text-slate-700 font-medium">廣島車站前往宮島口車站</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">08:40 - 08:50</span><span class="text-slate-700 font-medium">坐渡輪前往宮島</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">09:00 - 12:00</span><span class="text-slate-700 font-medium">嚴島神社、商店街散步 (吃牡蠣、炸楓葉饅頭)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">12:00 - 13:00</span><span class="text-slate-700 font-medium">午餐：牡蠣屋、梅山</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">13:15 - 15:30</span><span class="text-slate-700 font-medium">搭紅葉谷纜車前往彌山看瀨戶內海</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">16:00 - 17:30</span><span class="text-slate-700 font-medium">最後採買、搭船回廣島</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- Day 3 -->
-            <div class="card text-sm md:text-base">
+            <div class="card">
                 <div class="collapsible-header p-6 flex justify-between items-center">
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-neutral-400">Day 3 | 10/21 (三)</span>
-                        <h3 class="text-xl font-semibold text-neutral-800">廣島市區探索</h3>
+                    <div class="flex items-center gap-5">
+                        <div class="bg-blue-600 text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center shadow-lg shadow-blue-100">
+                            <span class="text-[10px] font-black uppercase leading-none mb-1">Oct</span>
+                            <span class="text-xl font-black leading-none">21</span>
+                        </div>
+                        <div><span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Day 3 | Wednesday</span><h3 class="text-xl font-bold text-slate-800">廣島市區探索</h3></div>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 chevron text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    <div class="bg-slate-100 p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" /></svg></div>
                 </div>
-                <div class="collapsible-content px-6 pb-6 border-t border-neutral-50">
-                    <div class="mt-4 space-y-4 text-neutral-700">
-                        <div class="flex gap-4"><span class="itinerary-time">09:30 - 11:30</span><span>廣島城、縮景園</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">11:30 - 13:00</span><span>午餐：廣島燒(OKONOMIMURA)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">13:30 - 15:30</span><span>和平紀念館、原爆圓頂屋</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">16:00 - 18:30</span><span>本通商店街、紙屋町逛街</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">19:00</span><span>晚餐</span></div>
+                <div class="collapsible-content px-6 pb-8 border-t border-slate-50">
+                    <div class="mt-6 space-y-5 text-sm">
+                        <div class="flex gap-4"><span class="itinerary-time">09:30 - 11:30</span><span class="text-slate-700 font-medium">廣島城、縮景園</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">11:30 - 13:00</span><span class="text-slate-700 font-medium">午餐：廣島燒 (OKONOMIMURA)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">13:30 - 15:30</span><span class="text-slate-700 font-medium">和平紀念館、原爆圓頂屋</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">16:00 - 18:30</span><span class="text-slate-700 font-medium underline decoration-slate-200">本通商店街、紙屋町逛街</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- Day 4 -->
-            <div class="card text-sm md:text-base">
+            <div class="card">
                 <div class="collapsible-header p-6 flex justify-between items-center">
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-neutral-400">Day 4 | 10/22 (四)</span>
-                        <h3 class="text-xl font-semibold text-neutral-800">廣島 > 尾道</h3>
+                    <div class="flex items-center gap-5">
+                        <div class="bg-blue-600 text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center shadow-lg shadow-blue-100">
+                            <span class="text-[10px] font-black uppercase leading-none mb-1">Oct</span>
+                            <span class="text-xl font-black leading-none">22</span>
+                        </div>
+                        <div><span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Day 4 | Thursday</span><h3 class="text-xl font-bold text-slate-800">廣島 > 尾道</h3></div>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 chevron text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    <div class="bg-slate-100 p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" /></svg></div>
                 </div>
-                <div class="collapsible-content px-6 pb-6 border-t border-neutral-50">
-                    <div class="mt-4 space-y-4 text-neutral-700 font-medium">
-                        <div class="flex gap-4"><span class="itinerary-time">08:11 - 09:39</span><span>廣島站前往尾道站</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">10:00 - 12:00</span><span>搭乘纜車上山 (千光寺公園、展望台)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">12:00 - 13:30</span><span>午餐：尾道拉麵</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">14:00 - 17:00</span><span>漫步尾道老街或找家靠海的咖啡廳放空</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">17:00</span><span>入住尾道綠丘飯店</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">18:00</span><span>晚餐</span></div>
+                <div class="collapsible-content px-6 pb-8 border-t border-slate-50">
+                    <div class="mt-6 space-y-5 text-sm">
+                        <div class="flex gap-4"><span class="itinerary-time">08:11 - 09:39</span><span class="text-slate-700 fontmedium">廣島站前往尾道站 (山陽本線)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">10:00 - 12:00</span><span class="text-slate-700 font-medium">搭乘纜車上山 (千光寺公園、展望台)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">12:00 - 13:30</span><span class="text-slate-700 font-medium">午餐：尾道拉麵</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">14:00 - 17:00</span><span class="text-slate-700 font-medium">漫步尾道老街或找家靠海的咖啡廳放空</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">17:00</span><span class="text-slate-700 font-medium">入住尾道綠丘飯店</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- Day 5 -->
-            <div class="card text-sm md:text-base">
+            <div class="card">
                 <div class="collapsible-header p-6 flex justify-between items-center">
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-neutral-400">Day 5 | 10/23 (五)</span>
-                        <h3 class="text-xl font-semibold text-neutral-800">尾道 > 姬路 > 岡山</h3>
+                    <div class="flex items-center gap-5">
+                        <div class="bg-blue-600 text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center shadow-lg shadow-blue-100">
+                            <span class="text-[10px] font-black uppercase leading-none mb-1">Oct</span>
+                            <span class="text-xl font-black leading-none">23</span>
+                        </div>
+                        <div><span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Day 5 | Friday</span><h3 class="text-xl font-bold text-slate-800">尾道 > 姬路 > 岡山</h3></div>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 chevron text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    <div class="bg-slate-100 p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" /></svg></div>
                 </div>
-                <div class="collapsible-content px-6 pb-6 border-t border-neutral-50">
-                    <div class="mt-4 space-y-4">
-                        <div class="flex gap-4"><span class="itinerary-time">08:00 - 08:35</span><span>尾道 > 岡山 (JR)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">08:45 - 09:10</span><span>岡山 > 姬路 (新幹線)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">09:30 - 13:30</span><span>參觀姬路城及其周邊、午餐</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">14:00 - 14:20</span><span>姬路 > 岡山 (新幹線)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">15:30 - 18:30</span><span>岡山車站週邊逛街 (岡山一番街)</span></div>
+                <div class="collapsible-content px-6 pb-8 border-t border-slate-50">
+                    <div class="mt-6 space-y-5 text-sm">
+                        <div class="flex gap-4"><span class="itinerary-time">08:00 - 08:35</span><span class="text-slate-700 font-medium">尾道 > 岡山 (JR)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">08:45 - 09:10</span><span class="text-slate-700 font-medium">岡山 > 姬路 (新幹線)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">09:30 - 13:30</span><span class="text-slate-700 font-medium">參觀姬路城（白鷺城）及其周邊、午餐</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">14:00 - 14:20</span><span class="text-slate-700 font-medium">姬路 > 岡山 (新幹線)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">15:30 - 18:30</span><span class="text-slate-700 font-medium">岡山車站週邊逛街 (岡山一番街、唐吉訶德)</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- Day 6 -->
-            <div class="card text-sm md:text-base">
+            <div class="card">
                 <div class="collapsible-header p-6 flex justify-between items-center">
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-neutral-400">Day 6 | 10/24 (六)</span>
-                        <h3 class="text-xl font-semibold text-neutral-800">吉備津神社與岡山名勝</h3>
+                    <div class="flex items-center gap-5">
+                        <div class="bg-blue-600 text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center shadow-lg shadow-blue-100">
+                            <span class="text-[10px] font-black uppercase leading-none mb-1">Oct</span>
+                            <span class="text-xl font-black leading-none">24</span>
+                        </div>
+                        <div><span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Day 6 | Saturday</span><h3 class="text-xl font-bold text-slate-800">吉備津神社與岡山名勝</h3></div>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 chevron text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    <div class="bg-slate-100 p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" /></svg></div>
                 </div>
-                <div class="collapsible-content px-6 pb-6 border-t border-neutral-50">
-                    <div class="mt-4 space-y-4">
-                        <div class="flex gap-4"><span class="itinerary-time">08:11 - 08:35</span><span>岡山車站搭乘「桃太郎線」到吉備津站</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">08:40 - 10:30</span><span>參拜吉備津神社 (看長廊、大吉備津彥命)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">11:00 - 12:30</span><span>回岡山站附近午餐</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">12:30 - 15:00</span><span>參觀岡山後樂園 (三大名園) 與岡山城</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">15:30 - 16:30</span><span>逛表町商店街</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">17:00</span><span>晚餐</span></div>
+                <div class="collapsible-content px-6 pb-8 border-t border-slate-50">
+                    <div class="mt-6 space-y-5 text-sm">
+                        <div class="flex gap-4"><span class="itinerary-time">08:11 - 08:35</span><span class="text-slate-700 font-medium">岡山車站搭乘「桃太郎線」到吉備津站</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">08:40 - 10:30</span><span class="text-slate-700 font-medium">參拜吉備津神社 (看 360 公尺大長廊)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">12:30 - 15:00</span><span class="text-slate-700 font-medium underline decoration-amber-200">岡山後樂園 (日本三大名園) 與岡山城</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">15:30 - 16:30</span><span class="text-slate-700 font-medium">逛表町商店街、晴天之國岡山館</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- Day 7 -->
-            <div class="card text-sm md:text-base">
+            <div class="card">
                 <div class="collapsible-header p-6 flex justify-between items-center">
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-neutral-400">Day 7 | 10/25 (日)</span>
-                        <h3 class="text-xl font-semibold text-neutral-800">最後採買與歸途</h3>
+                    <div class="flex items-center gap-5">
+                        <div class="bg-blue-600 text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center shadow-lg shadow-blue-100">
+                            <span class="text-[10px] font-black uppercase leading-none mb-1">Oct</span>
+                            <span class="text-xl font-black leading-none">25</span>
+                        </div>
+                        <div><span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Day 7 | Sunday</span><h3 class="text-xl font-bold text-slate-800">最後採買與歸途</h3></div>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 chevron text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    <div class="bg-slate-100 p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" /></svg></div>
                 </div>
-                <div class="collapsible-content px-6 pb-6 border-t border-neutral-50">
-                    <div class="mt-4 space-y-4">
-                        <div class="flex gap-4"><span class="itinerary-time">09:30 - 11:30</span><span>AEON MALL 岡山最後採買、藥妝補貨</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">11:30 - 12:30</span><span>午餐時間 (需準時結束)</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">12:50</span><span>岡山車站西口搭乘機場巴士</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">13:30 - 14:00</span><span>抵達岡山機場進行報到</span></div>
-                        <div class="flex gap-4"><span class="itinerary-time">15:25 - 17:30</span><span>岡山 > 高雄 (虎航 IT215)</span></div>
+                <div class="collapsible-content px-6 pb-8 border-t border-slate-50">
+                    <div class="mt-6 space-y-5 text-sm">
+                        <div class="flex gap-4"><span class="itinerary-time">09:30 - 11:30</span><span class="text-slate-700 font-medium">AEON MALL 岡山最後採買、藥妝補貨</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">11:30 - 12:30</span><span class="text-slate-700 font-medium">午餐時間 (需準時結束)</span></div>
+                        <div class="flex gap-4"><span class="itinerary-time">12:50</span><span class="text-slate-700 font-medium">岡山車站西口搭乘機場巴士</span></div>
+                        <div class="flex gap-4 items-start"><span class="itinerary-time">15:25 - 17:30</span><div class="bg-amber-50 p-3 rounded-lg border-l-4 border-amber-500 w-full font-bold text-amber-900">岡山 ✈️ 高雄 (虎航 IT215)</div></div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- 3. Expenses Section -->
-        <section id="content-expenses" class="tab-content space-y-6">
-            <div class="card p-8">
-                <h2 class="text-2xl font-semibold mb-6 text-center text-neutral-800">每人預估費用統計 (NTD)</h2>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-10">
-                    <div class="flex justify-center"><svg id="expense-chart" width="280" height="280"></svg></div>
-                    <div class="space-y-4">
-                        <div class="p-6 bg-neutral-50 rounded-2xl border border-neutral-100 text-center">
-                            <p class="text-neutral-500 text-sm font-medium mb-1">預計每人總計</p>
-                            <p class="text-4xl font-bold text-neutral-800">NT$ 26,568</p>
+        <section id="content-expenses" class="tab-content space-y-8">
+            <div class="card p-10">
+                <h2 class="text-2xl font-black mb-10 text-center text-slate-800">每人預估費用統計</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
+                    <div class="flex justify-center">
+                        <div class="relative">
+                            <svg id="expense-chart" width="300" height="300"></svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Grand Total</span>
+                                <span class="text-3xl font-black text-slate-900">$26,568</span>
+                            </div>
                         </div>
-                        <div id="expense-legend" class="space-y-2"></div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="p-6 bg-blue-50 rounded-2xl border border-blue-100 text-center">
+                            <p class="text-blue-600 text-xs font-black uppercase tracking-widest mb-2">每人預估費用 (TWD)</p>
+                            <p class="text-5xl font-black text-slate-900">NT$ 26,568</p>
+                        </div>
+                        <div id="expense-legend" class="grid grid-cols-1 gap-2"></div>
                     </div>
                 </div>
 
-                <div class="border-t border-neutral-100 pt-8">
-                    <h3 class="text-lg font-bold mb-4 px-2">費用細項清單</h3>
+                <div class="border-t border-slate-100 pt-10">
+                    <h3 class="text-lg font-black mb-6 text-slate-800">費用細項清單</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <thead>
-                                <tr class="text-left text-neutral-400 border-b border-neutral-50">
-                                    <th class="py-3 px-2">項目</th>
-                                    <th class="py-3 px-2">內容細節</th>
-                                    <th class="py-3 px-2 text-right">金額 (TWD)</th>
+                                <tr class="text-left text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-50">
+                                    <th class="pb-4 px-2">項目</th>
+                                    <th class="pb-4 px-2">內容細節</th>
+                                    <th class="pb-4 px-2 text-right">金額 (TWD)</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-neutral-700">
-                                <tr class="border-b border-neutral-50"><td class="py-3 px-2 font-medium">機票</td><td class="py-3 px-2">高雄/岡山 來回 (含稅)</td><td class="py-3 px-2 text-right">11,297</td></tr>
-                                <tr class="border-b border-neutral-50"><td class="py-3 px-2 font-medium">交通</td><td class="py-3 px-2">JR PASS 岡山廣島山口 5日</td><td class="py-3 px-2 text-right">3,391</td></tr>
-                                <tr class="border-b border-neutral-50"><td class="py-3 px-2 font-medium">交通</td><td class="py-3 px-2">新幹線 岡山/姬路來回額外費</td><td class="py-3 px-2 text-right">1,550</td></tr>
-                                <tr class="border-b border-neutral-50"><td class="py-3 px-2 font-medium">交通</td><td class="py-3 px-2">高鐵 桃園/台南 (接駁)</td><td class="py-3 px-2 text-right">1,190</td></tr>
-                                <tr class="border-b border-neutral-50"><td class="py-3 px-2 font-medium">住宿</td><td class="py-3 px-2">廣島東橫INN (3晚)</td><td class="py-3 px-2 text-right">3,429</td></tr>
-                                <tr class="border-b border-neutral-50"><td class="py-3 px-2 font-medium">住宿</td><td class="py-3 px-2">尾道綠丘飯店 (1晚)</td><td class="py-3 px-2 text-right">2,329</td></tr>
-                                <tr class="border-b border-neutral-50"><td class="py-3 px-2 font-medium">住宿</td><td class="py-3 px-2">岡山東橫INN (2晚)</td><td class="py-3 px-2 text-right">3,022</td></tr>
-                                <tr class="border-b border-neutral-50"><td class="py-3 px-2 font-medium">網路</td><td class="py-3 px-2">eSIM 7天無限流量</td><td class="py-3 px-2 text-right">360</td></tr>
+                            <tbody class="text-slate-700">
+                                <tr class="border-b border-slate-50"><td class="py-4 px-2 font-bold">機票</td><td class="py-4 px-2 no-italic">高雄/岡山 來回 (含稅)</td><td class="py-4 px-2 text-right font-black">11,297</td></tr>
+                                <tr class="border-b border-slate-50"><td class="py-4 px-2 font-bold">交通</td><td class="py-4 px-2 no-italic">JR PASS 岡山廣島山口 5日</td><td class="py-4 px-2 text-right font-black">3,391</td></tr>
+                                <tr class="border-b border-slate-50"><td class="py-4 px-2 font-bold">交通</td><td class="py-4 px-2 no-italic">新幹線 岡山/姬路來回額外費</td><td class="py-4 px-2 text-right font-black">1,550</td></tr>
+                                <tr class="border-b border-slate-50"><td class="py-4 px-2 font-bold">交通</td><td class="py-4 px-2 no-italic">高鐵 桃園/台南 (接駁)</td><td class="py-4 px-2 text-right font-black">1,190</td></tr>
+                                <tr class="border-b border-slate-50"><td class="py-4 px-2 font-bold text-amber-600">住宿</td><td class="py-4 px-2 no-italic">廣島東橫INN (3晚)</td><td class="py-4 px-2 text-right font-black">3,429</td></tr>
+                                <tr class="border-b border-slate-50"><td class="py-4 px-2 font-bold text-amber-600">住宿</td><td class="py-4 px-2 no-italic">尾道綠丘飯店 (1晚)</td><td class="py-4 px-2 text-right font-black">2,329</td></tr>
+                                <tr class="border-b border-slate-50"><td class="py-4 px-2 font-bold text-amber-600">住宿</td><td class="py-4 px-2 no-italic">岡山東橫INN (2晚)</td><td class="py-4 px-2 text-right font-black">3,022</td></tr>
+                                <tr><td class="py-4 px-2 font-bold">網路</td><td class="py-4 px-2 no-italic">eSIM 7天無限流量</td><td class="py-4 px-2 text-right font-black">360</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -401,42 +489,30 @@
 
         <!-- 4. Lodging Section -->
         <section id="content-lodging" class="tab-content space-y-6">
-            <div class="card p-8">
-                <h2 class="text-2xl font-semibold mb-6 text-neutral-800">飯店地標資訊</h2>
-                <div class="space-y-4">
-                    <a href="https://www.google.com/maps/search/?api=1&query=Toyoko+Inn+Hiroshima-eki+Shinkansen-guchi+No.2" target="_blank" class="block p-5 bg-neutral-50 rounded-xl border border-neutral-100 hover:bg-white hover:border-[#d8c8b8] transition-all group">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-lg mb-1 group-hover:text-[#8c7b6c]">東橫INN 廣島站前店2號</p>
-                                <p class="text-neutral-500 italic text-sm">廣島站步行約 5-8 分鐘</p>
-                            </div>
-                            <span class="text-[#8c7b6c] text-xs font-bold">地圖 ↗</span>
-                        </div>
+            <div class="card p-10">
+                <h2 class="text-2xl font-black mb-8 text-slate-800">飯店地標資訊</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Toyoko+Inn+Hiroshima-eki+Shinkansen-guchi+No.2" target="_blank" class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-50 transition-all group">
+                        <div class="flex justify-between items-start mb-4"><span class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-black">HIROSHIMA</span><span class="text-blue-600 font-bold text-xs">↗ MAP</span></div>
+                        <p class="font-extrabold text-xl text-slate-800 mb-2">東橫INN 廣島站前店2號</p>
+                        <p class="text-slate-400 text-xs no-italic">廣島站步行約 5-8 分鐘</p>
                     </a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Green+Hill+Hotel+Onomichi" target="_blank" class="block p-5 bg-neutral-50 rounded-xl border border-neutral-100 hover:bg-white hover:border-[#d8c8b8] transition-all group">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-lg mb-1 group-hover:text-[#8c7b6c]">尾道綠丘飯店 (Green Hill Hotel)</p>
-                                <p class="text-neutral-500 italic text-sm">尾道站正對面，交通極方便</p>
-                            </div>
-                            <span class="text-[#8c7b6c] text-xs font-bold">地圖 ↗</span>
-                        </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Green+Hill+Hotel+Onomichi" target="_blank" class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-50 transition-all group">
+                        <div class="flex justify-between items-start mb-4"><span class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-black">ONOMICHI</span><span class="text-blue-600 font-bold text-xs">↗ MAP</span></div>
+                        <p class="font-extrabold text-xl text-slate-800 mb-2">尾道綠丘飯店</p>
+                        <p class="text-slate-400 text-xs no-italic">尾道站正對面，交通極方便</p>
                     </a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Toyoko+Inn+Okayama-eki+Higashi-guchi" target="_blank" class="block p-5 bg-neutral-50 rounded-xl border border-neutral-100 hover:bg-white hover:border-[#d8c8b8] transition-all group">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-lg mb-1 group-hover:text-[#8c7b6c]">東橫INN 岡山站前店</p>
-                                <p class="text-neutral-500 italic text-sm">岡山站東口步行約 5 分鐘</p>
-                            </div>
-                            <span class="text-[#8c7b6c] text-xs font-bold">地圖 ↗</span>
-                        </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Toyoko+Inn+Okayama-eki+Higashi-guchi" target="_blank" class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-50 transition-all group">
+                        <div class="flex justify-between items-start mb-4"><span class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-black">OKAYAMA</span><span class="text-blue-600 font-bold text-xs">↗ MAP</span></div>
+                        <p class="font-extrabold text-xl text-slate-800 mb-2">東橫INN 岡山站前店</p>
+                        <p class="text-slate-400 text-xs no-italic">岡山站東口步行約 5 分鐘</p>
                     </a>
                 </div>
             </div>
         </section>
 
-        <footer class="mt-12 text-center text-neutral-400 text-sm pb-10">
-            <p>© 2026 廣島之旅計劃書 | 七天六夜自由行</p>
+        <footer class="mt-16 text-center text-slate-400 text-xs pb-12">
+            <p class="font-black tracking-[0.2em] uppercase">© 2026 HIROSHIMA TRAVEL GUIDE | 7 Days Trip</p>
         </footer>
     </div>
 
@@ -444,6 +520,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const tabs = document.querySelectorAll('.pill-tab-button');
             const contents = document.querySelectorAll('.tab-content');
+            const COLORS = ["#2563eb", "#f59e0b", "#64748b", "#cbd5e1"];
 
             function setActiveTab(tabId) {
                 const targetId = tabId.replace('tab-', 'content-');
@@ -456,67 +533,51 @@
                 if (activeTab && activeContent) {
                     activeTab.classList.add('active');
                     activeContent.classList.add('active');
-                    if (tabId === 'tab-expenses') drawChart("#expense-chart", "#expense-legend", 280, 75);
+                    if (tabId === 'tab-expenses') drawChart("#expense-chart", "#expense-legend", 300, 85);
                 }
             }
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => setActiveTab(tab.id));
-            });
+            tabs.forEach(tab => tab.addEventListener('click', () => setActiveTab(tab.id)));
 
             document.querySelectorAll('.collapsible-header').forEach(header => {
                 header.addEventListener('click', () => {
                     const content = header.nextElementSibling;
                     const chevron = header.querySelector('.chevron');
-                    const isOpen = content.classList.contains('open');
-                    
-                    if (!isOpen) {
-                        content.classList.add('open');
-                        chevron.classList.add('rotated');
-                    } else {
-                        content.classList.remove('open');
-                        chevron.classList.remove('rotated');
-                    }
+                    content.classList.toggle('open');
+                    chevron.classList.toggle('rotated');
                 });
             });
 
             function drawChart(containerId, legendId, size, innerRadius) {
                 const data = [
-                    { label: "機票", value: 11297, color: "#8c7b6c" },
-                    { label: "住宿總計", value: 8780, color: "#d8c8b8" },
-                    { label: "交通票券", value: 6131, color: "#e5dcd1" },
-                    { label: "網路/雜項", value: 360, color: "#f1ede7" }
+                    { label: "機票 Flight", value: 11297, color: COLORS[0] },
+                    { label: "住宿總計 Stay", value: 8780, color: COLORS[1] },
+                    { label: "交通票券 Transport", value: 6131, color: COLORS[2] },
+                    { label: "網路雜項 Others", value: 360, color: COLORS[3] }
                 ];
                 const radius = size / 2;
                 const svg = d3.select(containerId);
                 svg.selectAll("*").remove();
                 const g = svg.append("g").attr("transform", `translate(${size/2},${size/2})`);
                 const pie = d3.pie().sort(null).value(d => d.value);
-                const arc = d3.arc().innerRadius(innerRadius).outerRadius(radius);
+                const arc = d3.arc().innerRadius(innerRadius).outerRadius(radius).cornerRadius(4).padAngle(0.02);
                 
-                g.selectAll("path")
-                    .data(pie(data))
-                    .enter().append("path")
-                    .attr("d", arc)
-                    .attr("fill", d => d.data.color)
-                    .attr("stroke", "#fff")
-                    .style("stroke-width", "2px");
+                g.selectAll("path").data(pie(data)).enter().append("path").attr("d", arc).attr("fill", d => d.data.color);
 
                 if (legendId) {
                     const legend = d3.select(legendId);
                     legend.selectAll("*").remove();
                     data.forEach(d => {
-                        const row = legend.append("div").attr("class", "flex items-center justify-between text-sm py-2 border-b border-neutral-50 last:border-0 px-2");
+                        const row = legend.append("div").attr("class", "flex items-center justify-between py-3 border-b border-slate-50 last:border-0 px-2 text-xs");
                         const left = row.append("div").attr("class", "flex items-center");
                         left.append("div").attr("class", "legend-color").style("background-color", d.color);
-                        left.append("span").attr("class", "text-neutral-500 font-medium").text(d.label);
-                        row.append("span").attr("class", "font-bold text-neutral-700").text(`$${d.value.toLocaleString()}`);
+                        left.append("span").attr("class", "text-slate-500 font-bold").text(d.label);
+                        row.append("span").attr("class", "font-black text-slate-800").text(`$${d.value.toLocaleString()}`);
                     });
                 }
             }
 
-            // Initial call for the mini chart in overview
-            drawChart("#overview-mini-chart", null, 80, 25);
+            drawChart("#overview-mini-chart", null, 80, 28);
         });
     </script>
 </body>
