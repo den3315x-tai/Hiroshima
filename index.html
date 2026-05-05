@@ -6,31 +6,9 @@
     <title>2026 廣島七天六夜旅行計劃書</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script>
-        function downloadItineraryPDF() {
-
-            const element = document.getElementById("content-itinerary");
-
-            const btn = element.querySelector("button");
-            btn.style.display = "none";
-
-            const opt = {
-                margin: 0.3,
-                filename: '行程規劃.pdf',
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().set(opt).from(element).save().then(() => {
-                btn.style.display = "block";
-            });
-        }
-    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
-
+        
         :root {
             --primary-bg: #f8fafc;
             --primary-text: #1e293b;
@@ -51,10 +29,9 @@
         .tab-content {
             display: none;
         }
-
-            .tab-content.active {
-                display: block;
-            }
+        .tab-content.active {
+            display: block;
+        }
 
         .card {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -75,43 +52,40 @@
             border: 1px solid transparent;
         }
 
-            .pill-tab-button:hover {
-                background-color: #e2e8f0;
-                color: var(--accent-blue);
-            }
+        .pill-tab-button:hover {
+            background-color: #e2e8f0;
+            color: var(--accent-blue);
+        }
 
-            .pill-tab-button.active {
-                background-color: var(--accent-blue);
-                color: white;
-                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            }
+        .pill-tab-button.active {
+            background-color: var(--accent-blue);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
 
         .collapsible-header {
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
-
-            .collapsible-header:hover {
-                background-color: #f8fafc;
-            }
+        .collapsible-header:hover {
+            background-color: #f8fafc;
+        }
 
         .collapsible-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-out;
         }
-
-            .collapsible-content.open {
-                max-height: 2000px;
-            }
+        .collapsible-content.open {
+            max-height: 2000px; 
+        }
 
         .chevron {
             transition: transform 0.3s ease;
         }
-
-            .chevron.rotated {
-                transform: rotate(180deg);
-            }
+        .chevron.rotated {
+            transform: rotate(180deg);
+        }
 
         .itinerary-time {
             font-weight: 700;
@@ -302,14 +276,6 @@
 
         <!-- 2. Itinerary Section -->
         <section id="content-itinerary" class="tab-content space-y-10">
-
-            <!-- PDF按鈕 -->
-            <div class="flex justify-end">
-                <button onclick="downloadItineraryPDF()"
-                        class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">
-                    📄 下載行程PDF
-                </button>
-            </div>
 
             <div class="card p-4 shadow-md">
                 <h3 class="font-bold text-lg mb-3">Day 1｜10/19</h3>
