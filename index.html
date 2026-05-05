@@ -141,13 +141,11 @@
 
         <!-- 1. Overview Section -->
         <section id="content-overview" class="tab-content active space-y-6">
-            <!-- 行程總覽地圖圖片 -->
             <div class="card overflow-hidden mb-8">
                 <img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/SUM-MAP.png" alt="行程總覽地圖" class="w-full h-auto block">
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- 左側主欄位 -->
                 <div class="lg:col-span-2 space-y-6">
                     <div class="card p-8">
                         <div class="flex items-center gap-4 mb-8">
@@ -181,7 +179,6 @@
                         </div>
                     </div>
 
-                    <!-- 航班資訊 -->
                     <div class="card p-8">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="bg-amber-500 p-3 rounded-xl text-white shadow-lg shadow-amber-100">
@@ -206,9 +203,7 @@
                     </div>
                 </div>
 
-                <!-- 右側側邊欄 -->
                 <div class="space-y-6">
-                    <!-- 即時天氣 -->
                     <div class="card p-6 border-l-4 border-sky-400">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="font-extrabold text-lg text-slate-800">廣島即時天氣</h3>
@@ -227,7 +222,6 @@
                         </div>
                     </div>
 
-                    <!-- 日幣換算 -->
                     <div class="card p-6 border-l-4 border-emerald-500">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="font-extrabold text-lg text-slate-800">日幣即時換算</h3>
@@ -253,7 +247,6 @@
                         </div>
                     </div>
 
-                    <!-- 費用簡約卡片 -->
                     <div class="card p-6 border-l-4 border-amber-500 cursor-pointer hover:bg-slate-50 transition-all" onclick="document.getElementById('tab-expenses').click()">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="font-extrabold text-lg text-slate-800">費用概算</h3>
@@ -285,8 +278,6 @@
         <section id="content-expenses" class="tab-content space-y-8">
             <div class="card p-8 md:p-12">
                 <h2 class="text-3xl font-black mb-10 text-center text-slate-800">每人預估費用統計</h2>
-                
-                <!-- 圖表區域 -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
                     <div class="flex justify-center">
                         <div class="relative">
@@ -297,12 +288,9 @@
                             </div>
                         </div>
                     </div>
-                    <div id="expense-legend-summary" class="space-y-3">
-                        <!-- 由 JS 生成分類總結 -->
-                    </div>
+                    <div id="expense-legend-summary" class="space-y-3"></div>
                 </div>
 
-                <!-- 詳細細項表格 -->
                 <div class="space-y-6">
                     <h3 class="text-xl font-black text-slate-800 border-l-4 border-blue-600 pl-4">支出詳細清單</h3>
                     <div class="overflow-x-auto">
@@ -316,64 +304,17 @@
                                 </tr>
                             </thead>
                             <tbody class="text-sm divide-y divide-slate-50">
-                                <!-- 機票 -->
-                                <tr>
-                                    <td class="py-4 px-2 font-bold text-blue-600">機票</td>
-                                    <td class="py-4 px-2 font-bold text-slate-700">虎航來回機票</td>
-                                    <td class="py-4 px-2 text-slate-400">高雄 > 岡山 / 岡山 > 台北</td>
-                                    <td class="py-4 px-2 text-right font-black text-slate-700">11,297</td>
-                                </tr>
-                                <!-- 交通 -->
-                                <tr>
-                                    <td class="py-4 px-2 font-bold text-amber-500">交通</td>
-                                    <td class="py-4 px-2 font-bold text-slate-700">高鐵</td>
-                                    <td class="py-4 px-2 text-slate-400">桃園 > 台南</td>
-                                    <td class="py-4 px-2 text-right font-black text-slate-700">1,190</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4 px-2 font-bold text-amber-500">交通</td>
-                                    <td class="py-4 px-2 font-bold text-slate-700">JR PASS</td>
-                                    <td class="py-4 px-2 text-slate-400">岡山 & 廣島 & 山口地區</td>
-                                    <td class="py-4 px-2 text-right font-black text-slate-700">3,391</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4 px-2 font-bold text-amber-500">交通</td>
-                                    <td class="py-4 px-2 font-bold text-slate-700">新幹線</td>
-                                    <td class="py-4 px-2 text-slate-400">岡山姬路來回</td>
-                                    <td class="py-4 px-2 text-right font-black text-slate-700">1,550</td>
-                                </tr>
-                                <!-- 住宿 -->
-                                <tr>
-                                    <td class="py-4 px-2 font-bold text-slate-500">住宿</td>
-                                    <td class="py-4 px-2 font-bold text-slate-700">東橫INN 廣島站前2號</td>
-                                    <td class="py-4 px-2 text-slate-400">住宿 3 晚</td>
-                                    <td class="py-4 px-2 text-right font-black text-slate-700">3,429</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4 px-2 font-bold text-slate-500">住宿</td>
-                                    <td class="py-4 px-2 font-bold text-slate-700">尾道綠丘飯店</td>
-                                    <td class="py-4 px-2 text-slate-400">住宿 1 晚</td>
-                                    <td class="py-4 px-2 text-right font-black text-slate-700">2,329</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4 px-2 font-bold text-slate-500">住宿</td>
-                                    <td class="py-4 px-2 font-bold text-slate-700">東橫INN 岡山站前店</td>
-                                    <td class="py-4 px-2 text-slate-400">住宿 2 晚</td>
-                                    <td class="py-4 px-2 text-right font-black text-slate-700">3,022</td>
-                                </tr>
-                                <!-- 雜項 -->
-                                <tr>
-                                    <td class="py-4 px-2 font-bold text-emerald-500">雜項</td>
-                                    <td class="py-4 px-2 font-bold text-slate-700">eSIM (TRIP購買)</td>
-                                    <td class="py-4 px-2 text-slate-400">7天無限流量</td>
-                                    <td class="py-4 px-2 text-right font-black text-slate-700">360</td>
-                                </tr>
+                                <tr><td class="py-4 px-2 font-bold text-blue-600">機票</td><td class="py-4 px-2 font-bold text-slate-700">虎航來回機票</td><td class="py-4 px-2 text-slate-400">高雄 > 岡山 / 岡山 > 台北</td><td class="py-4 px-2 text-right font-black text-slate-700">11,297</td></tr>
+                                <tr><td class="py-4 px-2 font-bold text-amber-500">交通</td><td class="py-4 px-2 font-bold text-slate-700">高鐵</td><td class="py-4 px-2 text-slate-400">桃園 > 台南</td><td class="py-4 px-2 text-right font-black text-slate-700">1,190</td></tr>
+                                <tr><td class="py-4 px-2 font-bold text-amber-500">交通</td><td class="py-4 px-2 font-bold text-slate-700">JR PASS</td><td class="py-4 px-2 text-slate-400">岡山 & 廣島 & 山口地區</td><td class="py-4 px-2 text-right font-black text-slate-700">3,391</td></tr>
+                                <tr><td class="py-4 px-2 font-bold text-amber-500">交通</td><td class="py-4 px-2 font-bold text-slate-700">新幹線</td><td class="py-4 px-2 text-slate-400">岡山姬路來回</td><td class="py-4 px-2 text-right font-black text-slate-700">1,550</td></tr>
+                                <tr><td class="py-4 px-2 font-bold text-slate-500">住宿</td><td class="py-4 px-2 font-bold text-slate-700">東橫INN 廣島站前2號</td><td class="py-4 px-2 text-slate-400">住宿 3 晚</td><td class="py-4 px-2 text-right font-black text-slate-700">3,429</td></tr>
+                                <tr><td class="py-4 px-2 font-bold text-slate-500">住宿</td><td class="py-4 px-2 font-bold text-slate-700">尾道綠丘飯店</td><td class="py-4 px-2 text-slate-400">住宿 1 晚</td><td class="py-4 px-2 text-right font-black text-slate-700">2,329</td></tr>
+                                <tr><td class="py-4 px-2 font-bold text-slate-500">住宿</td><td class="py-4 px-2 font-bold text-slate-700">東橫INN 岡山站前店</td><td class="py-4 px-2 text-slate-400">住宿 2 晚</td><td class="py-4 px-2 text-right font-black text-slate-700">3,022</td></tr>
+                                <tr><td class="py-4 px-2 font-bold text-emerald-500">雜項</td><td class="py-4 px-2 font-bold text-slate-700">eSIM (TRIP購買)</td><td class="py-4 px-2 text-slate-400">7天無限流量</td><td class="py-4 px-2 text-right font-black text-slate-700">360</td></tr>
                             </tbody>
                             <tfoot>
-                                <tr class="bg-slate-50 font-black">
-                                    <td colspan="3" class="py-6 px-4 text-slate-800 text-lg">預估總計</td>
-                                    <td class="py-6 px-4 text-right text-blue-600 text-xl">NT$ 26,568</td>
-                                </tr>
+                                <tr class="bg-slate-50 font-black"><td colspan="3" class="py-6 px-4 text-slate-800 text-lg">預估總計</td><td class="py-6 px-4 text-right text-blue-600 text-xl">NT$ 26,568</td></tr>
                             </tfoot>
                         </table>
                     </div>
@@ -384,26 +325,58 @@
         <!-- 4. Lodging Section -->
         <section id="content-lodging" class="tab-content space-y-6">
             <div class="card p-10">
-                <h2 class="text-2xl font-black mb-8 text-slate-800">飯店地標資訊</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <a href="https://www.google.com/maps/search/?api=1&query=Toyoko+Inn+Hiroshima-eki+Shinkansen-guchi+No.2" target="_blank" class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 hover:shadow-lg transition-all">
-                        <span class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-black">HIROSHIMA</span>
-                        <p class="font-extrabold text-lg text-slate-800 mt-4">東橫INN 廣島站前店2號</p>
-                    </a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Green+Hill+Hotel+Onomichi" target="_blank" class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 hover:shadow-lg transition-all">
-                        <span class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-black">ONOMICHI</span>
-                        <p class="font-extrabold text-lg text-slate-800 mt-4">尾道綠丘飯店</p>
-                    </a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Toyoko+Inn+Okayama-eki+Higashi-guchi" target="_blank" class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 hover:shadow-lg transition-all">
-                        <span class="bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-black">OKAYAMA</span>
-                        <p class="font-extrabold text-lg text-slate-800 mt-4">東橫INN 岡山站前店</p>
-                    </a>
+                <h2 class="text-2xl font-black mb-8 text-slate-800">飯店地標與聯絡資訊</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 廣島 -->
+                    <div class="flex flex-col h-full p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <span class="inline-block bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-black w-fit uppercase">Hiroshima</span>
+                        <h3 class="font-extrabold text-lg text-slate-800 mt-4 mb-2">東橫INN 廣島站前店2號</h3>
+                        <p class="text-xs text-slate-400 mb-6">入住 3 晚 (10/19-21)</p>
+                        
+                        <div class="mt-auto space-y-3">
+                            <a href="tel:+81822621045" class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                <span class="text-sm font-bold">082-262-1045</span>
+                            </a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Toyoko+Inn+Hiroshima-eki+Shinkansen-guchi+No.2" target="_blank" class="w-full py-3 bg-white text-center rounded-xl border border-slate-200 text-sm font-black text-slate-700 hover:bg-slate-100 transition-colors block">開啟地圖</a>
+                        </div>
+                    </div>
+
+                    <!-- 尾道 -->
+                    <div class="flex flex-col h-full p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <span class="inline-block bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-black w-fit uppercase">Onomichi</span>
+                        <h3 class="font-extrabold text-lg text-slate-800 mt-4 mb-2">尾道綠丘飯店</h3>
+                        <p class="text-xs text-slate-400 mb-6">入住 1 晚 (10/22)</p>
+                        
+                        <div class="mt-auto space-y-3">
+                            <a href="tel:+81848256000" class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                <span class="text-sm font-bold">0848-25-6000</span>
+                            </a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Green+Hill+Hotel+Onomichi" target="_blank" class="w-full py-3 bg-white text-center rounded-xl border border-slate-200 text-sm font-black text-slate-700 hover:bg-slate-100 transition-colors block">開啟地圖</a>
+                        </div>
+                    </div>
+
+                    <!-- 岡山 -->
+                    <div class="flex flex-col h-full p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <span class="inline-block bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-black w-fit uppercase">Okayama</span>
+                        <h3 class="font-extrabold text-lg text-slate-800 mt-4 mb-2">東橫INN 岡山站前店</h3>
+                        <p class="text-xs text-slate-400 mb-6">入住 2 晚 (10/23-24)</p>
+                        
+                        <div class="mt-auto space-y-3">
+                            <a href="tel:+81862241045" class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                <span class="text-sm font-bold">086-224-1045</span>
+                            </a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Toyoko+Inn+Okayama-eki+Higashi-guchi" target="_blank" class="w-full py-3 bg-white text-center rounded-xl border border-slate-200 text-sm font-black text-slate-700 hover:bg-slate-100 transition-colors block">開啟地圖</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <footer class="mt-16 text-center text-slate-400 text-xs pb-12">
-            <p class="font-black tracking-[0.2em] uppercase">© 2026 HIROSHIMA TRAVEL GUIDE</p>
+        <footer class="mt-16 text-center text-slate-400 text-xs pb-12 font-black uppercase tracking-widest">
+            © 2026 HIROSHIMA TRAVEL GUIDE
         </footer>
     </div>
 
@@ -413,7 +386,6 @@
             const contents = document.querySelectorAll('.tab-content');
             const COLORS = ["#2563eb", "#f59e0b", "#64748b", "#10b981"];
 
-            // Tab 邏輯
             function setActiveTab(tabId) {
                 const targetId = tabId.replace('tab-', 'content-');
                 tabs.forEach(t => t.classList.remove('active'));
@@ -424,24 +396,21 @@
             }
             tabs.forEach(tab => tab.addEventListener('click', () => setActiveTab(tab.id)));
 
-            // 折疊邏輯
             document.querySelectorAll('.collapsible-header').forEach(header => {
                 header.addEventListener('click', () => {
                     const content = header.nextElementSibling;
                     const chevron = header.querySelector('.chevron');
                     const isOpen = content.classList.contains('open');
-                    document.querySelectorAll('.collapsible-content').forEach(c => c.classList.remove('open'));
-                    document.querySelectorAll('.chevron').forEach(c => c.classList.remove('rotated'));
                     if (!isOpen) { content.classList.add('open'); chevron.classList.add('rotated'); }
+                    else { content.classList.remove('open'); chevron.classList.remove('rotated'); }
                 });
             });
 
-            // 天氣 API
             async function fetchWeather() {
                 try {
                     const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=34.385&longitude=132.453&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo');
                     const data = await res.json();
-                    const codes = { 0: ["☀️", "晴朗"], 1: ["🌤️", "晴時多雲"], 2: ["⛅", "多雲"], 3: ["☁️", "陰天"], 45: ["🌫️", "有霧"], 61: ["🌧️", "小雨"], 95: ["⛈️", "雷雨"] };
+                    const codes = { 0: ["☀️", "晴朗"], 1: ["🌤️", "晴時多雲"], 2: ["⛅", "多雲"], 3: ["☁️", "陰天"] };
                     const weather = codes[data.current.weather_code] || ["🌡️", "觀測中"];
                     document.getElementById('weather-loading').classList.add('hidden');
                     document.getElementById('weather-display').classList.remove('hidden');
@@ -450,11 +419,10 @@
                     document.getElementById('weather-icon').innerText = weather[0];
                     document.getElementById('max-temp').innerText = `${Math.round(data.daily.temperature_2m_max[0])}°C`;
                     document.getElementById('min-temp').innerText = `${Math.round(data.daily.temperature_2m_min[0])}°C`;
-                } catch (e) { console.error(e); }
+                } catch (e) {}
             }
             fetchWeather();
 
-            // 匯率換算
             let jpyToTwdRate = 0.215;
             async function fetchFX() {
                 try {
@@ -463,7 +431,7 @@
                     jpyToTwdRate = data.rates.TWD;
                     document.getElementById('fx-rate-unit').innerText = jpyToTwdRate.toFixed(4);
                     convertFX();
-                } catch (e) { document.getElementById('fx-rate-unit').innerText = "0.2150"; }
+                } catch (e) {}
             }
             function convertFX() {
                 const jpy = parseFloat(document.getElementById('jpy-input-val').value) || 0;
@@ -472,27 +440,23 @@
             document.getElementById('jpy-input-val').addEventListener('input', convertFX);
             fetchFX();
 
-            // 圖表
             function drawChart(id, lId, s, ir) {
-                // 資料分類匯總
                 const data = [ 
                     { l: "機票", v: 11297, c: COLORS[0] }, 
-                    { l: "交通", v: (1190 + 3391 + 1550), c: COLORS[1] }, // 高鐵+JR+新幹線
-                    { l: "住宿", v: (3429 + 2329 + 3022), c: COLORS[2] }, // 廣島+尾道+岡山
-                    { l: "雜項", v: 360, c: COLORS[3] } // eSIM
+                    { l: "交通", v: (1190 + 3391 + 1550), c: COLORS[1] }, 
+                    { l: "住宿", v: (3429 + 2329 + 3022), c: COLORS[2] }, 
+                    { l: "雜項", v: 360, c: COLORS[3] } 
                 ];
-                
                 const svg = d3.select(id); svg.selectAll("*").remove();
                 const g = svg.append("g").attr("transform", `translate(${s/2},${s/2})`);
                 const pie = d3.pie().value(d => d.v);
                 const arc = d3.arc().innerRadius(ir).outerRadius(s/2).cornerRadius(4).padAngle(0.02);
                 g.selectAll("path").data(pie(data)).enter().append("path").attr("d", arc).attr("fill", d => d.data.c);
-                
                 if (lId) {
                     const leg = d3.select(lId); leg.selectAll("*").remove();
                     data.forEach(d => {
-                        const r = leg.append("div").attr("class", "flex justify-between p-4 bg-slate-50 rounded-xl border border-slate-100");
-                        r.append("div").attr("class", "flex items-center text-sm text-slate-500 font-bold").html(`<div class="legend-color" style="background-color:${d.c}"></div>${d.l}`);
+                        const r = leg.append("div").attr("class", "flex justify-between p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm");
+                        r.append("div").attr("class", "flex items-center text-slate-500 font-bold").html(`<div class="legend-color" style="background-color:${d.c}"></div>${d.l}`);
                         r.append("span").attr("class", "font-black text-slate-800").text(`NT$ ${d.v.toLocaleString()}`);
                     });
                 }
