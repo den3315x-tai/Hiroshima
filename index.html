@@ -141,6 +141,11 @@
 
         <!-- 1. Overview Section -->
         <section id="content-overview" class="tab-content active space-y-6">
+            <!-- 行程總覽地圖圖片 -->
+            <div class="card overflow-hidden mb-8">
+                <img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/SUM-MAP.png" alt="行程總覽地圖" class="w-full h-auto block">
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- 左側主欄位 -->
                 <div class="lg:col-span-2 space-y-6">
@@ -222,14 +227,13 @@
                         </div>
                     </div>
 
-                    <!-- 日幣換算 (修正字體重疊設計) -->
+                    <!-- 日幣換算 -->
                     <div class="card p-6 border-l-4 border-emerald-500">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="font-extrabold text-lg text-slate-800">日幣即時換算</h3>
                             <span class="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full uppercase">Exchange</span>
                         </div>
                         <div class="space-y-4">
-                            <!-- 修正重疊：標籤放在輸入框上方 -->
                             <div>
                                 <label for="jpy-input-val" class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">JPY 日幣輸入</label>
                                 <input type="number" id="jpy-input-val" value="1000" class="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-lg font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all">
@@ -268,7 +272,6 @@
 
         <!-- 2. Itinerary Section -->
         <section id="content-itinerary" class="tab-content space-y-6">
-            <!-- Day 1-7 -->
             <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Day 1｜10/19</h3><span class="chevron">▼</span></div><div class="collapsible-content open"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-19.png" class="w-full" alt="Day 1"></div></div>
             <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Day 2｜10/20</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-20.png" class="w-full" alt="Day 2"></div></div>
             <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Day 3｜10/21</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-21.png" class="w-full" alt="Day 3"></div></div>
@@ -280,18 +283,100 @@
 
         <!-- 3. Expenses Section -->
         <section id="content-expenses" class="tab-content space-y-8">
-            <div class="card p-10">
-                <h2 class="text-2xl font-black mb-10 text-center text-slate-800">每人預估費用統計</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="card p-8 md:p-12">
+                <h2 class="text-3xl font-black mb-10 text-center text-slate-800">每人預估費用統計</h2>
+                
+                <!-- 圖表區域 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
                     <div class="flex justify-center">
                         <div class="relative">
-                            <svg id="expense-chart" width="300" height="300"></svg>
+                            <svg id="expense-chart" width="320" height="320"></svg>
                             <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Total</span>
                                 <span class="text-3xl font-black text-slate-900">$26,568</span>
                             </div>
                         </div>
                     </div>
-                    <div id="expense-legend" class="space-y-2"></div>
+                    <div id="expense-legend-summary" class="space-y-3">
+                        <!-- 由 JS 生成分類總結 -->
+                    </div>
+                </div>
+
+                <!-- 詳細細項表格 -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-black text-slate-800 border-l-4 border-blue-600 pl-4">支出詳細清單</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                                    <th class="py-4 px-2">類別</th>
+                                    <th class="py-4 px-2">項目</th>
+                                    <th class="py-4 px-2">備註</th>
+                                    <th class="py-4 px-2 text-right">金額 (NT$)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm divide-y divide-slate-50">
+                                <!-- 機票 -->
+                                <tr>
+                                    <td class="py-4 px-2 font-bold text-blue-600">機票</td>
+                                    <td class="py-4 px-2 font-bold text-slate-700">虎航來回機票</td>
+                                    <td class="py-4 px-2 text-slate-400">高雄 > 岡山 / 岡山 > 台北</td>
+                                    <td class="py-4 px-2 text-right font-black text-slate-700">11,297</td>
+                                </tr>
+                                <!-- 交通 -->
+                                <tr>
+                                    <td class="py-4 px-2 font-bold text-amber-500">交通</td>
+                                    <td class="py-4 px-2 font-bold text-slate-700">高鐵</td>
+                                    <td class="py-4 px-2 text-slate-400">桃園 > 台南</td>
+                                    <td class="py-4 px-2 text-right font-black text-slate-700">1,190</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-2 font-bold text-amber-500">交通</td>
+                                    <td class="py-4 px-2 font-bold text-slate-700">JR PASS</td>
+                                    <td class="py-4 px-2 text-slate-400">岡山 & 廣島 & 山口地區</td>
+                                    <td class="py-4 px-2 text-right font-black text-slate-700">3,391</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-2 font-bold text-amber-500">交通</td>
+                                    <td class="py-4 px-2 font-bold text-slate-700">新幹線</td>
+                                    <td class="py-4 px-2 text-slate-400">岡山姬路來回</td>
+                                    <td class="py-4 px-2 text-right font-black text-slate-700">1,550</td>
+                                </tr>
+                                <!-- 住宿 -->
+                                <tr>
+                                    <td class="py-4 px-2 font-bold text-slate-500">住宿</td>
+                                    <td class="py-4 px-2 font-bold text-slate-700">東橫INN 廣島站前2號</td>
+                                    <td class="py-4 px-2 text-slate-400">住宿 3 晚</td>
+                                    <td class="py-4 px-2 text-right font-black text-slate-700">3,429</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-2 font-bold text-slate-500">住宿</td>
+                                    <td class="py-4 px-2 font-bold text-slate-700">尾道綠丘飯店</td>
+                                    <td class="py-4 px-2 text-slate-400">住宿 1 晚</td>
+                                    <td class="py-4 px-2 text-right font-black text-slate-700">2,329</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-2 font-bold text-slate-500">住宿</td>
+                                    <td class="py-4 px-2 font-bold text-slate-700">東橫INN 岡山站前店</td>
+                                    <td class="py-4 px-2 text-slate-400">住宿 2 晚</td>
+                                    <td class="py-4 px-2 text-right font-black text-slate-700">3,022</td>
+                                </tr>
+                                <!-- 雜項 -->
+                                <tr>
+                                    <td class="py-4 px-2 font-bold text-emerald-500">雜項</td>
+                                    <td class="py-4 px-2 font-bold text-slate-700">eSIM (TRIP購買)</td>
+                                    <td class="py-4 px-2 text-slate-400">7天無限流量</td>
+                                    <td class="py-4 px-2 text-right font-black text-slate-700">360</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-slate-50 font-black">
+                                    <td colspan="3" class="py-6 px-4 text-slate-800 text-lg">預估總計</td>
+                                    <td class="py-6 px-4 text-right text-blue-600 text-xl">NT$ 26,568</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
@@ -326,7 +411,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const tabs = document.querySelectorAll('.pill-tab-button');
             const contents = document.querySelectorAll('.tab-content');
-            const COLORS = ["#2563eb", "#f59e0b", "#64748b", "#cbd5e1"];
+            const COLORS = ["#2563eb", "#f59e0b", "#64748b", "#10b981"];
 
             // Tab 邏輯
             function setActiveTab(tabId) {
@@ -335,7 +420,7 @@
                 contents.forEach(c => c.classList.remove('active'));
                 document.getElementById(tabId).classList.add('active');
                 document.getElementById(targetId).classList.add('active');
-                if (tabId === 'tab-expenses') drawChart("#expense-chart", "#expense-legend", 300, 85);
+                if (tabId === 'tab-expenses') drawChart("#expense-chart", "#expense-legend-summary", 320, 95);
             }
             tabs.forEach(tab => tab.addEventListener('click', () => setActiveTab(tab.id)));
 
@@ -369,7 +454,7 @@
             }
             fetchWeather();
 
-            // 匯率換算 (JPY to TWD)
+            // 匯率換算
             let jpyToTwdRate = 0.215;
             async function fetchFX() {
                 try {
@@ -389,18 +474,26 @@
 
             // 圖表
             function drawChart(id, lId, s, ir) {
-                const data = [ { l: "機票", v: 11297, c: COLORS[0] }, { l: "住宿", v: 8780, c: COLORS[1] }, { l: "交通", v: 6131, c: COLORS[2] }, { l: "雜項", v: 360, c: COLORS[3] } ];
+                // 資料分類匯總
+                const data = [ 
+                    { l: "機票", v: 11297, c: COLORS[0] }, 
+                    { l: "交通", v: (1190 + 3391 + 1550), c: COLORS[1] }, // 高鐵+JR+新幹線
+                    { l: "住宿", v: (3429 + 2329 + 3022), c: COLORS[2] }, // 廣島+尾道+岡山
+                    { l: "雜項", v: 360, c: COLORS[3] } // eSIM
+                ];
+                
                 const svg = d3.select(id); svg.selectAll("*").remove();
                 const g = svg.append("g").attr("transform", `translate(${s/2},${s/2})`);
                 const pie = d3.pie().value(d => d.v);
                 const arc = d3.arc().innerRadius(ir).outerRadius(s/2).cornerRadius(4).padAngle(0.02);
                 g.selectAll("path").data(pie(data)).enter().append("path").attr("d", arc).attr("fill", d => d.data.c);
+                
                 if (lId) {
                     const leg = d3.select(lId); leg.selectAll("*").remove();
                     data.forEach(d => {
-                        const r = leg.append("div").attr("class", "flex justify-between p-3 border-b border-slate-50 last:border-0");
-                        r.append("div").attr("class", "flex items-center text-xs text-slate-500 font-bold").html(`<div class="legend-color" style="background-color:${d.c}"></div>${d.l}`);
-                        r.append("span").attr("class", "font-black text-slate-800").text(`$${d.v.toLocaleString()}`);
+                        const r = leg.append("div").attr("class", "flex justify-between p-4 bg-slate-50 rounded-xl border border-slate-100");
+                        r.append("div").attr("class", "flex items-center text-sm text-slate-500 font-bold").html(`<div class="legend-color" style="background-color:${d.c}"></div>${d.l}`);
+                        r.append("span").attr("class", "font-black text-slate-800").text(`NT$ ${d.v.toLocaleString()}`);
                     });
                 }
             }
