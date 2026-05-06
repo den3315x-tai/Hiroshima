@@ -30,9 +30,9 @@
             display: none;
         }
 
-        .tab-content.active {
-            display: block;
-        }
+            .tab-content.active {
+                display: block;
+            }
 
         .card {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -53,25 +53,25 @@
             border: 1px solid transparent;
         }
 
-        .pill-tab-button:hover {
-            background-color: #e2e8f0;
-            color: var(--accent-blue);
-        }
+            .pill-tab-button:hover {
+                background-color: #e2e8f0;
+                color: var(--accent-blue);
+            }
 
-        .pill-tab-button.active {
-            background-color: var(--accent-blue);
-            color: white;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
+            .pill-tab-button.active {
+                background-color: var(--accent-blue);
+                color: white;
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            }
 
         .collapsible-header {
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
 
-        .collapsible-header:hover {
-            background-color: #f8fafc;
-        }
+            .collapsible-header:hover {
+                background-color: #f8fafc;
+            }
 
         .collapsible-content {
             max-height: 0;
@@ -79,30 +79,36 @@
             transition: max-height 0.4s ease-out;
         }
 
-        .collapsible-content.open {
-            max-height: 2000px;
-        }
+            .collapsible-content.open {
+                max-height: 2000px;
+            }
 
         .chevron {
             transition: transform 0.3s ease;
         }
 
-        .chevron.rotated {
-            transform: rotate(180deg);
-        }
+            .chevron.rotated {
+                transform: rotate(180deg);
+            }
 
         .no-italic {
             font-style: normal !important;
         }
-        
+
         .loading-shimmer {
             background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
         }
+
         @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
         }
 
         .checklist-item {
@@ -113,17 +119,19 @@
             border-radius: 0.75rem;
             transition: background-color 0.2s;
         }
-        .checklist-item:hover {
-            background-color: #f1f5f9;
-        }
+
+            .checklist-item:hover {
+                background-color: #f1f5f9;
+            }
 
         /* 費用卡片專用樣式 */
         .expense-card {
             transition: transform 0.2s;
         }
-        .expense-card:hover {
-            transform: translateY(-4px);
-        }
+
+            .expense-card:hover {
+                transform: translateY(-4px);
+            }
 
         /* 時間軸專用樣式 */
         .timeline-item {
@@ -132,10 +140,12 @@
             padding-bottom: 2rem;
             border-left: 2px solid #e2e8f0;
         }
-        .timeline-item:last-child {
-            border-left: 2px solid transparent;
-            padding-bottom: 0;
-        }
+
+            .timeline-item:last-child {
+                border-left: 2px solid transparent;
+                padding-bottom: 0;
+            }
+
         .timeline-dot {
             position: absolute;
             left: -9px;
@@ -418,13 +428,13 @@
 
         <!-- 3. Itinerary Section -->
         <section id="content-itinerary" class="tab-content space-y-6">
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 1｜10/19</h3><span class="chevron rotated">▼</span></div><div class="collapsible-content open"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-19.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 2｜10/20</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-20.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 3｜10/21</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-21.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 4｜10/22</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-22.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 5｜10/23</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-23.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 6｜10/24</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-24.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 7｜10/25</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-25.png" class="w-full"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 1｜10/19｜啟程</h3><span class="chevron rotated">▼</span></div><div class="collapsible-content open"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-19.png" class="w-full"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 2｜10/20｜宮島一日遊</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-20.png" class="w-full"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 3｜10/21｜廣島散策</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-21.png" class="w-full"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 4｜10/22｜尾道散策</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-22.png" class="w-full"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 5｜10/23｜姬路城尋訪</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-23.png" class="w-full"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 6｜10/24｜岡山深度遊</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-24.png" class="w-full"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 7｜10/25｜歸途</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/10-25.png" class="w-full"></div></div>
         </section>
 
         <!-- 4. Expenses Section -->
@@ -633,7 +643,7 @@
                     weatherIcon.innerText = weather[0];
                     document.getElementById('max-temp').innerText = `${Math.round(data.daily.temperature_2m_max[0])}°C`;
                     document.getElementById('min-temp').innerText = `${Math.round(data.daily.temperature_2m_min[0])}°C`;
-                } catch (e) {}
+                } catch (e) { }
             }
             fetchWeather();
 
@@ -649,7 +659,7 @@
                     jpyToTwdRate = data.rates.TWD;
                     const jpyVal = parseFloat(jpyInput.value) || 0;
                     twdInput.value = Math.round(jpyVal * jpyToTwdRate);
-                } catch (e) {}
+                } catch (e) { }
             }
 
             jpyInput.addEventListener('input', () => {
@@ -665,16 +675,16 @@
             fetchFX();
 
             function drawChart(id, lId, s, ir) {
-                const data = [ 
-                    { l: "機票", v: 11297, c: COLORS[0] }, 
-                    { l: "交通", v: (1190 + 3391 + 1550), c: COLORS[1] }, 
-                    { l: "住宿", v: (3429 + 2329 + 3022), c: COLORS[2] }, 
-                    { l: "雜項", v: 360, c: COLORS[3] } 
+                const data = [
+                    { l: "機票", v: 11297, c: COLORS[0] },
+                    { l: "交通", v: (1190 + 3391 + 1550), c: COLORS[1] },
+                    { l: "住宿", v: (3429 + 2329 + 3022), c: COLORS[2] },
+                    { l: "雜項", v: 360, c: COLORS[3] }
                 ];
                 const svg = d3.select(id); svg.selectAll("*").remove();
-                const g = svg.append("g").attr("transform", `translate(${s/2},${s/2})`);
+                const g = svg.append("g").attr("transform", `translate(${s / 2},${s / 2})`);
                 const pie = d3.pie().value(d => d.v);
-                const arc = d3.arc().innerRadius(ir).outerRadius(s/2).cornerRadius(4).padAngle(0.02);
+                const arc = d3.arc().innerRadius(ir).outerRadius(s / 2).cornerRadius(4).padAngle(0.02);
                 g.selectAll("path").data(pie(data)).enter().append("path").attr("d", arc).attr("fill", d => d.data.c);
                 if (lId) {
                     const leg = d3.select(lId); leg.selectAll("*").remove();
