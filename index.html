@@ -124,6 +124,29 @@
         .expense-card:hover {
             transform: translateY(-4px);
         }
+
+        /* 時間軸專用樣式 */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--accent-blue);
+            border: 4px solid white;
+            box-shadow: 0 0 0 2px var(--accent-blue);
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -155,6 +178,7 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-6">
+                    <!-- 改良版：旅程總覽時間軸 (旅行社風格) -->
                     <div class="card p-8">
                         <div class="flex items-center gap-4 mb-8">
                             <div class="bg-blue-600 p-3 rounded-xl text-white shadow-lg shadow-blue-100">
@@ -162,28 +186,105 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" />
                                 </svg>
                             </div>
-                            <h2 class="text-2xl font-bold text-slate-800">旅程總覽</h2>
+                            <div>
+                                <h2 class="text-2xl font-bold text-slate-800">精彩行程速覽</h2>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">7-Day Hiroshima & Okayama Tour</p>
+                            </div>
                         </div>
 
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead>
-                                    <tr class="text-left text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-200">
-                                        <th class="pb-4 px-2">日期</th>
-                                        <th class="pb-4 px-2">主要行程</th>
-                                        <th class="pb-4 px-2">交通備註</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-sm text-slate-700">
-                                    <tr class="border-b border-slate-100"><td class="py-4 px-2 font-bold text-blue-600">Day 1</td><td class="py-4 px-2 font-bold">高雄 → 岡山 → 廣島</td><td class="py-4 px-2 text-slate-500 no-italic">✈️ 虎航 IT262 / 🚅 新幹線</td></tr>
-                                    <tr class="border-b border-slate-100"><td class="py-4 px-2 font-bold text-blue-600">Day 2</td><td class="py-4 px-2 font-bold">宮島一日遊</td><td class="py-4 px-2 text-slate-500 no-italic">⛴️ JR 渡輪</td></tr>
-                                    <tr class="border-b border-slate-100"><td class="py-4 px-2 font-bold text-blue-600">Day 3</td><td class="py-4 px-2 font-bold">廣島市區探索</td><td class="py-4 px-2 text-slate-500 no-italic">🚃 廣島路面電車</td></tr>
-                                    <tr class="border-b border-slate-100"><td class="py-4 px-2 font-bold text-blue-600">Day 4</td><td class="py-4 px-2 font-bold">廣島 → 尾道</td><td class="py-4 px-2 text-slate-500 no-italic">🚃 JR 山陽本線</td></tr>
-                                    <tr class="border-b border-slate-100"><td class="py-4 px-2 font-bold text-blue-600">Day 5</td><td class="py-4 px-2 font-bold">尾道 → 姬路 → 岡山</td><td class="py-4 px-2 text-slate-500 no-italic">🚅 新幹線</td></tr>
-                                    <tr class="border-b border-slate-100"><td class="py-4 px-2 font-bold text-blue-600">Day 6</td><td class="py-4 px-2 font-bold">吉備津神社 → 後樂園</td><td class="py-4 px-2 text-slate-500 no-italic">🚃 桃太郎線 / 岡山路面電車</td></tr>
-                                    <tr class="border-b border-slate-100"><td class="py-4 px-2 font-bold text-blue-600">Day 7</td><td class="py-4 px-2 font-bold">岡山採買 → 賦歸</td><td class="py-4 px-2 text-slate-500 no-italic">✈️ 虎航 IT215</td></tr>
-                                </tbody>
-                            </table>
+                        <div class="space-y-0">
+                            <!-- Day 1 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
+                                    <span class="text-blue-600 font-black text-sm uppercase">Day 1</span>
+                                    <h3 class="font-bold text-slate-800">首航西日本：高鐵飛馳廣島</h3>
+                                </div>
+                                <p class="text-sm text-slate-500 mb-2">啟程前往岡山，搭乘新幹線直抵和平之城廣島。</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] rounded-md font-bold border border-slate-200 uppercase">✈️ 虎航 IT262</span>
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] rounded-md font-bold border border-slate-200 uppercase">🚅 山陽新幹線</span>
+                                </div>
+                            </div>
+
+                            <!-- Day 2 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
+                                    <span class="text-blue-600 font-black text-sm uppercase">Day 2</span>
+                                    <h3 class="font-bold text-slate-800">神之島探訪：宮島與海上大鳥居</h3>
+                                </div>
+                                <p class="text-sm text-slate-500 mb-2">嚴島神社漫步，與野生鹿共度午后時光，登彌山眺望瀨戶內海。</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] rounded-md font-bold border border-blue-100 uppercase">⛴️ JR 渡輪</span>
+                                </div>
+                            </div>
+
+                            <!-- Day 3 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
+                                    <span class="text-blue-600 font-black text-sm uppercase">Day 3</span>
+                                    <h3 class="font-bold text-slate-800">和平與鐵道：廣島市區深度行</h3>
+                                </div>
+                                <p class="text-sm text-slate-500 mb-2">和平紀念公園巡禮，體驗懷舊路面電車，一嚐道地廣島燒。</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] rounded-md font-bold border border-amber-100 uppercase">🚃 廣島路電</span>
+                                </div>
+                            </div>
+
+                            <!-- Day 4 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
+                                    <span class="text-blue-600 font-black text-sm uppercase">Day 4</span>
+                                    <h3 class="font-bold text-slate-800">文藝坂道：尾道山城漫步</h3>
+                                </div>
+                                <p class="text-sm text-slate-500 mb-2">沿著貓之細道向上，尋找電影中的絕美階梯與瀨戶內海景觀。</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] rounded-md font-bold border border-slate-200 uppercase">🚃 JR 山陽線</span>
+                                </div>
+                            </div>
+
+                            <!-- Day 5 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
+                                    <span class="text-blue-600 font-black text-sm uppercase">Day 5</span>
+                                    <h3 class="font-bold text-slate-800">白鷺傳說：姬路古城與桃太郎故鄉</h3>
+                                </div>
+                                <p class="text-sm text-slate-500 mb-2">世界遺產姬路城巡禮，隨後轉往岡山展開傳說之旅。</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] rounded-md font-bold border border-slate-200 uppercase">🚅 山陽新幹線</span>
+                                </div>
+                            </div>
+
+                            <!-- Day 6 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
+                                    <span class="text-blue-600 font-black text-sm uppercase">Day 6</span>
+                                    <h3 class="font-bold text-slate-800">庭園藝術：名園之首與神社迴廊</h3>
+                                </div>
+                                <p class="text-sm text-slate-500 mb-2">日本三大名園「後樂園」，吉備津神社獨特的木造大迴廊。</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] rounded-md font-bold border border-slate-200 uppercase">🚃 岡山路電</span>
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] rounded-md font-bold border border-slate-200 uppercase">🚃 JR 桃太郎線</span>
+                                </div>
+                            </div>
+
+                            <!-- Day 7 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
+                                    <span class="text-blue-600 font-black text-sm uppercase">Day 7</span>
+                                    <h3 class="font-bold text-slate-800">滿載而歸：岡山車站採買趣</h3>
+                                </div>
+                                <p class="text-sm text-slate-500 mb-2">最後的伴手禮衝刺，帶著豐富回憶與行李賦歸。</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] rounded-md font-bold border border-slate-200 uppercase">✈️ 虎航 IT215</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -342,7 +443,7 @@
                 </div>
             </div>
 
-            <!-- 費用清單 - 改為卡片式呈現 -->
+            <!-- 費用清單 -->
             <div class="space-y-6">
                 <h2 class="text-2xl font-bold text-slate-800 px-2 flex items-center gap-4">
                     <span class="bg-slate-800 p-2 rounded text-white text-sm">💰</span> 費用詳細清單 (每人)
