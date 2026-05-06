@@ -15,7 +15,7 @@
             --accent-blue: #2563eb;
             --accent-orange: #f59e0b;
             --card-white: #ffffff;
-            --border-color: #cbd5e1; /* 加強邊框對比 */
+            --border-color: #cbd5e1;
         }
 
         body {
@@ -91,13 +91,13 @@
             transform: rotate(180deg);
         }
 
-        /* 統計表格專用強化框線 */
+        /* 統計表格強化框線 */
         .expense-table th {
-            border-bottom: 2px solid #94a3b8; /* 標題下緣加深 */
+            border-bottom: 2px solid #94a3b8;
         }
         
         .expense-table td {
-            border-bottom: 1px solid #cbd5e1; /* 儲存格下緣加深 */
+            border-bottom: 1px solid #cbd5e1;
         }
 
         .no-italic {
@@ -232,13 +232,24 @@
                     </div>
 
                     <div class="card p-6 border-l-4 border-emerald-500">
-                        <h3 class="font-extrabold text-lg text-slate-800 mb-6">日幣即時換算</h3>
+                        <h3 class="font-extrabold text-lg text-slate-800 mb-6">匯率即時換算</h3>
                         <div class="space-y-4 text-slate-700">
-                            <input type="number" id="jpy-input-val" value="1000" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold">
-                            <div class="text-center text-slate-300">↓</div>
-                            <div class="w-full px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xl font-black text-emerald-700">
-                                <span class="text-sm font-bold mr-1">$</span><span id="twd-output-val">---</span>
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">日幣 (JPY)</label>
+                                <div class="relative">
+                                    <input type="number" id="jpy-input-val" value="1000" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">¥</span>
+                                </div>
                             </div>
+                            <div class="text-center text-slate-300">⇅</div>
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">台幣 (TWD)</label>
+                                <div class="relative">
+                                    <input type="number" id="twd-input-val" class="w-full pl-10 pr-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl text-lg font-bold text-emerald-700 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-600 font-bold">$</span>
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-center text-slate-400 mt-2">匯率依據即時 API 資料</p>
                         </div>
                     </div>
 
@@ -332,7 +343,7 @@
                 </div>
             </div>
 
-            <!-- 強化框線的費用表格 -->
+            <!-- 費用清單 - 保持強化框線 -->
             <div class="card p-8 md:p-12">
                 <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-4">
                     <span class="bg-slate-800 p-2 rounded text-white text-sm">💰</span> 費用詳細清單 (每人)
@@ -468,20 +479,32 @@
             }
             fetchWeather();
 
-            let jpyToTwdRate = 0.215;
+            // 雙向匯率邏輯
+            let jpyToTwdRate = 0.215; // 預設值
+            const jpyInput = document.getElementById('jpy-input-val');
+            const twdInput = document.getElementById('twd-input-val');
+
             async function fetchFX() {
                 try {
                     const res = await fetch('https://open.er-api.com/v6/latest/JPY');
                     const data = await res.json();
                     jpyToTwdRate = data.rates.TWD;
-                    convertFX();
+                    // 初次載入換算
+                    const jpyVal = parseFloat(jpyInput.value) || 0;
+                    twdInput.value = Math.round(jpyVal * jpyToTwdRate);
                 } catch (e) {}
             }
-            function convertFX() {
-                const jpy = parseFloat(document.getElementById('jpy-input-val').value) || 0;
-                document.getElementById('twd-output-val').innerText = Math.round(jpy * jpyToTwdRate).toLocaleString();
-            }
-            document.getElementById('jpy-input-val').addEventListener('input', convertFX);
+
+            jpyInput.addEventListener('input', () => {
+                const jpyVal = parseFloat(jpyInput.value) || 0;
+                twdInput.value = Math.round(jpyVal * jpyToTwdRate);
+            });
+
+            twdInput.addEventListener('input', () => {
+                const twdVal = parseFloat(twdInput.value) || 0;
+                jpyInput.value = Math.round(twdVal / jpyToTwdRate);
+            });
+
             fetchFX();
 
             function drawChart(id, lId, s, ir) {
