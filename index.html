@@ -91,15 +91,6 @@
             transform: rotate(180deg);
         }
 
-        /* 統計表格強化框線 */
-        .expense-table th {
-            border-bottom: 2px solid #94a3b8;
-        }
-        
-        .expense-table td {
-            border-bottom: 1px solid #cbd5e1;
-        }
-
         .no-italic {
             font-style: normal !important;
         }
@@ -124,6 +115,14 @@
         }
         .checklist-item:hover {
             background-color: #f1f5f9;
+        }
+
+        /* 費用卡片專用樣式 */
+        .expense-card {
+            transition: transform 0.2s;
+        }
+        .expense-card:hover {
+            transform: translateY(-4px);
         }
     </style>
 </head>
@@ -343,49 +342,107 @@
                 </div>
             </div>
 
-            <!-- 費用清單 - 保持強化框線 -->
-            <div class="card p-8 md:p-12">
-                <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-4">
+            <!-- 費用清單 - 改為卡片式呈現 -->
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800 px-2 flex items-center gap-4">
                     <span class="bg-slate-800 p-2 rounded text-white text-sm">💰</span> 費用詳細清單 (每人)
                 </h2>
-                <div class="overflow-x-auto">
-                    <table class="w-full expense-table border-collapse text-slate-700">
-                        <thead>
-                            <tr class="text-xs font-black text-slate-500 uppercase tracking-widest">
-                                <th class="pb-4 text-left px-2">類別</th>
-                                <th class="pb-4 text-left px-2">明細</th>
-                                <th class="pb-4 text-right px-2">估計金額 (TWD)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm">
-                            <tr><td class="py-5 px-2 font-bold text-blue-700 bg-slate-50/50">機票</td><td class="py-5 px-2">虎航來回 (含行李/稅)</td><td class="py-5 px-2 text-right font-black">$11,297</td></tr>
-                            <tr><td class="py-5 px-2 font-bold text-blue-700" rowspan="3">住宿</td><td class="py-5 px-2">廣島 東橫INN (3晚)</td><td class="py-5 px-2 text-right font-black">$3,429</td></tr>
-                            <tr class="border-l-2 border-slate-200">
-                                <td class="py-5 px-2 pl-4">尾道 綠丘飯店 (1晚)</td>
-                                <td class="py-5 px-2 text-right font-black">$2,329</td>
-                            </tr>
-                            <tr class="border-l-2 border-slate-200">
-                                <td class="py-5 px-2 pl-4">岡山 東橫INN (2晚)</td>
-                                <td class="py-5 px-2 text-right font-black">$3,022</td>
-                            </tr>
-                            <tr><td class="py-5 px-2 font-bold text-blue-700 bg-slate-50/50" rowspan="3">交通</td><td class="py-5 px-2 bg-slate-50/50">JR 廣島&山口 PASS (5日)</td><td class="py-5 px-2 text-right font-black bg-slate-50/50">$3,391</td></tr>
-                            <tr class="border-l-2 border-slate-200 bg-slate-50/50">
-                                <td class="py-5 px-2 pl-4">岡山/廣島市區電車</td>
-                                <td class="py-5 px-2 text-right font-black">$1,190</td>
-                            </tr>
-                            <tr class="border-l-2 border-slate-200 bg-slate-50/50">
-                                <td class="py-5 px-2 pl-4">高雄-左營來回接駁</td>
-                                <td class="py-5 px-2 text-right font-black">$1,550</td>
-                            </tr>
-                            <tr><td class="py-5 px-2 font-bold text-blue-700">雜項</td><td class="py-5 px-2">旅遊平安險/網路卡</td><td class="py-5 px-2 text-right font-black">$360</td></tr>
-                        </tbody>
-                        <tfoot>
-                            <tr class="bg-slate-900 text-white">
-                                <td colspan="2" class="py-6 px-4 rounded-bl-xl font-bold text-lg">預計總合</td>
-                                <td class="py-6 px-4 rounded-br-xl text-right text-2xl font-black">NT$ 26,568</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- 類別：機票 -->
+                    <div class="card expense-card p-6 border-l-8 border-blue-600">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-1 rounded">FLIGHT</span>
+                                <h3 class="text-xl font-bold text-slate-800 mt-2">機票費用</h3>
+                            </div>
+                            <span class="text-2xl font-black text-slate-900">$11,297</span>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-4">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500 font-medium">虎航來回 (含行李/稅)</span>
+                                <span class="font-bold text-slate-700">$11,297</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 類別：住宿 -->
+                    <div class="card expense-card p-6 border-l-8 border-slate-600">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="text-[10px] font-black text-slate-600 uppercase tracking-widest bg-slate-100 px-2 py-1 rounded">ACCOMMODATION</span>
+                                <h3 class="text-xl font-bold text-slate-800 mt-2">住宿費用</h3>
+                            </div>
+                            <span class="text-2xl font-black text-slate-900">$8,780</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
+                                <span class="text-slate-500 font-medium">廣島 東橫INN (3晚)</span>
+                                <span class="font-bold text-slate-700">$3,429</span>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
+                                <span class="text-slate-500 font-medium">尾道 綠丘飯店 (1晚)</span>
+                                <span class="font-bold text-slate-700">$2,329</span>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
+                                <span class="text-slate-500 font-medium">岡山 東橫INN (2晚)</span>
+                                <span class="font-bold text-slate-700">$3,022</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 類別：交通 -->
+                    <div class="card expense-card p-6 border-l-8 border-amber-500">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="text-[10px] font-black text-amber-600 uppercase tracking-widest bg-amber-50 px-2 py-1 rounded">TRANSPORT</span>
+                                <h3 class="text-xl font-bold text-slate-800 mt-2">交通費用</h3>
+                            </div>
+                            <span class="text-2xl font-black text-slate-900">$6,131</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
+                                <span class="text-slate-500 font-medium">JR 廣島&山口 PASS (5日)</span>
+                                <span class="font-bold text-slate-700">$3,391</span>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
+                                <span class="text-slate-500 font-medium">岡山/廣島市區電車</span>
+                                <span class="font-bold text-slate-700">$1,190</span>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
+                                <span class="text-slate-500 font-medium">高雄-左營來回接駁</span>
+                                <span class="font-bold text-slate-700">$1,550</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 類別：雜項 -->
+                    <div class="card expense-card p-6 border-l-8 border-emerald-500">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2 py-1 rounded">OTHERS</span>
+                                <h3 class="text-xl font-bold text-slate-800 mt-2">其餘雜項</h3>
+                            </div>
+                            <span class="text-2xl font-black text-slate-900">$360</span>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-4">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-500 font-medium">旅遊平安險/網路卡</span>
+                                <span class="font-bold text-slate-700">$360</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 總計卡片 -->
+                <div class="card bg-slate-900 text-white p-8 mt-10 shadow-2xl shadow-slate-200">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div class="text-center md:text-left">
+                            <p class="text-slate-400 text-xs font-black uppercase tracking-widest mb-1">TOTAL ESTIMATED EXPENSE</p>
+                            <h3 class="text-2xl font-bold">每人預計總支出</h3>
+                        </div>
+                        <div class="text-4xl font-black tracking-tight">NT$ 26,568</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -489,7 +546,6 @@
                     const res = await fetch('https://open.er-api.com/v6/latest/JPY');
                     const data = await res.json();
                     jpyToTwdRate = data.rates.TWD;
-                    // 初次載入換算
                     const jpyVal = parseFloat(jpyInput.value) || 0;
                     twdInput.value = Math.round(jpyVal * jpyToTwdRate);
                 } catch (e) {}
