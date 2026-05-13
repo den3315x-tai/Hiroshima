@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
-    
+
     <title>
-    2026 廣島七天六夜旅
+        2026 廣島七天六夜旅
     </title>
-    
+
     <meta name="description"
           content="廣島・尾道・岡山自由行">
-    
+
     <meta property="og:title"
           content="2026 廣島七天六夜旅行">
-    
+
     <meta property="og:description"
           content="廣島・尾道・岡山自由行">
-    
+
     <meta property="og:type"
           content="website">
-    
+
     <meta property="og:image"
           content="https://den3315x-tai.github.io/Hiroshima/preview.png">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
@@ -363,26 +363,119 @@
                         </div>
                     </div>
 
-                    <div class="card p-6 border-l-4 border-emerald-500">
-                        <h3 class="font-extrabold text-lg text-slate-800 mb-6">匯率即時換算</h3>
-                        <div class="space-y-4 text-slate-700">
+                    <div class="card p-6 bg-gradient-to-br from-emerald-50 to-white border border-emerald-100">
+
+                        <div class="flex items-center justify-between mb-6">
+
                             <div>
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">日幣 (JPY)</label>
-                                <div class="relative">
-                                    <input type="number" id="jpy-input-val" value="1000" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold focus:ring-2 focus:ring-emerald-500 outline-none">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">¥</span>
-                                </div>
+                                <p class="text-xs font-black tracking-widest text-emerald-600 uppercase">
+                                    LIVE EXCHANGE RATE
+                                </p>
+
+                                <h3 class="text-2xl font-black text-slate-800 mt-1">
+                                    即時日幣匯率
+                                </h3>
                             </div>
-                            <div class="text-center text-slate-300">⇅</div>
-                            <div>
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">台幣 (TWD)</label>
-                                <div class="relative">
-                                    <input type="number" id="twd-input-val" class="w-full pl-10 pr-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl text-lg font-bold text-emerald-700 focus:ring-2 focus:ring-emerald-500 outline-none">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-600 font-bold">$</span>
-                                </div>
+
+                            <div class="text-4xl">
+                                💴
                             </div>
-                            <p class="text-[10px] text-center text-slate-400 mt-2">匯率依據即時 API 資料</p>
+
                         </div>
+
+                        <!-- 匯率顯示 -->
+
+                        <div class="bg-white rounded-2xl p-5 border border-slate-100 mb-5">
+
+                            <p class="text-sm text-slate-400 font-bold mb-2">
+                                目前匯率
+                            </p>
+
+                            <div class="flex items-end gap-2">
+
+                                <span id="fx-rate"
+                                      class="text-5xl font-black text-slate-900">
+                                    0.215
+                                </span>
+
+                                <span class="text-slate-400 font-bold mb-1">
+                                    TWD
+                                </span>
+
+                            </div>
+
+                            <p class="text-sm text-slate-500 mt-2">
+                                1 JPY ≈ TWD
+                            </p>
+
+                        </div>
+
+                        <!-- 換算器 -->
+
+                        <div class="space-y-4">
+
+                            <div>
+
+                                <label class="text-xs font-bold text-slate-400 mb-2 block">
+                                    日幣 JPY
+                                </label>
+
+                                <div class="relative">
+
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">
+                                        ¥
+                                    </span>
+
+                                    <input type="number"
+                                           id="jpy-input-val"
+                                           value="10000"
+                                           class="w-full pl-10 pr-4 py-4 rounded-2xl border border-slate-200 bg-white text-2xl font-black focus:ring-2 focus:ring-emerald-400 outline-none">
+
+                                </div>
+
+                            </div>
+
+                            <div class="text-center text-slate-300 text-2xl font-light">
+                                ⇅
+                            </div>
+
+                            <div>
+
+                                <label class="text-xs font-bold text-slate-400 mb-2 block">
+                                    台幣 TWD
+                                </label>
+
+                                <div class="relative">
+
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-500 font-bold">
+                                        NT$
+                                    </span>
+
+                                    <input type="number"
+                                           id="twd-input-val"
+                                           class="w-full pl-14 pr-4 py-4 rounded-2xl border border-emerald-200 bg-emerald-50 text-2xl font-black text-emerald-700 focus:ring-2 focus:ring-emerald-400 outline-none">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- 更新時間 -->
+
+                        <div class="mt-6 pt-4 border-t border-slate-100">
+
+                            <p class="text-xs text-slate-400">
+
+                                最後更新：
+                                <span id="fx-update-time">
+                                    --
+                                </span>
+
+                            </p>
+
+                        </div>
+
                     </div>
 
                     <div class="card p-6 border-l-4 border-amber-500 cursor-pointer" onclick="document.getElementById('tab-expenses').click()">
@@ -1227,6 +1320,13 @@
                     const res = await fetch('https://open.er-api.com/v6/latest/JPY');
                     const data = await res.json();
                     jpyToTwdRate = data.rates.TWD;
+                    document.getElementById('fx-rate').innerText =
+                        jpyToTwdRate.toFixed(3);
+
+                    const updateTime = new Date(data.time_last_update_utc);
+
+                    document.getElementById('fx-update-time').innerText =
+                        updateTime.toLocaleString('zh-TW');
                     const jpyVal = parseFloat(jpyInput.value) || 0;
                     twdInput.value = Math.round(jpyVal * jpyToTwdRate);
                 } catch (e) { }
