@@ -7,7 +7,7 @@
           content="width=device-width, initial-scale=1.0">
 
     <title>
-        2026 廣島七天六夜旅行計劃書
+        2026 廣島七天六夜旅
     </title>
 
     <meta name="description"
@@ -23,8 +23,8 @@
           content="website">
 
     <meta property="og:image"
-          content="https://den3315x-tai.github.io/Hiroshima/SUM-MAP.png">
-    <title>2026 廣島七天六夜旅行計劃書</title>
+          content="https://den3315x-tai.github.io/Hiroshima/preview.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
@@ -364,25 +364,99 @@
                     </div>
 
                     <div class="card p-6 border-l-4 border-emerald-500">
-                        <h3 class="font-extrabold text-lg text-slate-800 mb-6">匯率即時換算</h3>
-                        <div class="space-y-4 text-slate-700">
+
+                        <div class="flex items-center justify-between mb-5">
+
                             <div>
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">日幣 (JPY)</label>
-                                <div class="relative">
-                                    <input type="number" id="jpy-input-val" value="1000" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold focus:ring-2 focus:ring-emerald-500 outline-none">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">¥</span>
-                                </div>
+                                <h3 class="font-extrabold text-lg text-slate-800">
+                                    匯率即時換算
+                                </h3>
+
+                                <p class="text-xs text-slate-400 mt-1 font-medium">
+                                    1 JPY ≈
+                                    <span id="fx-rate" class="font-bold text-slate-600">
+                                        0.215
+                                    </span>
+                                    TWD
+                                </p>
                             </div>
-                            <div class="text-center text-slate-300">⇅</div>
-                            <div>
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">台幣 (TWD)</label>
-                                <div class="relative">
-                                    <input type="number" id="twd-input-val" class="w-full pl-10 pr-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl text-lg font-bold text-emerald-700 focus:ring-2 focus:ring-emerald-500 outline-none">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-600 font-bold">$</span>
-                                </div>
+
+                            <div class="text-2xl">
+                                💴
                             </div>
-                            <p class="text-[10px] text-center text-slate-400 mt-2">匯率依據即時 API 資料</p>
+
                         </div>
+
+                        <div class="space-y-4 text-slate-700">
+
+                            <!-- JPY -->
+
+                            <div>
+
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">
+                                    日幣 (JPY)
+                                </label>
+
+                                <div class="relative">
+
+                                    <input type="number"
+                                           id="jpy-input-val"
+                                           value="10000"
+                                           class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold focus:ring-2 focus:ring-emerald-500 outline-none">
+
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">
+                                        ¥
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Arrow -->
+
+                            <div class="text-center text-slate-300 text-sm">
+                                ⇅
+                            </div>
+
+                            <!-- TWD -->
+
+                            <div>
+
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">
+                                    台幣 (TWD)
+                                </label>
+
+                                <div class="relative">
+
+                                    <input type="number"
+                                           id="twd-input-val"
+                                           class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold text-emerald-700 focus:ring-2 focus:ring-emerald-500 outline-none">
+
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">
+                                        NT$
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Update Time -->
+
+                            <div class="pt-2 text-center">
+
+                                <p class="text-[10px] text-slate-400">
+
+                                    最後更新：
+                                    <span id="fx-update-time">
+                                        --
+                                    </span>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
                     </div>
 
                     <div class="card p-6 border-l-4 border-amber-500 cursor-pointer" onclick="document.getElementById('tab-expenses').click()">
@@ -1223,13 +1297,43 @@
             const twdInput = document.getElementById('twd-input-val');
 
             async function fetchFX() {
+
                 try {
+
                     const res = await fetch('https://open.er-api.com/v6/latest/JPY');
+
                     const data = await res.json();
+
+                    // 匯率
+
                     jpyToTwdRate = data.rates.TWD;
-                    const jpyVal = parseFloat(jpyInput.value) || 0;
-                    twdInput.value = Math.round(jpyVal * jpyToTwdRate);
-                } catch (e) { }
+
+                    // 更新匯率文字
+
+                    document.getElementById('fx-rate').innerText =
+                        jpyToTwdRate.toFixed(3);
+
+                    // 更新時間
+
+                    const updateTime =
+                        new Date(data.time_last_update_utc);
+
+                    document.getElementById('fx-update-time').innerText =
+                        updateTime.toLocaleString('zh-TW');
+
+                    // 初始換算
+
+                    const jpyVal =
+                        parseFloat(jpyInput.value) || 0;
+
+                    twdInput.value =
+                        Math.round(jpyVal * jpyToTwdRate);
+
+                } catch (e) {
+
+                    console.log(e);
+
+                }
             }
 
             jpyInput.addEventListener('input', () => {
