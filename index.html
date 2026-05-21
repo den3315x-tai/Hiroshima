@@ -1,30 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>
-        2026 廣島七天六夜旅
-    </title>
-
-    <meta name="description"
-          content="廣島・尾道・岡山自由行">
-
-    <meta property="og:title"
-          content="2026 廣島七天六夜">
-
-    <meta property="og:description"
-          content="廣島・尾道・岡山自由行">
-
-    <meta property="og:type"
-          content="website">
-
-    <meta property="og:image"
-          content="https://den3315x-tai.github.io/Hiroshima/preview.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 廣島七天六夜旅</title>
+    <meta name="description" content="廣島・尾道・岡山自由行">
+    <meta property="og:title" content="2026 廣島七天六夜">
+    <meta property="og:description" content="廣島・尾道・岡山自由行">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://den3315x-tai.github.io/Hiroshima/preview.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -52,9 +36,9 @@
             display: none;
         }
 
-            .tab-content.active {
-                display: block;
-            }
+        .tab-content.active {
+            display: block;
+        }
 
         .card {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -62,6 +46,7 @@
             border-radius: 1rem;
             overflow: hidden;
             border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .pill-tab-button {
@@ -75,43 +60,43 @@
             border: 1px solid transparent;
         }
 
-            .pill-tab-button:hover {
-                background-color: #e2e8f0;
-                color: var(--accent-blue);
-            }
+        .pill-tab-button:hover {
+            background-color: #e2e8f0;
+            color: var(--accent-blue);
+        }
 
-            .pill-tab-button.active {
-                background-color: var(--accent-blue);
-                color: white;
-                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            }
+        .pill-tab-button.active {
+            background-color: var(--accent-blue);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
 
         .collapsible-header {
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
 
-            .collapsible-header:hover {
-                background-color: #f8fafc;
-            }
+        .collapsible-header:hover {
+            background-color: #f8fafc;
+        }
 
         .collapsible-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-            .collapsible-content.open {
-                max-height: 2000px;
-            }
+        .collapsible-content.open {
+            max-height: 2000px;
+        }
 
         .chevron {
             transition: transform 0.3s ease;
         }
 
-            .chevron.rotated {
-                transform: rotate(180deg);
-            }
+        .chevron.rotated {
+            transform: rotate(180deg);
+        }
 
         .no-italic {
             font-style: normal !important;
@@ -127,7 +112,6 @@
             0% {
                 background-position: 200% 0;
             }
-
             100% {
                 background-position: -200% 0;
             }
@@ -142,18 +126,19 @@
             transition: background-color 0.2s;
         }
 
-            .checklist-item:hover {
-                background-color: #f1f5f9;
-            }
+        .checklist-item:hover {
+            background-color: #f1f5f9;
+        }
 
         /* 費用卡片專用樣式 */
         .expense-card {
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-            .expense-card:hover {
-                transform: translateY(-4px);
-            }
+        .expense-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
 
         /* 時間軸專用樣式 */
         .timeline-item {
@@ -163,10 +148,10 @@
             border-left: 2px solid #e2e8f0;
         }
 
-            .timeline-item:last-child {
-                border-left: 2px solid transparent;
-                padding-bottom: 0;
-            }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
 
         .timeline-dot {
             position: absolute;
@@ -179,9 +164,27 @@
             border: 4px solid white;
             box-shadow: 0 0 0 2px var(--accent-blue);
         }
+
+        /* D3.js 動態 Tooltip 樣式 */
+        .chart-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 50;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
+    <!-- D3 Tooltip 容器 -->
+    <div id="tooltip" class="chart-tooltip"></div>
+
     <div class="max-w-5xl mx-auto">
         <!-- Header -->
         <header class="mb-10 text-center">
@@ -211,7 +214,7 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-6">
-                    <!-- 改良版：旅程總覽時間軸 (旅行社風格) -->
+                    <!-- 旅程總覽時間軸 -->
                     <div class="card p-8">
                         <div class="flex items-center gap-4 mb-8">
                             <div class="bg-blue-600 p-3 rounded-xl text-white shadow-lg shadow-blue-100">
@@ -321,6 +324,7 @@
                         </div>
                     </div>
 
+                    <!-- 航班資訊 -->
                     <div class="card p-8 text-slate-700">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="bg-amber-500 p-3 rounded-xl text-white shadow-lg shadow-amber-100">
@@ -346,6 +350,7 @@
                 </div>
 
                 <div class="space-y-6">
+                    <!-- 天氣資訊 -->
                     <div class="card p-6 border-l-4 border-sky-400">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="font-extrabold text-lg text-slate-800">廣島即時天氣</h3>
@@ -364,107 +369,57 @@
                         </div>
                     </div>
 
+                    <!-- 匯率即時換算 -->
                     <div class="card p-6 border-l-4 border-emerald-500">
-
                         <div class="flex items-center justify-between mb-5">
-
                             <div>
-                                <h3 class="font-extrabold text-lg text-slate-800">
-                                    匯率即時換算
-                                </h3>
-
+                                <h3 class="font-extrabold text-lg text-slate-800">匯率即時換算</h3>
                                 <p class="text-xs text-slate-400 mt-1 font-medium">
-                                    1 JPY ≈
-                                    <span id="fx-rate" class="font-bold text-slate-600">
-                                        0.215
-                                    </span>
-                                    TWD
+                                    1 JPY ≈ <span id="fx-rate" class="font-bold text-slate-600">0.215</span> TWD
                                 </p>
                             </div>
-
-                            <div class="text-2xl">
-                                💴
-                            </div>
-
+                            <div class="text-2xl">💴</div>
                         </div>
 
                         <div class="space-y-4 text-slate-700">
-
                             <!-- JPY -->
-
                             <div>
-
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">
-                                    日幣 (JPY)
-                                </label>
-
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">日幣 (JPY)</label>
                                 <div class="relative">
-
-                                    <input type="number"
-                                           id="jpy-input-val"
-                                           value="10000"
-                                           class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold focus:ring-2 focus:ring-emerald-500 outline-none">
-
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">
-                                        ¥
-                                    </span>
-
+                                    <input type="number" id="jpy-input-val" value="10000" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">¥</span>
                                 </div>
-
                             </div>
 
                             <!-- Arrow -->
-
-                            <div class="text-center text-slate-300 text-sm">
-                                ⇅
-                            </div>
+                            <div class="text-center text-slate-300 text-sm">⇅</div>
 
                             <!-- TWD -->
-
                             <div>
-
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">
-                                    台幣 (TWD)
-                                </label>
-
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">台幣 (TWD)</label>
                                 <div class="relative">
-
-                                    <input type="number"
-                                           id="twd-input-val"
-                                           class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold text-emerald-700 focus:ring-2 focus:ring-emerald-500 outline-none">
-
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">
-                                        NT$
-                                    </span>
-
+                                    <input type="number" id="twd-input-val" class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-lg font-bold text-emerald-700 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">NT$</span>
                                 </div>
-
                             </div>
 
                             <!-- Update Time -->
-
                             <div class="pt-2 text-center">
-
-                                <p class="text-[10px] text-slate-400">
-
-                                    最後更新：
-                                    <span id="fx-update-time">
-                                        --
-                                    </span>
-
-                                </p>
-
+                                <p class="text-[10px] text-slate-400">最後更新：<span id="fx-update-time">--</span></p>
                             </div>
-
                         </div>
-
                     </div>
 
-                    <div class="card p-6 border-l-4 border-amber-500 cursor-pointer" onclick="document.getElementById('tab-expenses').click()">
+                    <!-- 預算入口卡片 -->
+                    <div class="card p-6 border-l-4 border-amber-500 cursor-pointer" id="mini-chart-card">
                         <h3 class="font-extrabold text-lg text-slate-800 mb-4">費用概算</h3>
                         <div class="flex items-center gap-4">
-                            <svg id="overview-mini-chart" width="80" height="80"></svg>
-                            <div><p class="text-2xl font-black text-slate-800">NT$ 26,568</p></div>
+                            <div class="relative flex justify-center items-center" style="width: 80px; height: 80px;">
+                                <svg id="overview-mini-chart" width="80" height="80" class="overflow-visible"></svg>
+                            </div>
+                            <div>
+                                <p class="text-2xl font-black text-slate-800">NT$ 26,568</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -479,10 +434,10 @@
                         <span class="bg-rose-500 p-2 rounded text-white text-sm">✓</span> 必備文件
                     </h2>
                     <div class="space-y-1">
-                        <div class="checklist-item"><input type="checkbox" class="w-4 h-4 text-blue-600 border-slate-300"><span class="font-medium">護照 (效期 6 個月以上)</span></div>
-                        <div class="checklist-item"><input type="checkbox" class="w-4 h-4 text-blue-600 border-slate-300"><span class="font-medium">Visit Japan Web QR Code 截圖</span></div>
-                        <div class="checklist-item"><input type="checkbox" class="w-4 h-4 text-blue-600 border-slate-300"><span class="font-medium">電子機票與飯店預約確認單</span></div>
-                        <div class="checklist-item"><input type="checkbox" class="w-4 h-4 text-blue-600 border-slate-300"><span class="font-medium">JR PASS 實體兌換券 (MCO)</span></div>
+                        <div class="checklist-item"><input type="checkbox" class="w-4 h-4 text-blue-600 border-slate-300 rounded"><span class="font-medium">護照 (效期 6 個月以上)</span></div>
+                        <div class="checklist-item"><input type="checkbox" class="w-4 h-4 text-blue-600 border-slate-300 rounded"><span class="font-medium">Visit Japan Web QR Code 截圖</span></div>
+                        <div class="checklist-item"><input type="checkbox" class="w-4 h-4 text-blue-600 border-slate-300 rounded"><span class="font-medium">電子機票與飯店預約確認單</span></div>
+                        <div class="checklist-item"><input type="checkbox" class="w-4 h-4 text-blue-600 border-slate-300 rounded"><span class="font-medium">JR PASS 實體兌換券 (MCO)</span></div>
                     </div>
                 </div>
 
@@ -525,727 +480,327 @@
 
         <!-- 3. Itinerary Section -->
         <section id="content-itinerary" class="tab-content space-y-6">
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 1｜10/19｜啟程</h3><span class="chevron rotated">▼</span></div><div class="collapsible-content open"><img src="https://den3315x-tai.github.io/Hiroshima/10-19.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 2｜10/20｜宮島一日遊</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-20.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 3｜10/21｜廣島散策</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-21.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 4｜10/22｜尾道散策</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-22.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 5｜10/23｜姬路城尋訪</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-23.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 6｜10/24｜岡山深度遊</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-24.png" class="w-full"></div></div>
-            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 7｜10/25｜歸途</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-25.png" class="w-full"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 1｜10/19｜啟程</h3><span class="chevron rotated">▼</span></div><div class="collapsible-content open"><img src="https://den3315x-tai.github.io/Hiroshima/10-19.png" class="w-full h-auto block" alt="Day 1"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 2｜10/20｜宮島一日遊</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-20.png" class="w-full h-auto block" alt="Day 2"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 3｜10/21｜廣島散策</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-21.png" class="w-full h-auto block" alt="Day 3"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 4｜10/22｜尾道散策</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-22.png" class="w-full h-auto block" alt="Day 4"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 5｜10/23｜姬路城尋訪</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-23.png" class="w-full h-auto block" alt="Day 5"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 6｜10/24｜岡山深度遊</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-24.png" class="w-full h-auto block" alt="Day 6"></div></div>
+            <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 7｜10/25｜歸途</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-25.png" class="w-full h-auto block" alt="Day 7"></div></div>
         </section>
 
-        <!-- 6. Food Section -->
+        <!-- 4. Food Section -->
         <section id="content-food" class="tab-content space-y-8">
-
             <!-- 廣島 -->
             <div class="card p-8">
-
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="bg-green-400 p-3 rounded-xl text-white shadow-lg shadow-green-100">
-                        🍁
-                    </div>
-
+                    <div class="bg-green-400 p-3 rounded-xl text-white shadow-lg shadow-green-100">🍁</div>
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-800">
-                            廣島餐廳推薦
-                        </h2>
-
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">
-                            Hiroshima Gourmet Guide
-                        </p>
+                        <h2 class="text-2xl font-bold text-slate-800">廣島餐廳推薦</h2>
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Hiroshima Gourmet Guide</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
                     <!-- 燒野味 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                燒野味 罠 狩場
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">燒野味 罠 狩場</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/rb6csjucJv2L1k6B7"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/rb6csjucJv2L1k6B7" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">
-                                    必吃
-                                </span>
-
+                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">必吃</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            主打鹿肉與山豬等野味燒烤料理，氣氛非常有特色。
-                        </p>
+                        <p class="text-sm text-slate-500 leading-relaxed">主打鹿肉與山豬等野味燒烤料理，氣氛非常有特色。</p>
                     </div>
 
                     <!-- 蔥庵 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                蔥庵 紙屋町店
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">蔥庵 紙屋町店</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/Gzv3tNFRUB3b5iho9"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/Gzv3tNFRUB3b5iho9" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-amber-100 text-amber-600 px-2 py-1 rounded-full font-bold">
-                                    居酒屋
-                                </span>
-
+                                <span class="text-xs bg-amber-100 text-amber-600 px-2 py-1 rounded-full font-bold">居酒屋</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            廣島人氣蔥料理居酒屋，非常適合聚餐小酌。
-                        </p>
+                        <p class="text-sm text-slate-500 leading-relaxed">廣島人氣蔥料理居酒屋，非常適合聚餐小酌。</p>
                     </div>
 
                     <!-- Kanaiya -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                串燒處 Kanaiya
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">串燒處 Kanaiya</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/LWjWSLwiCuGb2Ppd6"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/LWjWSLwiCuGb2Ppd6" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-bold">
-                                    串燒
-                                </span>
-
+                                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-bold">串燒</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            日式炭火串燒人氣名店，氣氛非常道地。
-                        </p>
+                        <p class="text-sm text-slate-500 leading-relaxed">日式炭火串燒人氣名店，氣氛非常道地。</p>
                     </div>
 
                     <!-- 五衛門 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                五衛門 福屋廣島站前店
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">五衛門 福屋廣島站前店</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/zBmtG13QN7f1XUUJ6"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/zBmtG13QN7f1XUUJ6" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-bold">
-                                    廣島燒
-                                </span>
-
+                                <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-bold">廣島燒</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            廣島燒人氣名店，第一次來廣島非常推薦。
-                        </p>
+                        <p class="text-sm text-slate-500 leading-relaxed">廣島燒人氣名店，第一次來廣島非常推薦。</p>
                     </div>
-
                 </div>
             </div>
 
             <!-- 尾道 -->
             <div class="card p-8">
-
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="bg-sky-500 p-3 rounded-xl text-white shadow-lg shadow-sky-100">
-                        🚃
-                    </div>
-
+                    <div class="bg-sky-500 p-3 rounded-xl text-white shadow-lg shadow-sky-100">🚃</div>
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-800">
-                            尾道餐廳推薦
-                        </h2>
-
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">
-                            Onomichi Local Food
-                        </p>
+                        <h2 class="text-2xl font-bold text-slate-800">尾道餐廳推薦</h2>
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Onomichi Local Food</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
                     <!-- 高原誠吉食堂 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                高原誠吉食堂
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">高原誠吉食堂</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/fLeEpv1xr5Y1tn3EA"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/fLeEpv1xr5Y1tn3EA" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-bold">
-                                    食堂
-                                </span>
-
+                                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-bold">食堂</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            尾道在地家庭食堂，氣氛樸實溫暖。
-                        </p>
+                        <p class="text-sm text-slate-500 leading-relaxed">尾道在地家庭食堂，氣氛樸實溫暖。</p>
                     </div>
 
                     <!-- 壹番館 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                壹番館
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">壹番館</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/1thbF61yKqKJBvBX9"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/1thbF61yKqKJBvBX9" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">
-                                    拉麵
-                                </span>
-
+                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">拉麵</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            新生代尾道拉麵人氣名店。
-                        </p>
+                        <p class="text-sm text-slate-500 leading-relaxed">新生代尾道拉麵人氣名店。</p>
                     </div>
+
                     <!-- Maruboshi -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                尾道拉麵 Maruboshi
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">尾道拉麵 Maruboshi</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/VtX7kQkX2KfD7f2v8"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
+                                <a href="https://maps.app.goo.gl/VtX7kQkX2KfD7f2v8" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
                                 </a>
-
-                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">
-                                    拉麵
-                                </span>
+                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">拉麵</span>
                             </div>
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            經典尾道拉麵，湯頭帶有背脂香氣。
-                        </p>
+                        <p class="text-sm text-slate-500 leading-relaxed">經典尾道拉麵，湯頭帶有背脂香氣。</p>
                     </div>
+
                     <!-- 尾道拉麵 Tani -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
-
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                尾道拉麵 Tani
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">尾道拉麵 Tani</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/6D347qmy6CFL3rKH8"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/6D347qmy6CFL3rKH8" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">
-                                    拉麵
-                                </span>
-
+                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">拉麵</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            尾道站旁人氣拉麵店，交通方便。
-                        </p>
-
+                        <p class="text-sm text-slate-500 leading-relaxed">尾道站旁人氣拉麵店，交通方便。</p>
                     </div>
                 </div>
             </div>
 
-
             <!-- 岡山 -->
             <div class="card p-8">
-
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="bg-slate-400 p-3 rounded-xl text-white shadow-lg shadow-slate-100">
-                        🍑
-                    </div>
-
+                    <div class="bg-slate-400 p-3 rounded-xl text-white shadow-lg shadow-slate-100">🍑</div>
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-800">
-                            岡山餐廳推薦
-                        </h2>
-
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">
-                            Okayama Food Spots
-                        </p>
+                        <h2 class="text-2xl font-bold text-slate-800">岡山餐廳推薦</h2>
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Okayama Food Spots</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
                     <!-- 味司 野村 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                味司 野村
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">味司 野村</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/RBv8gVBaHswEd8hA7"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/RBv8gVBaHswEd8hA7" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-bold">
-                                    名物
-                                </span>
-
+                                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-bold">名物</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            岡山名物「多蜜醬豬排丼」創始店。
-                        </p>
+                        <p class="text-sm text-slate-500 leading-relaxed">岡山名物「多蜜醬豬排丼」創始店。</p>
                     </div>
+
                     <!-- 吾妻壽司 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
-
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                吾妻壽司
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">吾妻壽司</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/avHQQZVD4aa7YYHx6"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/avHQQZVD4aa7YYHx6" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-sky-100 text-sky-600 px-2 py-1 rounded-full font-bold">
-                                    壽司
-                                </span>
-
+                                <span class="text-xs bg-sky-100 text-sky-600 px-2 py-1 rounded-full font-bold">壽司</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            岡山老字號壽司名店，在地評價非常高。
-                        </p>
-
+                        <p class="text-sm text-slate-500 leading-relaxed">岡山老字號壽司名店，在地評價非常高。</p>
                     </div>
 
                     <!-- Hitorinabe Megu -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
-
                         <div class="flex justify-between items-start mb-3">
-
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                Hitorinabe Megu
-                            </h3>
-
+                            <h3 class="font-extrabold text-lg text-slate-800">Hitorinabe Megu</h3>
                             <div class="flex items-center gap-2">
-
-                                <a href="https://maps.app.goo.gl/Y7JXZGhQFQDezMrk6"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-4 h-4"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
-                                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
-
+                                <a href="https://maps.app.goo.gl/Y7JXZGhQFQDezMrk6" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894l6-3a1 1 0 01.894 0l6 3a1 1 0 01.553.894v10.764a1 1 0 01-.553.894L15 20m-6 0v-8m6 8v-8m0 0l6-3m-12 3l6-3" />
                                     </svg>
-
                                 </a>
-
-                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">
-                                    壽喜燒
-                                </span>
-
+                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-bold">壽喜燒</span>
                             </div>
-
                         </div>
-
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            一人鍋壽喜燒專門店，非常適合自由行旅客。
-                        </p>
-
+                        <p class="text-sm text-slate-500 leading-relaxed">一人鍋壽喜燒專門店，非常適合自由行旅客。</p>
                     </div>
-
                 </div>
-
             </div>
+
             <!-- 伴手禮推薦 -->
             <div class="card p-8">
-            
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="bg-sky-200 p-3 rounded-xl text-white shadow-lg shadow-sky-50">
-                        🎁
-                    </div>
-            
+                    <div class="bg-sky-200 p-3 rounded-xl text-white shadow-lg shadow-sky-50">🎁</div>
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-800">
-                            伴手禮推薦
-                        </h2>
-            
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">
-                            Souvenir Picks
-                        </p>
+                        <h2 class="text-2xl font-bold text-slate-800">伴手禮推薦</h2>
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Souvenir Picks</p>
                     </div>
                 </div>
-            
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            
                     <!-- 廣島 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
-            
                         <div class="flex items-center gap-2 mb-4">
                             <span class="text-2xl">🍁</span>
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                廣島
-                            </h3>
+                            <h3 class="font-extrabold text-lg text-slate-800">廣島</h3>
                         </div>
-            
                         <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
-            
                             <div>
-                                <p class="font-bold text-slate-800">
-                                    楓乃樹 楓糖饅頭
-                                </p>
-                                <p>
-                                    宮島人氣甜點，外皮酥脆帶楓糖香氣。
-                                </p>
+                                <p class="font-bold text-slate-800">楓乃樹 楓糖饅頭</p>
+                                <p>宮島人氣甜點，外皮酥脆帶楓糖香氣。</p>
                             </div>
-            
                             <div>
-                                <p class="font-bold text-slate-800">
-                                    廣島檸檬調味系列
-                                </p>
-                                <p>
-                                    瀨戶內檸檬風味零食、調味鹽與果凍都很熱門。
-                                </p>
+                                <p class="font-bold text-slate-800">廣島檸檬調味系列</p>
+                                <p>瀨戶內檸檬風味零食、調味鹽與果凍都很熱門。</p>
                             </div>
-            
                             <div>
-                                <p class="font-bold text-slate-800">
-                                    生紅葉饅頭
-                                </p>
-                                <p>
-                                    Q 彈麻糬口感，比傳統紅葉饅頭更有特色。
-                                </p>
+                                <p class="font-bold text-slate-800">生紅葉饅頭</p>
+                                <p>Q 彈麻糬口感，比傳統紅葉饅頭更有特色。</p>
                             </div>
-            
                         </div>
                     </div>
-            
+
                     <!-- 尾道 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
-            
                         <div class="flex items-center gap-2 mb-4">
                             <span class="text-2xl">🚃</span>
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                尾道
-                            </h3>
+                            <h3 class="font-extrabold text-lg text-slate-800">尾道</h3>
                         </div>
-            
                         <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
-            
                             <div>
-                                <p class="font-bold text-slate-800">
-                                    尾道拉麵禮盒
-                                </p>
-                                <p>
-                                    很適合帶回台灣煮，經典醬油背脂風味。
-                                </p>
+                                <p class="font-bold text-slate-800">尾道拉麵禮盒</p>
+                                <p>很適合帶回台灣煮，經典醬油背脂風味。</p>
                             </div>
-            
                             <div>
-                                <p class="font-bold text-slate-800">
-                                    瀨戶內海檸檬商品
-                                </p>
-                                <p>
-                                    檸檬蛋糕、檸檬糖與果醬非常有代表性。
-                                </p>
+                                <p class="font-bold text-slate-800">瀨戶內海檸檬商品</p>
+                                <p>檸檬蛋糕、檸檬糖與果醬非常有代表性。</p>
                             </div>
-            
                             <div>
-                                <p class="font-bold text-slate-800">
-                                    貓咪雜貨
-                                </p>
-                                <p>
-                                    貓之細道周邊小店很多，可愛又有尾道特色。
-                                </p>
+                                <p class="font-bold text-slate-800">貓咪雜貨</p>
+                                <p>貓之細道周邊小店很多，可愛又有尾道特色。</p>
                             </div>
-            
                         </div>
                     </div>
-            
+
                     <!-- 岡山 -->
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-lg transition">
-            
                         <div class="flex items-center gap-2 mb-4">
                             <span class="text-2xl">🍑</span>
-                            <h3 class="font-extrabold text-lg text-slate-800">
-                                岡山
-                            </h3>
+                            <h3 class="font-extrabold text-lg text-slate-800">岡山</h3>
                         </div>
-            
                         <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
-            
                             <div>
-                                <p class="font-bold text-slate-800">
-                                    吉備糰子
-                                </p>
-                                <p>
-                                    桃太郎傳說名物，最經典的岡山伴手禮。
-                                </p>
+                                <p class="font-bold text-slate-800">吉備糰子</p>
+                                <p>桃太郎傳說名物，最經典的岡山伴手禮。</p>
                             </div>
-            
                             <div>
-                                <p class="font-bold text-slate-800">
-                                    白桃果凍／白桃布丁
-                                </p>
-                                <p>
-                                    岡山白桃香氣非常強，甜點類很值得買。
-                                </p>
+                                <p class="font-bold text-slate-800">白桃果凍／白桃布丁</p>
+                                <p>岡山白桃香氣非常強，甜點類很值得買。</p>
                             </div>
-            
                             <div>
-                                <p class="font-bold text-slate-800">
-                                    麝香葡萄相關甜點
-                                </p>
-                                <p>
-                                    晴王葡萄餅乾、夾心餅與果乾人氣很高。
-                                </p>
+                                <p class="font-bold text-slate-800">麝香葡萄相關甜點</p>
+                                <p>晴王葡萄餅乾、夾心餅與果乾人氣很高。</p>
                             </div>
-            
                         </div>
                     </div>
-            
                 </div>
             </div>
-
-            
         </section>
-        <!-- 4. Expenses Section -->
+
+        <!-- 5. Expenses Section -->
         <section id="content-expenses" class="tab-content space-y-8">
             <div class="card p-8 md:p-12 text-center">
                 <h2 class="text-3xl font-black mb-10 text-slate-800">預算分配圖表</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div class="flex justify-center relative">
-                        <svg id="expense-chart" width="320" height="320"></svg>
-                        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                            <span class="text-xs font-black text-slate-400 uppercase">總支出</span>
-                            <span class="text-3xl font-black text-slate-900">$26,568</span>
+                    <div class="flex justify-center relative w-full max-w-[320px] mx-auto">
+                        <div class="aspect-square w-full relative">
+                            <svg id="expense-chart" viewBox="0 0 320 320" class="w-full h-full overflow-visible"></svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                <span class="text-xs font-black text-slate-400 uppercase">總支出</span>
+                                <span class="text-2xl md:text-3xl font-black text-slate-900">$26,568</span>
+                            </div>
                         </div>
                     </div>
-                    <div id="expense-legend-summary" class="space-y-3 text-left"></div>
+                    <div id="expense-legend-summary" class="space-y-3 text-left w-full"></div>
                 </div>
             </div>
 
@@ -1353,7 +908,8 @@
                 </div>
             </div>
         </section>
-        <!-- 5. Lodging Section -->
+
+        <!-- 6. Lodging Section -->
         <section id="content-lodging" class="tab-content space-y-6">
             <div class="card p-10">
                 <h2 class="text-2xl font-black mb-8 text-slate-800 text-center">飯店聯絡資訊</h2>
@@ -1361,17 +917,17 @@
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
                         <h3 class="font-extrabold text-lg mb-2">東橫INN 廣島新幹線口2號店</h3>
                         <p class="text-sm text-slate-500 mb-4">入住 3 晚 | 082-262-1045</p>
-                        <a href="https://maps.app.goo.gl/vUqvGLHt9bUSczwe7" target="_blank" class="block w-full py-2 bg-white border border-slate-300 text-center rounded-xl font-bold">Google Map</a>
+                        <a href="https://maps.app.goo.gl/vUqvGLHt9bUSczwe7" target="_blank" rel="noopener noreferrer" class="block w-full py-2 bg-white border border-slate-300 text-center rounded-xl font-bold hover:bg-slate-100 transition">Google Map</a>
                     </div>
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
                         <h3 class="font-extrabold text-lg mb-2">尾道綠丘飯店</h3>
                         <p class="text-sm text-slate-500 mb-4">入住 1 晚 | 0848-25-6000</p>
-                        <a href="https://www.google.com/maps/search/?api=1&query=Green+Hill+Hotel+Onomichi" target="_blank" class="block w-full py-2 bg-white border border-slate-300 text-center rounded-xl font-bold">Google Map</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Green+Hill+Hotel+Onomichi" target="_blank" rel="noopener noreferrer" class="block w-full py-2 bg-white border border-slate-300 text-center rounded-xl font-bold hover:bg-slate-100 transition">Google Map</a>
                     </div>
                     <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
                         <h3 class="font-extrabold text-lg mb-2">東橫INN 岡山站東口</h3>
                         <p class="text-sm text-slate-500 mb-4">入住 2 晚 | 086-224-1045</p>
-                        <a href="https://maps.app.goo.gl/5KsDXLZSsQurEJ4p9" target="_blank" class="block w-full py-2 bg-white border border-slate-300 text-center rounded-xl font-bold">Google Map</a>
+                        <a href="https://maps.app.goo.gl/5KsDXLZSsQurEJ4p9" target="_blank" rel="noopener noreferrer" class="block w-full py-2 bg-white border border-slate-300 text-center rounded-xl font-bold hover:bg-slate-100 transition">Google Map</a>
                     </div>
                 </div>
             </div>
@@ -1394,10 +950,28 @@
                 contents.forEach(c => c.classList.remove('active'));
                 document.getElementById(tabId).classList.add('active');
                 document.getElementById(targetId).classList.add('active');
-                if (tabId === 'tab-expenses') drawChart("#expense-chart", "#expense-legend-summary", 320, 95);
+
+                // 切換時平滑捲動到上方，改善行動版體驗
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // 只有在進入費用頁面時，才繪製精緻的 D3 預算大圖表，避免寬度計算在隱藏狀態下失效
+                if (tabId === 'tab-expenses') {
+                    setTimeout(() => {
+                        drawChart("#expense-chart", "#expense-legend-summary", 320, 95, true);
+                    }, 50);
+                }
             }
             tabs.forEach(tab => tab.addEventListener('click', () => setActiveTab(tab.id)));
 
+            // 預算入口卡片點擊，引導跳轉至費用統計 Tab
+            const miniChartCard = document.getElementById('mini-chart-card');
+            if (miniChartCard) {
+                miniChartCard.addEventListener('click', () => {
+                    setActiveTab('tab-expenses');
+                });
+            }
+
+            // 折疊面板 (詳細行程)
             const allHeaders = document.querySelectorAll('.collapsible-header');
             allHeaders.forEach(header => {
                 header.addEventListener('click', () => {
@@ -1424,12 +998,34 @@
                 });
             });
 
+            // 即時天氣 API
             async function fetchWeather() {
                 try {
                     const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=34.385&longitude=132.453&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo');
+                    if (!res.ok) throw new Error('Weather API error');
                     const data = await res.json();
                     const weatherIcon = document.getElementById('weather-icon');
-                    const codes = { 0: ["☀️", "晴朗"], 1: ["🌤️", "晴時多雲"], 2: ["⛅", "多雲"], 3: ["☁️", "陰天"] };
+                    const codes = {
+                        0: ["☀️", "晴朗"],
+                        1: ["🌤️", "晴時多雲"],
+                        2: ["⛅", "多雲"],
+                        3: ["☁️", "陰天"],
+                        45: ["🌫️", "有霧"],
+                        48: ["🌫️", "有霧"],
+                        51: ["🌧️", "毛毛雨"],
+                        53: ["🌧️", "毛毛雨"],
+                        55: ["🌧️", "毛毛雨"],
+                        61: ["🌧️", "小雨"],
+                        63: ["🌧️", "中雨"],
+                        65: ["🌧️", "大雨"],
+                        71: ["❄️", "小雪"],
+                        73: ["❄️", "中雪"],
+                        75: ["❄️", "大雪"],
+                        80: ["🌧️", "陣雨"],
+                        81: ["🌧️", "陣雨"],
+                        82: ["🌧️", "暴雨"],
+                        95: ["⚡", "雷雨"]
+                    };
                     const weather = codes[data.current.weather_code] || ["🌡️", "觀測中"];
                     document.getElementById('weather-loading').classList.add('hidden');
                     document.getElementById('weather-display').classList.remove('hidden');
@@ -1438,7 +1034,9 @@
                     weatherIcon.innerText = weather[0];
                     document.getElementById('max-temp').innerText = `${Math.round(data.daily.temperature_2m_max[0])}°C`;
                     document.getElementById('min-temp').innerText = `${Math.round(data.daily.temperature_2m_min[0])}°C`;
-                } catch (e) { }
+                } catch (e) {
+                    document.getElementById('weather-loading').innerHTML = '<p class="text-xs text-red-500 font-medium">天氣資訊獲取失敗</p>';
+                }
             }
             fetchWeather();
 
@@ -1448,79 +1046,155 @@
             const twdInput = document.getElementById('twd-input-val');
 
             async function fetchFX() {
-
                 try {
-
                     const res = await fetch('https://open.er-api.com/v6/latest/JPY');
-
+                    if (!res.ok) throw new Error('Exchange rate API error');
                     const data = await res.json();
-
-                    // 匯率
-
                     jpyToTwdRate = data.rates.TWD;
 
-                    // 更新匯率文字
-
-                    document.getElementById('fx-rate').innerText =
-                        jpyToTwdRate.toFixed(3);
-
-                    // 更新時間
-
-                    const updateTime =
-                        new Date(data.time_last_update_utc);
-
-                    document.getElementById('fx-update-time').innerText =
-                        updateTime.toLocaleString('zh-TW');
+                    document.getElementById('fx-rate').innerText = jpyToTwdRate.toFixed(3);
+                    const updateTime = new Date(data.time_last_update_utc);
+                    document.getElementById('fx-update-time').innerText = updateTime.toLocaleString('zh-TW');
 
                     // 初始換算
-
-                    const jpyVal =
-                        parseFloat(jpyInput.value) || 0;
-
-                    twdInput.value =
-                        Math.round(jpyVal * jpyToTwdRate);
-
+                    const jpyVal = parseFloat(jpyInput.value) || 0;
+                    twdInput.value = Math.round(jpyVal * jpyToTwdRate);
                 } catch (e) {
-
-                    console.log(e);
-
+                    console.error("匯率更新失敗，使用快取默認值 (0.215)：", e);
+                    document.getElementById('fx-update-time').innerText = "使用默認匯率";
+                    const jpyVal = parseFloat(jpyInput.value) || 0;
+                    twdInput.value = Math.round(jpyVal * jpyToTwdRate);
                 }
             }
 
             jpyInput.addEventListener('input', () => {
-                const jpyVal = parseFloat(jpyInput.value) || 0;
+                const jpyVal = parseFloat(jpyInput.value);
+                if (isNaN(jpyVal)) {
+                    twdInput.value = "";
+                    return;
+                }
                 twdInput.value = Math.round(jpyVal * jpyToTwdRate);
             });
 
             twdInput.addEventListener('input', () => {
-                const twdVal = parseFloat(twdInput.value) || 0;
+                const twdVal = parseFloat(twdInput.value);
+                if (isNaN(twdVal)) {
+                    jpyInput.value = "";
+                    return;
+                }
                 jpyInput.value = Math.round(twdVal / jpyToTwdRate);
             });
 
             fetchFX();
 
-            function drawChart(id, lId, s, ir) {
+            // 繪製與更新 D3.js 圖表 (重構防爆版，增加互動效果)
+            function drawChart(id, lId, s, ir, enableTooltip = false) {
                 const data = [
                     { l: "機票", v: 11297, c: COLORS[0] },
                     { l: "交通", v: (1190 + 3391 + 1550), c: COLORS[1] },
                     { l: "住宿", v: (3429 + 2329 + 3022), c: COLORS[2] },
                     { l: "雜項", v: 360, c: COLORS[3] }
                 ];
-                const svg = d3.select(id); svg.selectAll("*").remove();
-                const g = svg.append("g").attr("transform", `translate(${s / 2},${s / 2})`);
-                const pie = d3.pie().value(d => d.v);
-                const arc = d3.arc().innerRadius(ir).outerRadius(s / 2).cornerRadius(4).padAngle(0.02);
-                g.selectAll("path").data(pie(data)).enter().append("path").attr("d", arc).attr("fill", d => d.data.c);
+                const totalSum = data.reduce((acc, curr) => acc + curr.v, 0);
+
+                const svg = d3.select(id);
+                svg.selectAll("*").remove();
+
+                const width = s;
+                const height = s;
+                const radius = Math.min(width, height) / 2;
+
+                const g = svg.append("g")
+                    .attr("transform", `translate(${width / 2},${height / 2})`);
+
+                const pie = d3.pie()
+                    .value(d => d.v)
+                    .sort(null); // 保持資料原始排序
+
+                const arc = d3.arc()
+                    .innerRadius(ir)
+                    .outerRadius(radius)
+                    .cornerRadius(5)
+                    .padAngle(0.03);
+
+                // Hover 時稍微放大的圓弧定義
+                const arcHover = d3.arc()
+                    .innerRadius(ir)
+                    .outerRadius(radius + 6)
+                    .cornerRadius(5)
+                    .padAngle(0.03);
+
+                // 畫扇形
+                const path = g.selectAll("path")
+                    .data(pie(data))
+                    .enter()
+                    .append("path")
+                    .attr("d", arc)
+                    .attr("fill", d => d.data.c)
+                    .style("cursor", "pointer")
+                    .style("transition", "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)");
+
+                // 動態進場動畫
+                path.transition()
+                    .duration(800)
+                    .attrTween("d", function(d) {
+                        var interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
+                        return function(t) {
+                            return arc(interpolate(t));
+                        };
+                    });
+
+                // 新增動態互動提示
+                if (enableTooltip) {
+                    const tooltip = d3.select("#tooltip");
+
+                    path.on("mouseover", function(event, d) {
+                        d3.select(this)
+                            .transition()
+                            .duration(150)
+                            .attr("d", arcHover);
+
+                        const percentage = ((d.data.v / totalSum) * 100).toFixed(1);
+
+                        tooltip.style("opacity", 1)
+                            .html(`<strong>${d.data.l}</strong><br>NT$ ${d.data.v.toLocaleString()}<br>${percentage}%`);
+                    })
+                    .on("mousemove", function(event) {
+                        tooltip.style("left", (event.pageX + 12) + "px")
+                            .style("top", (event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", function() {
+                        d3.select(this)
+                            .transition()
+                            .duration(150)
+                            .attr("d", arc);
+
+                        tooltip.style("opacity", 0);
+                    });
+                }
+
+                // 渲染圖例與百分比
                 if (lId) {
-                    const leg = d3.select(lId); leg.selectAll("*").remove();
+                    const leg = d3.select(lId);
+                    leg.selectAll("*").remove();
                     data.forEach(d => {
-                        const r = leg.append("div").attr("class", "flex justify-between p-4 bg-slate-50 rounded-xl border border-slate-300 text-sm");
-                        r.append("div").attr("class", "flex items-center text-slate-600 font-bold").html(`<div class="w-3 h-3 rounded-full mr-2" style="background-color:${d.c}"></div>${d.l}`);
-                        r.append("span").attr("class", "font-black text-slate-800").text(`NT$ ${d.v.toLocaleString()}`);
+                        const percent = ((d.v / totalSum) * 100).toFixed(1);
+                        const r = leg.append("div")
+                            .attr("class", "flex justify-between items-center p-4 bg-slate-50 rounded-xl border border-slate-200 text-sm hover:border-slate-300 transition duration-150");
+                        
+                        r.append("div")
+                            .attr("class", "flex items-center text-slate-600 font-bold")
+                            .html(`<div class="w-3.5 h-3.5 rounded-full mr-2" style="background-color:${d.c}"></div>${d.l} <span class="ml-1 text-[10px] text-slate-400 font-normal">(${percent}%)</span>`);
+                        
+                        r.append("span")
+                            .attr("class", "font-black text-slate-800")
+                            .text(`NT$ ${d.v.toLocaleString()}`);
                     });
                 }
             }
-            drawChart("#overview-mini-chart", null, 80, 28);
+
+            // 首次加載時，只繪製側邊欄的迷你預算圓餅圖 (不包含 Tooltip)
+            drawChart("#overview-mini-chart", null, 80, 26, false);
         });
     </script>
 </body>
