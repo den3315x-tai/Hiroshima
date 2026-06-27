@@ -14,6 +14,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <!-- 引入 html2pdf.js 用於客戶端生成 PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
@@ -190,6 +192,10 @@
                 display: none !important;
             }
         }
+
+        .pdf-exporting .no-print {
+            display: none !important;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -210,7 +216,7 @@
             
             <!-- PDF 匯出按鈕 (列印時會隱藏) -->
             <div class="mt-4 flex justify-center no-print">
-                <button id="btn-download-pdf" class="flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg shadow-md transition transform hover:-translate-y-0.5">
+                <button id="btn-download-pdf" onclick="window.exportHiroshimaPdf && window.exportHiroshimaPdf()" class="flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg shadow-md transition transform hover:-translate-y-0.5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
@@ -1257,32 +1263,22 @@
                ========================================================================== */
             const downloadBtn = document.getElementById('btn-download-pdf');
             if (downloadBtn) {
-                downloadBtn.addEventListener('click', () => {
-                    // 顯示下載中的回饋提示
+                window.exportHiroshimaPdf = async () => {
+                    if (downloadBtn.disabled) return;
                     const originalBtnContent = downloadBtn.innerHTML;
-                    downloadBtn.innerHTML = `
-                        <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        PDF 手冊生成中...
-                    `;
-                    downloadBtn.disabled = true;
-
-                    // 1. 紀錄當下作用中的頁籤，以便下載完後復原 UI
                     const activeTabId = document.querySelector('.pill-tab-button.active').id;
-
-                    // 2. 暫時將所有摺疊元件打開，並把所有的 tab-content 設為顯示
                     const closedCollapsibles = [];
-                    document.querySelectorAll('.collapsible-content').forEach(content => {
-                        if (!content.classList.contains('open')) {
-                            content.classList.add('open');
-                            closedCollapsibles.push(content);
-                        }
-                    });
+                    let previousScrollY = window.scrollY;
 
-                    // 3. 將所有分頁區塊暫時設為可見，以便 html2pdf 一併抓取
-                    contents.forEach(c => c.style.display = 'block');
+                    const setDownloadStatus = (text) => {
+                        downloadBtn.innerHTML = `
+                            <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            ${text}
+                        `;
+                    };
 
                     const restorePdfState = () => {
                         closedCollapsibles.forEach(content => {
@@ -1290,36 +1286,124 @@
                         });
 
                         contents.forEach(c => c.style.display = '');
+                        document.body.classList.remove('pdf-exporting');
                         setActiveTab(activeTabId);
+                        window.scrollTo({ top: previousScrollY, behavior: 'auto' });
 
                         downloadBtn.innerHTML = originalBtnContent;
                         downloadBtn.disabled = false;
                     };
 
-                    // 確保使用者未曾進入費用頁時，PDF 仍會包含完整圖表。
-                    drawChart("#expense-chart", "#expense-legend-summary", 320, 95, true);
-
-                    // 4. 設定 html2pdf 的格式選項
-                    const element = document.getElementById('handbook-container');
-                    const opt = {
-                        margin:       [10, 10, 10, 10], // 上下左右邊界
-                        filename:     '2026_Hiroshima_Travel_Guide.pdf',
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true }, // scale: 2 確保圖片解析度清晰
-                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    const waitForImages = async (root) => {
+                        const images = Array.from(root.querySelectorAll('img'));
+                        await Promise.all(images.map(img => {
+                            img.loading = 'eager';
+                            if (!img.complete) {
+                                img.src = img.currentSrc || img.src;
+                            }
+                            if (img.complete) return Promise.resolve();
+                            return new Promise(resolve => {
+                                const timeoutId = setTimeout(resolve, 8000);
+                                const done = () => {
+                                    clearTimeout(timeoutId);
+                                    resolve();
+                                };
+                                img.addEventListener('error', done, { once: true });
+                                img.addEventListener('load', done, { once: true });
+                            });
+                        }));
                     };
 
-                    // 5. 執行生成並下載
-                    html2pdf().set(opt).from(element).save().then(() => {
+                    const addElementToPdf = async (pdf, element, options) => {
+                        const canvas = await html2canvas(element, {
+                            scale: 1.2,
+                            useCORS: true,
+                            backgroundColor: '#f8fafc',
+                            windowWidth: document.documentElement.scrollWidth
+                        });
+
+                        const pageWidth = pdf.internal.pageSize.getWidth();
+                        const pageHeight = pdf.internal.pageSize.getHeight();
+                        const margin = options.margin;
+                        const usableWidth = pageWidth - margin * 2;
+                        const usableHeight = pageHeight - margin * 2;
+                        const imgWidth = usableWidth;
+                        const imgHeight = canvas.height * imgWidth / canvas.width;
+                        const pageCanvas = document.createElement('canvas');
+                        const pageCtx = pageCanvas.getContext('2d');
+                        const sourcePageHeight = Math.floor(canvas.width * usableHeight / usableWidth);
+                        let sourceY = 0;
+
+                        while (sourceY < canvas.height) {
+                            const sliceHeight = Math.min(sourcePageHeight, canvas.height - sourceY);
+                            pageCanvas.width = canvas.width;
+                            pageCanvas.height = sliceHeight;
+                            pageCtx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
+                            pageCtx.drawImage(canvas, 0, sourceY, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
+
+                            if (!options.isFirstPage) {
+                                pdf.addPage();
+                            }
+
+                            const sliceImgHeight = sliceHeight * imgWidth / canvas.width;
+                            pdf.addImage(pageCanvas.toDataURL('image/jpeg', 0.92), 'JPEG', margin, margin, imgWidth, sliceImgHeight);
+
+                            options.isFirstPage = false;
+                            sourceY += sliceHeight;
+                        }
+                    };
+
+                    try {
+                        downloadBtn.disabled = true;
+                        setDownloadStatus('PDF 手冊生成中...');
+
+                        if (typeof html2canvas !== 'function' || !window.jspdf?.jsPDF) {
+                            throw new Error('PDF 函式庫尚未載入完成，請重新整理頁面後再試。');
+                        }
+
+                        document.body.classList.add('pdf-exporting');
+                        document.querySelectorAll('.collapsible-content').forEach(content => {
+                            if (!content.classList.contains('open')) {
+                                content.classList.add('open');
+                                closedCollapsibles.push(content);
+                            }
+                        });
+
+                        contents.forEach(c => c.style.display = 'block');
+                        drawChart("#expense-chart", "#expense-legend-summary", 320, 95, true);
+                        await waitForImages(document.getElementById('handbook-container'));
+                        await new Promise(resolve => requestAnimationFrame(resolve));
+
+                        const { jsPDF } = window.jspdf;
+                        const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+                        const pdfOptions = { margin: 8, isFirstPage: true };
+                        const exportBlocks = [
+                            document.querySelector('header'),
+                            document.getElementById('content-overview'),
+                            document.getElementById('content-preparation'),
+                            ...Array.from(document.querySelectorAll('#content-itinerary > .card')),
+                            document.getElementById('content-food'),
+                            document.getElementById('content-expenses'),
+                            document.getElementById('content-lodging')
+                        ].filter(Boolean);
+
+                        for (let i = 0; i < exportBlocks.length; i++) {
+                            setDownloadStatus(`PDF 手冊生成中... ${i + 1}/${exportBlocks.length}`);
+                            await addElementToPdf(pdf, exportBlocks[i], pdfOptions);
+                        }
+
+                        pdf.save('2026_Hiroshima_Travel_Guide.pdf');
                         restorePdfState();
-                    }).catch(err => {
+                    } catch (err) {
                         console.error("PDF 導出時發生錯誤:", err);
                         downloadBtn.innerHTML = "匯出發生錯誤，請重試";
                         setTimeout(() => {
                             restorePdfState();
                         }, 3000);
-                    });
-                });
+                    }
+                };
+
+                downloadBtn.addEventListener('click', window.exportHiroshimaPdf);
             }
         });
     </script>
