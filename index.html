@@ -1326,30 +1326,42 @@
                         const pageHeight = pdf.internal.pageSize.getHeight();
                         const margin = options.margin;
                         const usableWidth = pageWidth - margin * 2;
-                        const usableHeight = pageHeight - margin * 2;
                         const imgWidth = usableWidth;
-                        const imgHeight = canvas.height * imgWidth / canvas.width;
+                        const fullImgHeight = canvas.height * imgWidth / canvas.width;
                         const pageCanvas = document.createElement('canvas');
                         const pageCtx = pageCanvas.getContext('2d');
-                        const sourcePageHeight = Math.floor(canvas.width * usableHeight / usableWidth);
                         let sourceY = 0;
 
+                        if (fullImgHeight <= pageHeight - margin * 2 && pageHeight - margin - options.cursorY < fullImgHeight) {
+                            pdf.addPage();
+                            options.cursorY = margin;
+                        }
+
                         while (sourceY < canvas.height) {
-                            const sliceHeight = Math.min(sourcePageHeight, canvas.height - sourceY);
+                            const remainingPageHeight = pageHeight - margin - options.cursorY;
+                            if (remainingPageHeight < options.minRemainingHeight) {
+                                pdf.addPage();
+                                options.cursorY = margin;
+                            }
+
+                            const availablePageHeight = pageHeight - margin - options.cursorY;
+                            const sourcePageHeight = Math.floor(canvas.width * availablePageHeight / imgWidth);
+                            const sliceHeight = Math.max(1, Math.min(sourcePageHeight, canvas.height - sourceY));
                             pageCanvas.width = canvas.width;
                             pageCanvas.height = sliceHeight;
                             pageCtx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
                             pageCtx.drawImage(canvas, 0, sourceY, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
 
-                            if (!options.isFirstPage) {
-                                pdf.addPage();
-                            }
-
                             const sliceImgHeight = sliceHeight * imgWidth / canvas.width;
-                            pdf.addImage(pageCanvas.toDataURL('image/jpeg', 0.92), 'JPEG', margin, margin, imgWidth, sliceImgHeight);
+                            pdf.addImage(pageCanvas.toDataURL('image/jpeg', 0.92), 'JPEG', margin, options.cursorY, imgWidth, sliceImgHeight);
 
-                            options.isFirstPage = false;
+                            options.cursorY += sliceImgHeight + options.blockGap;
                             sourceY += sliceHeight;
+
+                            if (sourceY < canvas.height) {
+                                pdf.addPage();
+                                options.cursorY = margin;
+                            }
                         }
                     };
 
@@ -1376,7 +1388,12 @@
 
                         const { jsPDF } = window.jspdf;
                         const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-                        const pdfOptions = { margin: 8, isFirstPage: true };
+                        const pdfOptions = {
+                            blockGap: 4,
+                            cursorY: 8,
+                            margin: 8,
+                            minRemainingHeight: 24
+                        };
                         const exportBlocks = [
                             document.querySelector('header'),
                             document.getElementById('content-overview'),
