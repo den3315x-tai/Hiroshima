@@ -1219,25 +1219,13 @@
                     .append("path")
                     .attr("d", arc)
                     .attr("fill", d => d.data.c)
-                    .style("cursor", "pointer")
-                    .style("transition", "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)");
-
-                path.transition()
-                    .duration(800)
-                    .attrTween("d", function(d) {
-                        var interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
-                        return function(t) {
-                            return arc(interpolate(t));
-                        };
-                    });
+                    .style("cursor", "pointer");
 
                 if (enableTooltip) {
                     const tooltip = d3.select("#tooltip");
 
                     path.on("mouseover", function(event, d) {
                         d3.select(this)
-                            .transition()
-                            .duration(150)
                             .attr("d", arcHover);
 
                         const percentage = ((d.data.v / totalSum) * 100).toFixed(1);
@@ -1251,8 +1239,6 @@
                     })
                     .on("mouseout", function() {
                         d3.select(this)
-                            .transition()
-                            .duration(150)
                             .attr("d", arc);
 
                         tooltip.style("opacity", 0);
