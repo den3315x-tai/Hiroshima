@@ -570,7 +570,7 @@
                                     <svg id="overview-mini-chart" width="80" height="80" class="overflow-visible"></svg>
                                 </div>
                                 <div>
-                                    <p class="text-2xl font-black text-slate-800">NT$ 26,568</p>
+                                    <p class="text-2xl font-black text-slate-800">NT$ 28,208</p>
                                 </div>
                             </div>
                         </div>
@@ -1009,7 +1009,7 @@
                                 <svg id="expense-chart" viewBox="0 0 320 320" class="w-full h-full overflow-visible"></svg>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                                     <span class="text-xs font-black text-slate-400 uppercase">總支出</span>
-                                    <span class="text-2xl md:text-3xl font-black text-slate-900">$26,568</span>
+                                    <span class="text-2xl md:text-3xl font-black text-slate-900">$28,208</span>
                                 </div>
                             </div>
                         </div>
@@ -1085,7 +1085,7 @@
                                     <span class="font-bold text-slate-700">$1,190</span>
                                 </div>
                                 <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
-                                    <span class="text-slate-500 font-medium">高雄-左營來回接駁</span>
+                                    <span class="text-slate-500 font-medium">台南桃園高鐵單程</span>
                                     <span class="font-bold text-slate-700">$1,550</span>
                                 </div>
                             </div>
@@ -1098,12 +1098,20 @@
                                     <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2 py-1 rounded">OTHERS</span>
                                     <h3 class="text-xl font-bold text-slate-800 mt-2">其餘雜項</h3>
                                 </div>
-                                <span class="text-2xl font-black text-slate-900">$360</span>
+                                <span class="text-2xl font-black text-slate-900">$2,000</span>
                             </div>
-                            <div class="bg-slate-50 rounded-xl p-4">
-                                <div class="flex justify-between items-center text-sm">
-                                    <span class="text-slate-500 font-medium">旅遊平安險/網路卡</span>
-                                    <span class="font-bold text-slate-700">$360</span>
+                            <div class="space-y-2">
+                                <div class="bg-slate-50 rounded-xl p-4">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-slate-500 font-medium">旅遊平安險</span>
+                                        <span class="font-bold text-slate-700">$1,600</span>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50 rounded-xl p-4">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-slate-500 font-medium">eSIM</span>
+                                        <span class="font-bold text-slate-700">$400</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1116,7 +1124,7 @@
                                 <p class="text-slate-400 text-xs font-black uppercase tracking-widest mb-1">TOTAL ESTIMATED EXPENSE</p>
                                 <h3 class="text-2xl font-bold">每人預計總支出</h3>
                             </div>
-                            <div class="text-4xl font-black tracking-tight">NT$ 26,568</div>
+                            <div class="text-4xl font-black tracking-tight">NT$ 28,208</div>
                         </div>
                     </div>
                 </div>
@@ -1351,7 +1359,7 @@
                     { l: "機票", v: 11297, c: COLORS[0] },
                     { l: "交通", v: (1190 + 3391 + 1550), c: COLORS[1] },
                     { l: "住宿", v: (3429 + 2329 + 3022), c: COLORS[2] },
-                    { l: "雜項", v: 360, c: COLORS[3] }
+                    { l: "雜項", v: 2000, c: COLORS[3] }
                 ];
                 const totalSum = data.reduce((acc, curr) => acc + curr.v, 0);
 
