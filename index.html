@@ -22,17 +22,22 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght=300;400;500;700&display=swap');
 
         :root {
-            --primary-bg: #f8fafc;
-            --primary-text: #1e293b;
-            --accent-blue: #2563eb;
-            --accent-orange: #f59e0b;
-            --card-white: #ffffff;
-            --border-color: #cbd5e1;
+            --primary-bg: #f4f0e8;
+            --primary-text: #1f3346;
+            --muted-text: #6f7f88;
+            --accent-blue: #c95f4a;
+            --accent-orange: #c77a35;
+            --accent-deep: #1b2f43;
+            --card-white: #fbf8f1;
+            --soft-panel: #f8f3ea;
+            --border-color: #e3d8c8;
         }
 
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: var(--primary-bg);
+            background:
+                radial-gradient(circle at top, rgba(255, 255, 255, 0.55), transparent 34rem),
+                var(--primary-bg);
             color: var(--primary-text);
             margin: 0;
             padding: 0;
@@ -47,11 +52,11 @@
         }
 
         .card {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 16px 44px rgba(31, 51, 70, 0.07);
             background-color: var(--card-white);
             border-radius: 1rem;
             overflow: hidden;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-color);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -67,14 +72,14 @@
         }
 
         .pill-tab-button:hover {
-            background-color: #e2e8f0;
+            background-color: rgba(201, 95, 74, 0.1);
             color: var(--accent-blue);
         }
 
         .pill-tab-button.active {
             background-color: var(--accent-blue);
             color: white;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 8px 20px rgba(201, 95, 74, 0.26);
         }
 
         .collapsible-header {
@@ -83,7 +88,7 @@
         }
 
         .collapsible-header:hover {
-            background-color: #f8fafc;
+            background-color: var(--soft-panel);
         }
 
         .collapsible-content {
@@ -109,7 +114,7 @@
         }
 
         .loading-shimmer {
-            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background: linear-gradient(90deg, #f8f3ea 25%, #eee4d6 50%, #f8f3ea 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
         }
@@ -133,7 +138,7 @@
         }
 
         .checklist-item:hover {
-            background-color: #f1f5f9;
+            background-color: var(--soft-panel);
         }
 
         /* 費用卡片專用樣式 */
@@ -151,7 +156,7 @@
             position: relative;
             padding-left: 2rem;
             padding-bottom: 2rem;
-            border-left: 2px solid #e2e8f0;
+            border-left: 2px solid var(--border-color);
         }
 
         .timeline-item:last-child {
@@ -174,7 +179,7 @@
         /* D3.js 動態 Tooltip 樣式 */
         .chart-tooltip {
             position: absolute;
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(31, 51, 70, 0.92);
             color: white;
             padding: 8px 12px;
             border-radius: 8px;
@@ -184,6 +189,121 @@
             transition: opacity 0.2s ease;
             z-index: 50;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Theme overrides: warm paper, deep ink, and muted terracotta accents. */
+        .text-slate-900,
+        .text-slate-800,
+        .text-slate-700 {
+            color: var(--primary-text) !important;
+        }
+
+        .text-slate-600,
+        .text-slate-500,
+        .text-slate-400 {
+            color: var(--muted-text) !important;
+        }
+
+        .text-blue-600,
+        .text-blue-500,
+        .text-sky-600,
+        .text-emerald-700,
+        .text-indigo-600,
+        .text-rose-500,
+        .text-rose-600 {
+            color: var(--accent-blue) !important;
+        }
+
+        .text-amber-600,
+        .text-amber-500,
+        .text-orange-600,
+        .text-yellow-700,
+        .text-red-600 {
+            color: var(--accent-orange) !important;
+        }
+
+        .bg-slate-50,
+        .bg-slate-100,
+        .bg-white,
+        .bg-blue-50,
+        .bg-amber-50,
+        .bg-indigo-50,
+        .bg-red-100,
+        .bg-orange-100,
+        .bg-yellow-100,
+        .bg-sky-100,
+        .bg-emerald-50 {
+            background-color: var(--soft-panel) !important;
+        }
+
+        .bg-blue-600,
+        .bg-rose-500,
+        .bg-rose-600,
+        .bg-indigo-500,
+        .bg-green-400,
+        .bg-sky-500,
+        .bg-sky-200,
+        .bg-emerald-500 {
+            background-color: var(--accent-blue) !important;
+        }
+
+        .bg-amber-500,
+        .bg-slate-400 {
+            background-color: var(--accent-orange) !important;
+        }
+
+        .bg-slate-900,
+        .hover\:bg-slate-800:hover {
+            background-color: var(--accent-deep) !important;
+        }
+
+        .border-slate-200,
+        .border-slate-300,
+        .border-blue-100,
+        .border-amber-100,
+        .border-t-blue-500,
+        .border-t-teal-500,
+        .border-t-amber-500 {
+            border-color: var(--border-color) !important;
+        }
+
+        .border-blue-600,
+        .border-rose-500,
+        .border-emerald-500,
+        .border-l-4,
+        .border-l-8 {
+            border-left-color: var(--accent-blue) !important;
+        }
+
+        .border-amber-500,
+        .border-slate-600 {
+            border-left-color: var(--accent-orange) !important;
+        }
+
+        input {
+            background-color: #fffaf2 !important;
+            border-color: var(--border-color) !important;
+            color: var(--primary-text) !important;
+        }
+
+        input:focus {
+            --tw-ring-color: rgba(201, 95, 74, 0.32) !important;
+        }
+
+        a.hover\:bg-blue-50:hover,
+        a.hover\:bg-slate-100:hover,
+        .hover\:bg-slate-100:hover {
+            background-color: rgba(201, 95, 74, 0.1) !important;
+        }
+
+        .shadow-blue-100,
+        .shadow-amber-100,
+        .shadow-green-100,
+        .shadow-sky-100,
+        .shadow-sky-50,
+        .shadow-slate-100,
+        .shadow-slate-200 {
+            --tw-shadow-color: rgba(31, 51, 70, 0.14) !important;
         }
 
         /* 下載列印專用自訂樣式 */
@@ -1080,7 +1200,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const tabs = document.querySelectorAll('.pill-tab-button');
             const contents = document.querySelectorAll('.tab-content');
-            const COLORS = ["#2563eb", "#f59e0b", "#64748b", "#10b981"];
+            const COLORS = ["#c95f4a", "#c77a35", "#1f3346", "#6f7f88"];
 
             function setActiveTab(tabId) {
                 const targetId = tabId.replace('tab-', 'content-');
