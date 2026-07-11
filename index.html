@@ -464,6 +464,42 @@
         .agenda-copy h4 { margin: 0; color: var(--ink); font: 500 19px/1.55 var(--serif); letter-spacing: .04em; }
         .agenda-copy p { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
 
+        #content-map { max-width: 1180px; margin: 0 auto; }
+        .map-section-header {
+            margin-bottom: 28px;
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 32px;
+        }
+        .map-section-header h2 { margin: 0; font: 400 clamp(34px, 4vw, 52px)/1.2 var(--serif); letter-spacing: .1em; }
+        .map-section-header p { max-width: 620px; margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.9; }
+        .map-open-link {
+            min-width: 180px;
+            min-height: 48px;
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            background: var(--orange);
+            color: #fff;
+            text-decoration: none;
+            font: 500 12px var(--serif);
+            letter-spacing: .12em;
+        }
+        .map-open-link svg { width: 18px; height: 18px; }
+        .travel-map-frame {
+            width: 100%;
+            height: min(72vh, 760px);
+            min-height: 580px;
+            overflow: hidden;
+            background: #e7e9e4;
+            border: 1px solid var(--line);
+        }
+        .travel-map-frame iframe { width: 100%; height: 100%; display: block; border: 0; }
+        .map-note { margin: 16px 0 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+
         footer { margin-top: 0 !important; padding: 34px 24px !important; background: var(--sea-deep); color: #9bb1b6 !important; }
 
         @media (max-width: 900px) {
@@ -494,6 +530,11 @@
             .agenda-icon { width: 34px; height: 34px; font-size: 16px; }
             .agenda-copy h4 { font-size: 16px; }
             .agenda-copy p { font-size: 11px; }
+            .map-section-header { margin-bottom: 20px; align-items: stretch; flex-direction: column; gap: 20px; }
+            .map-section-header h2 { font-size: 34px; }
+            .map-open-link { width: 100%; }
+            .travel-map-frame { height: 68vh; min-height: 520px; max-height: 680px; }
+            .map-note { font-size: 10px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -530,6 +571,7 @@
             <button id="tab-overview" class="pill-tab-button active">旅程資訊</button>
             <button id="tab-preparation" class="pill-tab-button">行前準備</button>
             <button id="tab-itinerary" class="pill-tab-button">詳細行程</button>
+            <button id="tab-map" class="pill-tab-button">旅行地圖</button>
             <button id="tab-food" class="pill-tab-button">推薦餐廳</button>
             <button id="tab-expenses" class="pill-tab-button">費用統計</button>
             <button id="tab-lodging" class="pill-tab-button">住宿地點</button>
@@ -946,7 +988,31 @@
                 </article>
             </section>
 
-            <!-- 4. Food Section -->
+            <!-- 4. Travel Map Section -->
+            <section id="content-map" class="tab-content">
+                <div class="map-section-header">
+                    <div>
+                        <h2>旅行地圖</h2>
+                        <p>將廣島、宮島、尾道、姬路與岡山的行程景點、交通、餐廳、住宿與購物地點集中在同一張地圖，旅途中可直接縮放與點選標記。</p>
+                    </div>
+                    <a class="map-open-link" href="https://www.google.com/maps/d/viewer?mid=1L-arojTMRrImkdGhdPAr63s7eBQSYAQ" target="_blank" rel="noopener noreferrer">
+                        在 Google 地圖開啟
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 5h5v5M19 5l-9 9" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+                <div class="travel-map-frame">
+                    <iframe
+                        src="https://www.google.com/maps/d/embed?mid=1L-arojTMRrImkdGhdPAr63s7eBQSYAQ&ehbc=2E312F"
+                        title="2026 廣島、尾道與岡山旅行地圖"
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                </div>
+                <p class="map-note">若內嵌地圖受到瀏覽器或網路限制，可使用上方按鈕改由 Google 地圖完整頁面開啟。</p>
+            </section>
+
+            <!-- 5. Food Section -->
             <section id="content-food" class="tab-content space-y-8">
                 <!-- 廣島 -->
                 <div class="card p-8">
