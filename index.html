@@ -8,18 +8,14 @@
     <meta property="og:title" content="2026 廣島七天六夜">
     <meta property="og:description" content="廣島・尾道・岡山自由行">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://den3315x-tai.github.io/Hiroshima/preview.png">
+    <meta property="og:image" content="https://den3315x-tai.github.io/Hiroshima/hero-miyajima.webp">
 
     <!-- CSS / JS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <!-- 引入 html2pdf.js 用於客戶端生成 PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght=300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;500;600&display=swap');
 
         :root {
             --primary-bg: #f4f0e8;
@@ -306,47 +302,231 @@
             --tw-shadow-color: rgba(31, 51, 70, 0.14) !important;
         }
 
-        /* 下載列印專用自訂樣式 */
-        @media print {
-            .no-print {
-                display: none !important;
-            }
+        /* Setouchi editorial redesign */
+        :root {
+            --paper: #f4f0e6;
+            --paper-soft: #faf7ef;
+            --ink: #102d3c;
+            --sea-deep: #082f3d;
+            --sea: #0b4355;
+            --orange: #e76f2e;
+            --orange-soft: #f3c39d;
+            --line: #bdc4bd;
+            --muted: #5d6f73;
+            --serif: "Noto Serif TC", "Yu Mincho", "Songti TC", PMingLiU, serif;
+            --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            --primary-bg: var(--paper);
+            --primary-text: var(--ink);
+            --muted-text: var(--muted);
+            --accent-blue: var(--orange);
+            --accent-orange: var(--orange);
+            --accent-deep: var(--sea-deep);
+            --card-white: var(--paper-soft);
+            --soft-panel: rgba(250, 247, 239, .72);
+            --border-color: var(--line);
         }
 
-        .pdf-exporting .no-print {
-            display: none !important;
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            min-width: 320px;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--sans);
+            line-height: 1.7;
+        }
+        button, input, a { font: inherit; }
+        button { color: inherit; }
+        img { display: block; max-width: 100%; }
+        :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+        #handbook-container { width: 100%; max-width: none; margin: 0; }
+        .travel-header { border-bottom: 1px solid var(--line); background: var(--paper-soft); }
+        .brand-row {
+            min-height: 72px;
+            padding: 0 clamp(24px, 5vw, 80px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--line);
+        }
+        .travel-brand { display: flex; flex-direction: column; color: var(--ink); text-decoration: none; }
+        .travel-brand strong { font: 500 19px/1.2 var(--serif); letter-spacing: .12em; }
+        .travel-brand small { margin-top: 5px; color: var(--muted); font-size: 9px; letter-spacing: .18em; }
+        .trip-date { color: var(--muted); font-size: 11px; letter-spacing: .16em; }
+        .hero-layout { min-height: 500px; display: grid; grid-template-columns: minmax(410px, 42%) 1fr; }
+        .hero-copy { padding: clamp(58px, 7vw, 100px) 5vw 60px; display: flex; flex-direction: column; justify-content: center; }
+        .hero-copy h1 { margin: 0; font: 400 clamp(48px, 5vw, 76px)/1.18 var(--serif); letter-spacing: .08em; }
+        .hero-copy p { max-width: 520px; margin: 25px 0 0; color: #344d55; font-size: 14px; line-height: 2; letter-spacing: .06em; }
+        .hero-route { width: min(300px, 75%); height: 1px; margin: 26px 0 15px; background: var(--line); }
+        .hero-copy b { font: 500 11px var(--sans); letter-spacing: .25em; }
+        .hero-media {
+            min-height: 500px;
+            background-image: linear-gradient(90deg, var(--paper-soft) 0%, rgba(250,247,239,.4) 8%, rgba(250,247,239,0) 24%), url('hero-miyajima.webp');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #navigation-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            width: 100%;
+            margin: 0;
+            padding: 0 clamp(16px, 5vw, 80px);
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            gap: 0;
+            overflow-x: auto;
+            background: var(--sea-deep);
+            border-bottom: 4px solid transparent;
+            scrollbar-width: none;
+        }
+        #navigation-tabs::-webkit-scrollbar { display: none; }
+        .pill-tab-button {
+            min-height: 76px;
+            flex: 0 0 auto;
+            padding: 0 clamp(18px, 2.4vw, 34px);
+            border: 0;
+            border-right: 1px solid rgba(255,255,255,.22);
+            border-radius: 0;
+            background: transparent;
+            color: #c7d5d7;
+            box-shadow: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .1em;
+        }
+        .pill-tab-button:first-child { border-left: 1px solid rgba(255,255,255,.22); }
+        .pill-tab-button:hover { background: rgba(255,255,255,.06); color: #fff; }
+        .pill-tab-button.active { position: relative; background: transparent; color: #fff; box-shadow: none; }
+        .pill-tab-button.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 4px; background: var(--orange); }
+
+        #handbook-sections-wrapper { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 68px 0 88px; }
+        .tab-content { animation: section-in .25s ease both; }
+        @keyframes section-in { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+        .card {
+            background: rgba(250,247,239,.78);
+            border: 1px solid var(--line);
+            border-radius: 0;
+            box-shadow: none;
+        }
+        .card:hover { box-shadow: none; }
+        .card h2, .card h3 { font-family: var(--serif); letter-spacing: .04em; }
+        .card .rounded-xl, .card .rounded-2xl { border-radius: 0 !important; }
+        .card .rounded-full { border-radius: 999px !important; }
+        .card .shadow-lg, .card .shadow-xl { box-shadow: none !important; }
+        .expense-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(8,47,61,.08); }
+        .timeline-dot { background: var(--orange); border-color: var(--paper-soft); box-shadow: 0 0 0 1px var(--orange); }
+        .timeline-item { border-left-color: var(--line); }
+        input { min-height: 48px; border-radius: 0 !important; }
+        input[type="checkbox"] { min-height: 0; accent-color: var(--orange); }
+        a { text-underline-offset: 3px; }
+
+        #content-overview > .card:first-child { background: #fff; }
+        #content-overview > .card:first-child img { width: 100%; height: auto; }
+
+        #content-itinerary { max-width: 980px; margin: 0 auto; }
+        .agenda-day { overflow: visible; }
+        .agenda-day + .agenda-day { margin-top: 18px; }
+        .agenda-day .collapsible-header {
+            min-height: 88px;
+            padding: 20px 26px;
+            display: grid;
+            grid-template-columns: 86px 1fr 28px;
+            align-items: center;
+            gap: 18px;
+            background: var(--paper-soft);
+        }
+        .agenda-day .collapsible-header:hover { background: #f7f2e8; }
+        .day-number { color: var(--orange); font: italic 13px var(--serif); letter-spacing: .16em; }
+        .day-heading { margin: 0; font: 500 22px/1.35 var(--serif); }
+        .day-heading small { display: block; margin-top: 5px; color: var(--muted); font: 10px var(--sans); letter-spacing: .14em; }
+        .chevron { width: 22px; height: 22px; transition: transform .25s ease; }
+        .chevron.rotated { transform: rotate(180deg); }
+        .collapsible-content.open { max-height: 5000px; }
+        .agenda-list { list-style: none; margin: 0; padding: 8px 28px 30px; background: var(--paper-soft); }
+        .agenda-item {
+            min-height: 112px;
+            position: relative;
+            display: grid;
+            grid-template-columns: 120px 52px 1fr;
+            gap: 20px;
+            align-items: start;
+            padding: 24px 0;
+            border-top: 1px solid var(--line);
+        }
+        .agenda-item::before { content: ""; position: absolute; left: 145px; top: 0; bottom: 0; width: 1px; background: rgba(11,67,85,.24); }
+        .agenda-time { padding-top: 8px; color: var(--sea); font: 500 17px/1.45 var(--serif); letter-spacing: .04em; white-space: pre-line; }
+        .agenda-icon { position: relative; z-index: 1; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--sea); border-radius: 50%; background: var(--paper-soft); font-size: 20px; }
+        .agenda-copy { padding-top: 2px; }
+        .agenda-copy h4 { margin: 0; color: var(--ink); font: 500 19px/1.55 var(--serif); letter-spacing: .04em; }
+        .agenda-copy p { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+
+        footer { margin-top: 0 !important; padding: 34px 24px !important; background: var(--sea-deep); color: #9bb1b6 !important; }
+
+        @media (max-width: 900px) {
+            .hero-layout { grid-template-columns: 48% 52%; }
+            #navigation-tabs { justify-content: flex-start; }
+            #handbook-sections-wrapper { width: min(100% - 36px, 760px); padding-top: 46px; }
+        }
+
+        @media (max-width: 640px) {
+            .brand-row { min-height: 66px; padding: 0 20px; }
+            .travel-brand strong { font-size: 16px; }
+            .travel-brand small { font-size: 8px; }
+            .trip-date { font-size: 9px; letter-spacing: .08em; }
+            .hero-layout { grid-template-columns: 1fr; }
+            .hero-copy { padding: 52px 24px 42px; }
+            .hero-copy h1 { font-size: clamp(42px, 13vw, 58px); }
+            .hero-copy p { font-size: 12px; }
+            .hero-media { min-height: 310px; background-image: linear-gradient(180deg, var(--paper-soft) 0%, rgba(250,247,239,0) 20%), url('hero-miyajima.webp'); background-position: 64% center; }
+            .pill-tab-button { min-height: 64px; padding: 0 20px; font-size: 12px; }
+            #handbook-sections-wrapper { width: calc(100% - 28px); padding: 34px 0 60px; }
+            .card.p-8, .card.p-6 { padding: 22px !important; }
+            .agenda-day .collapsible-header { min-height: 78px; grid-template-columns: 58px 1fr 22px; gap: 10px; padding: 17px 16px; }
+            .day-heading { font-size: 18px; }
+            .agenda-list { padding: 5px 16px 20px; }
+            .agenda-item { grid-template-columns: 60px 38px 1fr; gap: 10px; padding: 20px 0; }
+            .agenda-item::before { left: 78px; }
+            .agenda-time { font-size: 13px; }
+            .agenda-icon { width: 34px; height: 34px; font-size: 16px; }
+            .agenda-copy h4 { font-size: 16px; }
+            .agenda-copy p { font-size: 11px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
         }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
     <!-- D3 Tooltip 容器 -->
     <div id="tooltip" class="chart-tooltip"></div>
 
     <div class="max-w-5xl mx-auto" id="handbook-container">
-        <!-- Header -->
-        <header class="mb-10 text-center relative">
-            <h1 class="text-4xl font-extrabold mb-3 tracking-tight text-slate-900">2026 廣島七天六夜</h1>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <div class="flex items-center gap-3">
-                    <span class="h-1 w-12 bg-blue-600 rounded-full"></span>
-                    <p class="text-slate-500 font-medium no-italic">2026.10.19 - 10.25 | 高雄出發</p>
-                    <span class="h-1 w-12 bg-amber-500 rounded-full"></span>
-                </div>
+        <header class="travel-header" id="top">
+            <div class="brand-row">
+                <a class="travel-brand" href="#top" aria-label="回到頁首">
+                    <strong>瀨戶內旅帖</strong>
+                    <small>HIROSHIMA · ONOMICHI · OKAYAMA</small>
+                </a>
+                <span class="trip-date">2026.10.19 — 10.25</span>
             </div>
-            
-            <!-- PDF 匯出按鈕 (列印時會隱藏) -->
-            <div class="mt-4 flex justify-center no-print">
-                <button id="btn-download-pdf" onclick="window.exportHiroshimaPdf && window.exportHiroshimaPdf()" class="flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg shadow-md transition transform hover:-translate-y-0.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    匯出完整 PDF 手冊
-                </button>
+            <div class="hero-layout">
+                <div class="hero-copy">
+                    <h1>廣島<br>七天六夜</h1>
+                    <p>從高雄啟程，沿著山陽線走進廣島、宮島、尾道、姬路與岡山。這是一份為旅途中即時查閱而整理的完整手冊。</p>
+                    <span class="hero-route" aria-hidden="true"></span>
+                    <b>高雄 → 岡山 → 廣島 → 尾道 → 姬路 → 岡山</b>
+                </div>
+                <div class="hero-media" role="img" aria-label="宮島嚴島神社海上鳥居與瀨戶內海景色"></div>
             </div>
         </header>
 
-        <!-- Tabs (下載 PDF 時會被暫時隱藏) -->
-        <nav class="flex flex-wrap justify-center gap-2 mb-12 no-print" id="navigation-tabs">
+        <nav aria-label="網站主要導覽" id="navigation-tabs">
             <button id="tab-overview" class="pill-tab-button active">旅程資訊</button>
             <button id="tab-preparation" class="pill-tab-button">行前準備</button>
             <button id="tab-itinerary" class="pill-tab-button">詳細行程</button>
@@ -355,13 +535,12 @@
             <button id="tab-lodging" class="pill-tab-button">住宿地點</button>
         </nav>
 
-        <!-- 主內容包裝器，用於 PDF 精準定位 -->
         <div id="handbook-sections-wrapper" class="space-y-12">
             
             <!-- 1. Overview Section -->
             <section id="content-overview" class="tab-content active space-y-6">
                 <div class="card overflow-hidden mb-8">
-                    <img src="https://raw.githubusercontent.com/den3315x-tai/Hiroshima/refs/heads/main/SUM-MAP.png" alt="行程總覽地圖" class="w-full h-auto block" decoding="async">
+                    <img src="SUM-MAP.webp" alt="行程總覽地圖" class="w-full h-auto block" decoding="async">
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -645,13 +824,126 @@
 
             <!-- 3. Itinerary Section -->
             <section id="content-itinerary" class="tab-content space-y-6">
-                <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 1｜10/19｜啟程</h3><span class="chevron rotated">▼</span></div><div class="collapsible-content open"><img src="https://den3315x-tai.github.io/Hiroshima/10-19.png" class="w-full h-auto block" alt="Day 1" decoding="async"></div></div>
-                <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 2｜10/20｜宮島一日遊</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-20.png" class="w-full h-auto block" alt="Day 2" loading="lazy" decoding="async"></div></div>
-                <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 3｜10/21｜廣島散策</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-21.png" class="w-full h-auto block" alt="Day 3" loading="lazy" decoding="async"></div></div>
-                <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 4｜10/22｜尾道散策</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-22.png" class="w-full h-auto block" alt="Day 4" loading="lazy" decoding="async"></div></div>
-                <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 5｜10/23｜姬路城尋訪</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-23.png" class="w-full h-auto block" alt="Day 5" loading="lazy" decoding="async"></div></div>
-                <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 6｜10/24｜岡山深度遊</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-24.png" class="w-full h-auto block" alt="Day 6" loading="lazy" decoding="async"></div></div>
-                <div class="card"><div class="collapsible-header p-4 flex justify-between items-center"><h3 class="font-bold text-lg text-slate-800">Day 7｜10/25｜歸途</h3><span class="chevron">▼</span></div><div class="collapsible-content"><img src="https://den3315x-tai.github.io/Hiroshima/10-25.png" class="w-full h-auto block" alt="Day 7" loading="lazy" decoding="async"></div></div>
+                <article class="card agenda-day">
+                    <button class="collapsible-header" type="button" aria-expanded="true">
+                        <span class="day-number">DAY 01</span>
+                        <h3 class="day-heading">啟程<small>10/19 · 高雄 → 岡山 → 廣島</small></h3>
+                        <svg class="chevron rotated" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="collapsible-content open">
+                        <ol class="agenda-list">
+                            <li class="agenda-item"><time class="agenda-time">08:30</time><span class="agenda-icon" aria-hidden="true">🚕</span><div class="agenda-copy"><h4>坐計程車去高雄機場</h4><p>建議提前出發，預留交通與辦理報到時間。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">12:40<br>— 16:30</time><span class="agenda-icon" aria-hidden="true">✈️</span><div class="agenda-copy"><h4>高雄 → 岡山（虎航 IT262）</h4><p>12:40 從高雄國際機場出發；16:30 抵達岡山機場。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">17:05<br>— 17:35</time><span class="agenda-icon" aria-hidden="true">🚌</span><div class="agenda-copy"><h4>搭乘「機場接駁巴士」前往岡山車站</h4><p>車程約 30 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">18:30<br>— 19:10</time><span class="agenda-icon" aria-hidden="true">🚅</span><div class="agenda-copy"><h4>岡山車站 ＞ 廣島車站（新幹線）</h4><p>車程約 40 分鐘；搭乘山陽新幹線。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">19:20</time><span class="agenda-icon" aria-hidden="true">🏨</span><div class="agenda-copy"><h4>入住東橫INN 廣島新幹線口2號店</h4><p>辦理入住手續，稍作休息。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">19:30</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>車站附近覓食</h4><p>推薦廣島燒、拉麵、居酒屋等在地美食。</p></div></li>
+                        </ol>
+                    </div>
+                </article>
+
+                <article class="card agenda-day">
+                    <button class="collapsible-header" type="button" aria-expanded="false">
+                        <span class="day-number">DAY 02</span>
+                        <h3 class="day-heading">宮島一日遊<small>10/20 · 廣島 — 宮島行程</small></h3>
+                        <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="collapsible-content">
+                        <ol class="agenda-list">
+                            <li class="agenda-item"><time class="agenda-time">08:06<br>— 08:34</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>廣島車站前往宮島口車站</h4><p>搭乘 JR 山陽本線；車程約 28 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:40<br>— 08:50</time><span class="agenda-icon" aria-hidden="true">⛴️</span><div class="agenda-copy"><h4>坐渡輪前往宮島</h4><p>搭乘 JR 西日本宮島渡輪；船程約 10 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">09:00<br>— 12:00</time><span class="agenda-icon" aria-hidden="true">⛩️</span><div class="agenda-copy"><h4>嚴島神社、商店街散步</h4><p>吃牡蠣、炸楓葉饅頭等在地美食與伴手禮。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">12:00<br>— 13:00</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>午餐：牡蠣屋、梅山</h4><p>品嚐新鮮牡蠣料理與在地特色餐點。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">13:15<br>— 15:30</time><span class="agenda-icon" aria-hidden="true">🚠</span><div class="agenda-copy"><h4>搭紅葉谷纜車前往彌山，看瀨戶內海</h4><p>欣賞瀨戶內海美景與自然景觀。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">16:00<br>— 17:30</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>最後採買、搭船回廣島</h4><p>在商店街採買伴手禮；搭乘渡輪返回宮島口。</p></div></li>
+                        </ol>
+                    </div>
+                </article>
+
+                <article class="card agenda-day">
+                    <button class="collapsible-header" type="button" aria-expanded="false">
+                        <span class="day-number">DAY 03</span>
+                        <h3 class="day-heading">廣島散策<small>10/21 · 廣島市區一日遊</small></h3>
+                        <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="collapsible-content">
+                        <ol class="agenda-list">
+                            <li class="agenda-item"><time class="agenda-time">09:30<br>— 11:30</time><span class="agenda-icon" aria-hidden="true">🏯</span><div class="agenda-copy"><h4>廣島城、縮景園</h4><p>參觀廣島城天守閣；漫步日本名園縮景園。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">11:30<br>— 13:00</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>午餐：廣島燒（OKONOMIMURA）</h4><p>在御好燒村品嚐道地廣島燒。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">13:30<br>— 15:30</time><span class="agenda-icon" aria-hidden="true">🕊️</span><div class="agenda-copy"><h4>和平紀念館、原爆圓頂屋</h4><p>了解歷史，緬懷和平；參觀世界遺產原爆圓頂屋。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">16:00<br>— 18:30</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>本通商店街、紙屋町逛街</h4><p>廣島人氣商店街購物；百貨公司、美妝、伴手禮一次滿足。</p></div></li>
+                        </ol>
+                    </div>
+                </article>
+
+                <article class="card agenda-day">
+                    <button class="collapsible-header" type="button" aria-expanded="false">
+                        <span class="day-number">DAY 04</span>
+                        <h3 class="day-heading">尾道散策<small>10/22 · 尾道一日遊行程</small></h3>
+                        <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="collapsible-content">
+                        <ol class="agenda-list">
+                            <li class="agenda-item"><time class="agenda-time">08:11<br>— 09:39</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>廣島站前往尾道站（山陽本線）</h4><p>搭乘 JR 山陽本線；車程約 1 小時 28 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">10:00<br>— 12:00</time><span class="agenda-icon" aria-hidden="true">🚠</span><div class="agenda-copy"><h4>搭乘纜車上山（千光寺公園、展望台）</h4><p>搭乘千光寺山纜車；欣賞尾道市區與瀨戶內海美景。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">12:00<br>— 13:30</time><span class="agenda-icon" aria-hidden="true">🍜</span><div class="agenda-copy"><h4>午餐：尾道拉麵</h4><p>在地特色美食；推薦老字號拉麵店。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">14:00<br>— 17:00</time><span class="agenda-icon" aria-hidden="true">🚶</span><div class="agenda-copy"><h4>漫步尾道老街，或找家靠海的咖啡廳放空</h4><p>散步於古色古香的坂道小巷；享受悠閒的海景與咖啡時光。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">17:00</time><span class="agenda-icon" aria-hidden="true">🏨</span><div class="agenda-copy"><h4>入住尾道綠丘飯店</h4><p>辦理入住手續，稍作休息；享受飯店設施與瀨戶內海美景。</p></div></li>
+                        </ol>
+                    </div>
+                </article>
+
+                <article class="card agenda-day">
+                    <button class="collapsible-header" type="button" aria-expanded="false">
+                        <span class="day-number">DAY 05</span>
+                        <h3 class="day-heading">姬路城尋訪<small>10/23 · 尾道 → 姬路 → 岡山</small></h3>
+                        <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="collapsible-content">
+                        <ol class="agenda-list">
+                            <li class="agenda-item"><time class="agenda-time">08:00<br>— 08:35</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>尾道 ＞ 岡山（JR）</h4><p>搭乘 JR 山陽本線；車程約 35 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:45<br>— 09:10</time><span class="agenda-icon" aria-hidden="true">🚅</span><div class="agenda-copy"><h4>岡山 ＞ 姬路（新幹線）</h4><p>搭乘山陽新幹線「のぞみ」；車程約 25 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">09:30<br>— 13:30</time><span class="agenda-icon" aria-hidden="true">🏯</span><div class="agenda-copy"><h4>參觀姬路城（白鷺城）及其周邊、午餐</h4><p>參觀日本國寶・姬路城；散步周邊景點，品嚐當地美食。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">14:00<br>— 14:20</time><span class="agenda-icon" aria-hidden="true">🚅</span><div class="agenda-copy"><h4>姬路 ＞ 岡山（新幹線）</h4><p>搭乘山陽新幹線「のぞみ」；車程約 20 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">15:30<br>— 17:30</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>岡山車站週邊逛街（岡山一番街、唐吉訶德）</h4><p>人氣商店街購物、伴手禮採買；享受在地查食與購物樂趣。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">18:30</time><span class="agenda-icon" aria-hidden="true">🏨</span><div class="agenda-copy"><h4>入住東橫 INN 岡山站東口店</h4><p>辦理入住手續，稍作休息。</p></div></li>
+                        </ol>
+                    </div>
+                </article>
+
+                <article class="card agenda-day">
+                    <button class="collapsible-header" type="button" aria-expanded="false">
+                        <span class="day-number">DAY 06</span>
+                        <h3 class="day-heading">岡山深度遊<small>10/24 · 岡山一日遊行程</small></h3>
+                        <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="collapsible-content">
+                        <ol class="agenda-list">
+                            <li class="agenda-item"><time class="agenda-time">08:11<br>— 08:35</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>岡山車站搭乘「桃太郎線」到吉備津站</h4><p>搭乘 JR 桃太郎線；車程約 24 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:40<br>— 10:30</time><span class="agenda-icon" aria-hidden="true">⛩️</span><div class="agenda-copy"><h4>參拜吉備津神社（看 360 公尺大長廊）</h4><p>國寶級神社建築；漫步著名的長廊，感受歷史氛圍。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">12:30<br>— 15:00</time><span class="agenda-icon" aria-hidden="true">🏯</span><div class="agenda-copy"><h4>岡山後樂園（日本三大名園）與岡山城</h4><p>欣賞日式庭園之美；參觀烏城岡山城，眺望岡山市景。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">15:30<br>— 16:30</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>逛表町商店街、晴天之國岡山館</h4><p>岡山最大商店街，品嚐在地美食；購買伴手禮與特色商品。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">18:00</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>車站附近吃晚餐</h4><p>岡山車站周邊美食豐富；推薦岡山燒、海鮮料理或拉麵。</p></div></li>
+                        </ol>
+                    </div>
+                </article>
+
+                <article class="card agenda-day">
+                    <button class="collapsible-header" type="button" aria-expanded="false">
+                        <span class="day-number">DAY 07</span>
+                        <h3 class="day-heading">歸途<small>10/25 · 岡山 — 返程行程</small></h3>
+                        <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="collapsible-content">
+                        <ol class="agenda-list">
+                            <li class="agenda-item"><time class="agenda-time">09:30<br>— 11:30</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>AEON MALL 岡山最後採買、藥妝補貨</h4><p>超市、伴手禮、藥妝一次買齊；為旅程畫下完美句點。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">11:30<br>— 12:30</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>午餐時間（需準時結束）</h4><p>享用岡山在地美食；請準時結束，預留搭車時間。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">12:50</time><span class="agenda-icon" aria-hidden="true">🚌</span><div class="agenda-copy"><h4>岡山車站西口搭乘機場巴士</h4><p>前往岡山桃太郎機場；車程約 40 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">15:25<br>— 17:30</time><span class="agenda-icon" aria-hidden="true">✈️</span><div class="agenda-copy"><h4>岡山 → 桃園（虎航 IT216）</h4><p>航程約 2 小時 50 分鐘；抵達桃園國際機場。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">19:00</time><span class="agenda-icon" aria-hidden="true">🚄</span><div class="agenda-copy"><h4>桃園高鐵站坐車回台南</h4><p>搭乘高鐵返回台南；結束愉快的旅程，平安回家。</p></div></li>
+                        </ol>
+                    </div>
+                </article>
             </section>
 
             <!-- 4. Food Section -->
@@ -1217,8 +1509,8 @@
                 document.getElementById(tabId).classList.add('active');
                 document.getElementById(targetId).classList.add('active');
 
-                // 切換時平滑捲動到上方，改善行動版體驗
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // 切換時將導覽列帶回視窗頂端，方便行動版繼續操作
+                document.getElementById('navigation-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
                 // 只有在進入費用頁面時，才繪製精緻的 D3 預算大圖表，避免寬度計算在隱藏狀態下失效
                 if (tabId === 'tab-expenses') {
@@ -1251,15 +1543,18 @@
                         if (otherHeader !== header) {
                             otherContent.classList.remove('open');
                             otherChevron.classList.remove('rotated');
+                            otherHeader.setAttribute('aria-expanded', 'false');
                         }
                     });
 
                     if (!isOpen) {
                         currentContent.classList.add('open');
                         currentChevron.classList.add('rotated');
+                        header.setAttribute('aria-expanded', 'true');
                     } else {
                         currentContent.classList.remove('open');
                         currentChevron.classList.remove('rotated');
+                        header.setAttribute('aria-expanded', 'false');
                     }
                 });
             });
@@ -1463,170 +1758,6 @@
                 }
             });
 
-            /* ==========================================================================
-               新功能 2：PDF 匯出邏輯 (精確合併版)
-               ========================================================================== */
-            const downloadBtn = document.getElementById('btn-download-pdf');
-            if (downloadBtn) {
-                window.exportHiroshimaPdf = async () => {
-                    if (downloadBtn.disabled) return;
-                    const originalBtnContent = downloadBtn.innerHTML;
-                    const activeTabId = document.querySelector('.pill-tab-button.active').id;
-                    const closedCollapsibles = [];
-                    let previousScrollY = window.scrollY;
-
-                    const setDownloadStatus = (text) => {
-                        downloadBtn.innerHTML = `
-                            <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            ${text}
-                        `;
-                    };
-
-                    const restorePdfState = () => {
-                        closedCollapsibles.forEach(content => {
-                            content.classList.remove('open');
-                        });
-
-                        contents.forEach(c => c.style.display = '');
-                        document.body.classList.remove('pdf-exporting');
-                        setActiveTab(activeTabId);
-                        window.scrollTo({ top: previousScrollY, behavior: 'auto' });
-
-                        downloadBtn.innerHTML = originalBtnContent;
-                        downloadBtn.disabled = false;
-                    };
-
-                    const waitForImages = async (root) => {
-                        const images = Array.from(root.querySelectorAll('img'));
-                        await Promise.all(images.map(img => {
-                            img.loading = 'eager';
-                            if (!img.complete) {
-                                img.src = img.currentSrc || img.src;
-                            }
-                            if (img.complete) return Promise.resolve();
-                            return new Promise(resolve => {
-                                const timeoutId = setTimeout(resolve, 8000);
-                                const done = () => {
-                                    clearTimeout(timeoutId);
-                                    resolve();
-                                };
-                                img.addEventListener('error', done, { once: true });
-                                img.addEventListener('load', done, { once: true });
-                            });
-                        }));
-                    };
-
-                    const addElementToPdf = async (pdf, element, options) => {
-                        const canvas = await html2canvas(element, {
-                            scale: 1.2,
-                            useCORS: true,
-                            backgroundColor: '#f8fafc',
-                            windowWidth: document.documentElement.scrollWidth
-                        });
-
-                        const pageWidth = pdf.internal.pageSize.getWidth();
-                        const pageHeight = pdf.internal.pageSize.getHeight();
-                        const margin = options.margin;
-                        const usableWidth = pageWidth - margin * 2;
-                        const imgWidth = usableWidth;
-                        const fullImgHeight = canvas.height * imgWidth / canvas.width;
-                        const pageCanvas = document.createElement('canvas');
-                        const pageCtx = pageCanvas.getContext('2d');
-                        let sourceY = 0;
-
-                        if (fullImgHeight <= pageHeight - margin * 2 && pageHeight - margin - options.cursorY < fullImgHeight) {
-                            pdf.addPage();
-                            options.cursorY = margin;
-                        }
-
-                        while (sourceY < canvas.height) {
-                            const remainingPageHeight = pageHeight - margin - options.cursorY;
-                            if (remainingPageHeight < options.minRemainingHeight) {
-                                pdf.addPage();
-                                options.cursorY = margin;
-                            }
-
-                            const availablePageHeight = pageHeight - margin - options.cursorY;
-                            const sourcePageHeight = Math.floor(canvas.width * availablePageHeight / imgWidth);
-                            const sliceHeight = Math.max(1, Math.min(sourcePageHeight, canvas.height - sourceY));
-                            pageCanvas.width = canvas.width;
-                            pageCanvas.height = sliceHeight;
-                            pageCtx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
-                            pageCtx.drawImage(canvas, 0, sourceY, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
-
-                            const sliceImgHeight = sliceHeight * imgWidth / canvas.width;
-                            pdf.addImage(pageCanvas.toDataURL('image/jpeg', 0.92), 'JPEG', margin, options.cursorY, imgWidth, sliceImgHeight);
-
-                            options.cursorY += sliceImgHeight + options.blockGap;
-                            sourceY += sliceHeight;
-
-                            if (sourceY < canvas.height) {
-                                pdf.addPage();
-                                options.cursorY = margin;
-                            }
-                        }
-                    };
-
-                    try {
-                        downloadBtn.disabled = true;
-                        setDownloadStatus('PDF 手冊生成中...');
-
-                        if (typeof html2canvas !== 'function' || !window.jspdf?.jsPDF) {
-                            throw new Error('PDF 函式庫尚未載入完成，請重新整理頁面後再試。');
-                        }
-
-                        document.body.classList.add('pdf-exporting');
-                        document.querySelectorAll('.collapsible-content').forEach(content => {
-                            if (!content.classList.contains('open')) {
-                                content.classList.add('open');
-                                closedCollapsibles.push(content);
-                            }
-                        });
-
-                        contents.forEach(c => c.style.display = 'block');
-                        drawChart("#expense-chart", "#expense-legend-summary", 320, 95, true);
-                        await waitForImages(document.getElementById('handbook-container'));
-                        await new Promise(resolve => requestAnimationFrame(resolve));
-
-                        const { jsPDF } = window.jspdf;
-                        const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-                        const pdfOptions = {
-                            blockGap: 4,
-                            cursorY: 8,
-                            margin: 8,
-                            minRemainingHeight: 24
-                        };
-                        const exportBlocks = [
-                            document.querySelector('header'),
-                            document.getElementById('content-overview'),
-                            document.getElementById('content-preparation'),
-                            ...Array.from(document.querySelectorAll('#content-itinerary > .card')),
-                            document.getElementById('content-food'),
-                            document.getElementById('content-expenses'),
-                            document.getElementById('content-lodging')
-                        ].filter(Boolean);
-
-                        for (let i = 0; i < exportBlocks.length; i++) {
-                            setDownloadStatus(`PDF 手冊生成中... ${i + 1}/${exportBlocks.length}`);
-                            await addElementToPdf(pdf, exportBlocks[i], pdfOptions);
-                        }
-
-                        pdf.save('2026_Hiroshima_Travel_Guide.pdf');
-                        restorePdfState();
-                    } catch (err) {
-                        console.error("PDF 導出時發生錯誤:", err);
-                        downloadBtn.innerHTML = "匯出發生錯誤，請重試";
-                        setTimeout(() => {
-                            restorePdfState();
-                        }, 3000);
-                    }
-                };
-
-                downloadBtn.addEventListener('click', window.exportHiroshimaPdf);
-            }
         });
     </script>
 </body>
