@@ -418,6 +418,15 @@
         .card .rounded-full { border-radius: 999px !important; }
         .card .shadow-lg, .card .shadow-xl { box-shadow: none !important; }
         .expense-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(8,47,61,.08); }
+        #content-food .flex.justify-between.items-start.mb-3 { gap: 12px; }
+        #content-food .flex.justify-between.items-start.mb-3 > h3 { min-width: 0; flex: 1 1 auto; }
+        #content-food .flex.justify-between.items-start.mb-3 > .flex.items-center.gap-2 { flex: 0 0 auto; flex-wrap: nowrap; }
+        #content-food .flex.justify-between.items-start.mb-3 > .flex.items-center.gap-2 > a { flex: 0 0 auto; }
+        #content-food .flex.justify-between.items-start.mb-3 > .flex.items-center.gap-2 > span {
+            flex: 0 0 auto;
+            white-space: nowrap;
+            writing-mode: horizontal-tb;
+        }
         .timeline-dot { background: var(--orange); border-color: var(--paper-soft); box-shadow: 0 0 0 1px var(--orange); }
         .timeline-item { border-left-color: var(--line); }
         input { min-height: 48px; border-radius: 0 !important; }
