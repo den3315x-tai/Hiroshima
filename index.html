@@ -499,6 +499,19 @@
         }
         .travel-map-frame iframe { width: 100%; height: 100%; display: block; border: 0; }
         .map-note { margin: 16px 0 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+        .station-guide { margin-top: 52px; }
+        .station-guide-header { margin-bottom: 22px; display: flex; align-items: end; justify-content: space-between; gap: 28px; }
+        .station-guide-header h3 { margin: 0; color: var(--ink); font: 400 clamp(26px, 3vw, 36px)/1.3 var(--serif); letter-spacing: .08em; }
+        .station-guide-header p { max-width: 520px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+        .station-table-wrap { overflow: hidden; border: 1px solid var(--line); background: rgba(255,255,255,.36); }
+        .station-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .station-table th { padding: 15px 18px; background: var(--sea-deep); color: #fff; text-align: left; font: 500 11px/1.4 var(--sans); letter-spacing: .12em; }
+        .station-table th:first-child { width: 64px; text-align: center; }
+        .station-table td { padding: 18px; border-top: 1px solid var(--line); color: var(--ink); font-size: 13px; line-height: 1.55; vertical-align: middle; }
+        .station-table tbody tr:first-child td { border-top: 0; }
+        .station-table tbody tr:hover { background: rgba(11,67,85,.045); }
+        .station-table td:first-child { color: var(--orange); text-align: center; font: 500 12px var(--serif); letter-spacing: .06em; }
+        .station-table .station-ja { font-weight: 600; letter-spacing: .04em; }
 
         footer { margin-top: 0 !important; padding: 34px 24px !important; background: var(--sea-deep); color: #9bb1b6 !important; }
 
@@ -535,6 +548,17 @@
             .map-open-link { width: 100%; }
             .travel-map-frame { height: 68vh; min-height: 520px; max-height: 680px; }
             .map-note { font-size: 10px; }
+            .station-guide { margin-top: 40px; }
+            .station-guide-header { align-items: stretch; flex-direction: column; gap: 10px; }
+            .station-guide-header h3 { font-size: 27px; }
+            .station-table-wrap { overflow: visible; border: 0; background: transparent; }
+            .station-table, .station-table tbody, .station-table tr, .station-table td { display: block; width: 100%; }
+            .station-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+            .station-table tr { margin-bottom: 12px; padding: 14px 16px; border: 1px solid var(--line); background: rgba(255,255,255,.4); }
+            .station-table td { min-height: 30px; padding: 4px 0 4px 92px; border: 0; position: relative; font-size: 12px; }
+            .station-table td::before { content: attr(data-label); position: absolute; left: 0; top: 4px; width: 78px; color: var(--muted); font-size: 10px; letter-spacing: .08em; }
+            .station-table td:first-child { padding: 0 0 8px; text-align: left; }
+            .station-table td:first-child::before { display: none; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1010,6 +1034,28 @@
                     ></iframe>
                 </div>
                 <p class="map-note">若內嵌地圖受到瀏覽器或網路限制，可使用上方按鈕改由 Google 地圖完整頁面開啟。</p>
+                <div class="station-guide">
+                    <div class="station-guide-header">
+                        <h3>主要交通地點對照</h3>
+                        <p>依行程移動順序整理日本境內的大型交通節點；向站務人員問路或確認月台時，可直接出示英文或日文名稱。</p>
+                    </div>
+                    <div class="station-table-wrap">
+                        <table class="station-table">
+                            <caption class="sr-only">旅程中日本主要交通地點的中文、英文與日文名稱對照</caption>
+                            <thead><tr><th scope="col">順序</th><th scope="col">中文</th><th scope="col">English</th><th scope="col">日本語</th></tr></thead>
+                            <tbody>
+                                <tr><td>01</td><td data-label="中文">岡山桃太郎機場</td><td data-label="English">Okayama Momotaro Airport</td><td data-label="日本語" class="station-ja" lang="ja">岡山桃太郎空港</td></tr>
+                                <tr><td>02</td><td data-label="中文">岡山站</td><td data-label="English">Okayama Station</td><td data-label="日本語" class="station-ja" lang="ja">岡山駅</td></tr>
+                                <tr><td>03</td><td data-label="中文">廣島站</td><td data-label="English">Hiroshima Station</td><td data-label="日本語" class="station-ja" lang="ja">広島駅</td></tr>
+                                <tr><td>04</td><td data-label="中文">宮島口站</td><td data-label="English">Miyajimaguchi Station</td><td data-label="日本語" class="station-ja" lang="ja">宮島口駅</td></tr>
+                                <tr><td>05</td><td data-label="中文">宮島口渡輪碼頭</td><td data-label="English">Miyajimaguchi Ferry Terminal</td><td data-label="日本語" class="station-ja" lang="ja">宮島口桟橋</td></tr>
+                                <tr><td>06</td><td data-label="中文">宮島渡輪碼頭</td><td data-label="English">Miyajima Ferry Terminal</td><td data-label="日本語" class="station-ja" lang="ja">宮島桟橋</td></tr>
+                                <tr><td>07</td><td data-label="中文">尾道站</td><td data-label="English">Onomichi Station</td><td data-label="日本語" class="station-ja" lang="ja">尾道駅</td></tr>
+                                <tr><td>08</td><td data-label="中文">姬路站</td><td data-label="English">Himeji Station</td><td data-label="日本語" class="station-ja" lang="ja">姫路駅</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <!-- 5. Food Section -->
