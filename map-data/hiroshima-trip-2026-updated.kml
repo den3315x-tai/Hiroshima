@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>2026 廣島・尾道・岡山七天六夜（更新版）</name><description>依目前七天行程更新；已加入吳市、兒島與鷲羽山，移除取消景點。</description><Folder><name>交通</name><Placemark><name>JR宮島口站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.302350000000,34.312280000000,0</coordinates></Point></Placemark><Placemark><name>兒島站</name><description>分類：交通
+Day 5 轉乘鷲羽山夕景鑑賞巴士</description><Point><coordinates>133.807665200000,34.462740800000,0</coordinates></Point></Placemark><Placemark><name>千光寺山纜車・山頂站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.197250000000,34.410400000000,0</coordinates></Point></Placemark><Placemark><name>千光寺山纜車・山麓站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.202200000000,34.409650000000,0</coordinates></Point></Placemark><Placemark><name>吉備津站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.846053000000,34.674411000000,0</coordinates></Point></Placemark><Placemark><name>吳站</name><description>分類：交通
+Day 3 搭乘 JR 吳線往返廣島</description><Point><coordinates>132.557974500000,34.244687300000,0</coordinates></Point></Placemark><Placemark><name>姬路站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>134.690797000000,34.826405000000,0</coordinates></Point></Placemark><Placemark><name>宮島棧橋</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.322247000000,34.302095000000,0</coordinates></Point></Placemark><Placemark><name>宮島纜車・紅葉谷站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.325880000000,34.289200000000,0</coordinates></Point></Placemark><Placemark><name>尾道站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.193774000000,34.403907000000,0</coordinates></Point></Placemark><Placemark><name>岡山桃太郎機場</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.853869000000,34.756973000000,0</coordinates></Point></Placemark><Placemark><name>岡山站西口巴士總站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.915550000000,34.666680000000,0</coordinates></Point></Placemark><Placemark><name>岡山車站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.917825000000,34.665409000000,0</coordinates></Point></Placemark><Placemark><name>廣島車站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.475577000000,34.397826000000,0</coordinates></Point></Placemark></Folder><Folder><name>景點</name><Placemark><name>三百山展望台</name><description>分類：景點
+Day 5 夕景鑑賞巴士停留點</description><Point><coordinates>133.780656266000,34.449565074000,0</coordinates></Point></Placemark><Placemark><name>千光寺公園・頂上展望台 PEAK</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.196960000000,34.410686000000,0</coordinates></Point></Placemark><Placemark><name>原爆圓頂屋</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.453524000000,34.395466000000,0</coordinates></Point></Placemark><Placemark><name>吉備津神社</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.850200000000,34.670130000000,0</coordinates></Point></Placemark><Placemark><name>嚴島神社</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.319008000000,34.296542000000,0</coordinates></Point></Placemark><Placemark><name>大和博物館</name><description>分類：景點
+Day 3 09:00–10:20</description><Point><coordinates>132.555879900000,34.241184700000,0</coordinates></Point></Placemark><Placemark><name>姬路城</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>134.694020000000,34.839331000000,0</coordinates></Point></Placemark><Placemark><name>岡山城</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.936045000000,34.665176000000,0</coordinates></Point></Placemark><Placemark><name>岡山後樂園</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.937395000000,34.666330000000,0</coordinates></Point></Placemark><Placemark><name>廣島和平紀念資料館</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.453098000000,34.391550000000,0</coordinates></Point></Placemark><Placemark><name>彌山山頂展望台</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.319657000000,34.279781000000,0</coordinates></Point></Placemark><Placemark><name>海上自衛隊吳史料館（鐵鯨館）</name><description>分類：景點
+Day 3 10:25–11:25</description><Point><coordinates>132.555321100000,34.242161900000,0</coordinates></Point></Placemark><Placemark><name>紙鶴塔</name><description>分類：景點
+Day 3 15:50–16:50</description><Point><coordinates>132.454685600000,34.395670300000,0</coordinates></Point></Placemark><Placemark><name>貓之細道</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.200455000000,34.410557000000,0</coordinates></Point></Placemark><Placemark><name>鷲羽山展望台</name><description>分類：景點
+Day 5 欣賞瀨戶內海日落</description><Point><coordinates>133.812463666000,34.435467016000,0</coordinates></Point></Placemark></Folder><Folder><name>餐廳</name><Placemark><name>Hitorinabe Megu</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.928176000000,34.666300000000,0</coordinates></Point></Placemark><Placemark><name>お食事處 梅山</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.320350000000,34.297750000000,0</coordinates></Point></Placemark><Placemark><name>ごろ兵衛 岡山駅前店</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.920349000000,34.664866000000,0</coordinates></Point></Placemark><Placemark><name>七味</name><description>分類：餐廳
+關東煮；廣島市中區藥研堀7-17</description><Point><coordinates>132.464849358641,34.390238027270,0</coordinates></Point></Placemark><Placemark><name>串燒處 Kanaiya</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.476308000000,34.394447000000,0</coordinates></Point></Placemark><Placemark><name>五衛門 福屋廣島站前店</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.473742000000,34.396437000000,0</coordinates></Point></Placemark><Placemark><name>博多雞皮大臣 廣島站西店</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.472568000000,34.398180000000,0</coordinates></Point></Placemark><Placemark><name>吾妻壽司</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.918000000000,34.665429000000,0</coordinates></Point></Placemark><Placemark><name>味司 野村</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.923822000000,34.665186000000,0</coordinates></Point></Placemark><Placemark><name>增家 廣島站前荒神町店</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.477430000000,34.394884000000,0</coordinates></Point></Placemark><Placemark><name>富々</name><description>分類：餐廳
+關東煮；廣島市中區金山町11-11</description><Point><coordinates>132.466115864211,34.391702178117,0</coordinates></Point></Placemark><Placemark><name>尾道拉麵 Maruboshi</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.201646000000,34.407648000000,0</coordinates></Point></Placemark><Placemark><name>尾道拉麵 Tani</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.193550000000,34.404100000000,0</coordinates></Point></Placemark><Placemark><name>尾道拉麵 壹番館</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.202712000000,34.408334000000,0</coordinates></Point></Placemark><Placemark><name>燒野味 罠 狩場</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.472756000000,34.398049000000,0</coordinates></Point></Placemark><Placemark><name>牡蠣屋</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.321705000000,34.298559000000,0</coordinates></Point></Placemark><Placemark><name>蔥庵 紙屋町店</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.460498000000,34.394933000000,0</coordinates></Point></Placemark><Placemark><name>長田屋</name><description>分類：餐廳
+廣島燒；廣島市中區大手町1丁目7-19</description><Point><coordinates>132.454468120101,34.394209163447,0</coordinates></Point></Placemark><Placemark><name>高原誠吉食堂</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.201146000000,34.408432000000,0</coordinates></Point></Placemark></Folder><Folder><name>住宿</name><Placemark><name>尾道綠丘飯店</name><description>分類：住宿
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.192881000000,34.403329000000,0</coordinates></Point></Placemark><Placemark><name>東橫INN 岡山站東口</name><description>分類：住宿
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.920964000000,34.666500000000,0</coordinates></Point></Placemark><Placemark><name>東橫INN 廣島站新幹線口2號店</name><description>分類：住宿
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.479346000000,34.399052000000,0</coordinates></Point></Placemark></Folder><Folder><name>購物</name><Placemark><name>AEON MALL 岡山</name><description>分類：購物
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.917354000000,34.662020000000,0</coordinates></Point></Placemark><Placemark><name>唐吉訶德 岡山站前店</name><description>分類：購物
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.919550000000,34.665080000000,0</coordinates></Point></Placemark><Placemark><name>宮島表參道商店街</name><description>分類：購物
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.321961000000,34.299556000000,0</coordinates></Point></Placemark><Placemark><name>尾道本通商店街／尾道老街</name><description>分類：購物
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.200050000000,34.408300000000,0</coordinates></Point></Placemark><Placemark><name>岡山一番街</name><description>分類：購物
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.918719000000,34.664584000000,0</coordinates></Point></Placemark><Placemark><name>廣島本通商店街</name><description>分類：購物
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.456974000000,34.393820000000,0</coordinates></Point></Placemark><Placemark><name>晴天之國岡山館</name><description>分類：購物
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.929264000000,34.665151000000,0</coordinates></Point></Placemark><Placemark><name>紙屋町</name><description>分類：購物
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.455873000000,34.395555000000,0</coordinates></Point></Placemark><Placemark><name>表町商店街</name><description>分類：購物
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.929450000000,34.663450000000,0</coordinates></Point></Placemark></Folder></Document></kml>
