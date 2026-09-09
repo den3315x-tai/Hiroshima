@@ -472,6 +472,50 @@
         .agenda-copy { padding-top: 2px; }
         .agenda-copy h4 { margin: 0; color: var(--ink); font: 500 19px/1.55 var(--serif); letter-spacing: .04em; }
         .agenda-copy p { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+        .transport-jump-link {
+            min-height: 36px;
+            margin-top: 9px;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--sea);
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: rgba(11,67,85,.35);
+        }
+        .transport-jump-link::after { content: "→"; text-decoration: none; }
+
+        #content-transport { max-width: 1080px; margin: 0 auto; }
+        .transport-section-header { margin-bottom: 30px; }
+        .transport-section-header h2 { margin: 0; font: 400 clamp(34px, 4vw, 52px)/1.2 var(--serif); letter-spacing: .1em; }
+        .transport-section-header p { max-width: 760px; margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.9; }
+        .transport-notice { margin: 0 0 24px; padding: 16px 18px; border-left: 3px solid var(--orange); background: rgba(255,255,255,.34); color: var(--muted); font-size: 12px; line-height: 1.8; }
+        .transport-day { scroll-margin-top: 92px; border: 1px solid var(--line); background: rgba(250,247,239,.72); }
+        .transport-day + .transport-day { margin-top: 22px; }
+        .transport-day-header { padding: 18px 22px; display: flex; align-items: baseline; justify-content: space-between; gap: 18px; border-bottom: 1px solid var(--line); background: var(--paper-soft); }
+        .transport-day-header h3 { margin: 0; font: 500 22px/1.35 var(--serif); letter-spacing: .06em; }
+        .transport-day-header p { margin: 0; color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+        .transport-list { list-style: none; margin: 0; padding: 0; }
+        .transport-row {
+            scroll-margin-top: 92px;
+            display: grid;
+            grid-template-columns: 108px 150px minmax(220px, 1fr) 178px;
+            gap: 18px;
+            padding: 20px 22px;
+            border-top: 1px solid var(--line);
+            transition: background-color .2s ease, box-shadow .2s ease;
+        }
+        .transport-row:first-child { border-top: 0; }
+        .transport-time { color: var(--sea); font: 500 14px/1.55 var(--serif); letter-spacing: .04em; }
+        .transport-route strong, .transport-detail strong { display: block; color: var(--ink); font-size: 13px; line-height: 1.55; }
+        .transport-route span, .transport-detail span, .transport-place { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+        .transport-detail .train-display { color: var(--sea); font-weight: 700; }
+        .transport-status { display: inline-flex; margin-top: 8px; padding: 3px 8px; border: 1px solid var(--line); color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .05em; }
+        .transport-status.confirmed { border-color: #b9d3c1; color: #476b52; background: #edf5ef; }
+        .transport-status.check { border-color: #dbc99e; color: #7f6228; background: #faf3df; }
+        .transport-status.flexible { border-color: #b8ccd4; color: #426878; background: #edf4f6; }
+        .transport-row.transport-focus { background: #fff5e8; box-shadow: inset 4px 0 0 var(--orange); }
 
         #content-map { max-width: 1180px; margin: 0 auto; }
         .map-section-header {
@@ -568,6 +612,13 @@
             .agenda-icon { width: 34px; height: 34px; font-size: 16px; }
             .agenda-copy h4 { font-size: 16px; }
             .agenda-copy p { font-size: 11px; }
+            .transport-section-header h2 { font-size: 34px; }
+            .transport-day-header { align-items: flex-start; flex-direction: column; gap: 5px; padding: 16px; }
+            .transport-day-header h3 { font-size: 19px; }
+            .transport-row { grid-template-columns: 76px 1fr; gap: 10px 14px; padding: 17px 16px; }
+            .transport-time { grid-row: span 3; font-size: 12px; }
+            .transport-route strong, .transport-detail strong { font-size: 12px; }
+            .transport-place { margin-top: 0; }
             .map-section-header { margin-bottom: 20px; align-items: stretch; flex-direction: column; gap: 20px; }
             .map-section-header h2 { font-size: 34px; }
             .map-open-link { width: 100%; }
@@ -621,6 +672,7 @@
             <button id="tab-overview" class="pill-tab-button active">旅程資訊</button>
             <button id="tab-preparation" class="pill-tab-button">行前準備</button>
             <button id="tab-itinerary" class="pill-tab-button">詳細行程</button>
+            <button id="tab-transport" class="pill-tab-button">交通方式</button>
             <button id="tab-map" class="pill-tab-button">旅行地圖</button>
             <button id="tab-food" class="pill-tab-button">推薦餐廳</button>
             <button id="tab-expenses" class="pill-tab-button">費用統計</button>
@@ -1050,8 +1102,8 @@
                         <ol class="agenda-list">
                             <li class="agenda-item"><time class="agenda-time">08:30</time><span class="agenda-icon" aria-hidden="true">🚕</span><div class="agenda-copy"><h4>坐計程車去高雄機場</h4><p>建議提前出發，預留交通與辦理報到時間。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">12:40<br>— 16:30</time><span class="agenda-icon" aria-hidden="true">✈️</span><div class="agenda-copy"><h4>高雄 → 岡山（虎航 IT262）</h4><p>12:40 從高雄國際機場出發；16:30 抵達岡山機場。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">17:05<br>— 17:35</time><span class="agenda-icon" aria-hidden="true">🚌</span><div class="agenda-copy"><h4>搭乘「機場接駁巴士」前往岡山車站</h4><p>車程約 30 分鐘。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">18:30<br>— 19:10</time><span class="agenda-icon" aria-hidden="true">🚅</span><div class="agenda-copy"><h4>岡山車站 ＞ 廣島車站（新幹線）</h4><p>車程約 40 分鐘；搭乘山陽新幹線。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">17:05<br>— 17:35</time><span class="agenda-icon" aria-hidden="true">🚌</span><div class="agenda-copy"><h4>搭乘「機場接駁巴士」前往岡山車站</h4><p>車程約 30 分鐘。</p><a class="transport-jump-link" href="#transport-day1-airport-bus">查看搭乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">18:32<br>— 19:11</time><span class="agenda-icon" aria-hidden="true">🚅</span><div class="agenda-copy"><h4>岡山車站 ＞ 廣島車站（新幹線）</h4><p>搭乘山陽新幹線 Sakura 767；車程約 39 分鐘。</p><a class="transport-jump-link" href="#transport-day1-okayama-hiroshima">查看搭乘資訊</a></div></li>
                             <li class="agenda-item"><time class="agenda-time">19:20</time><span class="agenda-icon" aria-hidden="true">🏨</span><div class="agenda-copy"><h4>入住東橫INN 廣島新幹線口2號店</h4><p>辦理入住手續，稍作休息。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">19:30</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>車站附近覓食</h4><p>推薦廣島燒、拉麵、居酒屋等在地美食。</p></div></li>
                         </ol>
@@ -1066,19 +1118,19 @@
                     </button>
                     <div class="collapsible-content">
                         <ol class="agenda-list">
-                            <li class="agenda-item"><time class="agenda-time">07:50<br>— 08:19</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>廣島車站前往宮島口車站</h4><p>搭乘 JR 山陽本線；車程約 28 分鐘。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">08:40<br>— 08:50</time><span class="agenda-icon" aria-hidden="true">⛴️</span><div class="agenda-copy"><h4>坐渡輪前往宮島</h4><p>搭乘 JR 西日本宮島渡輪；船程約 10 分鐘。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">07:50<br>— 08:19</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>廣島車站前往宮島口車站</h4><p>搭乘 JR 山陽本線；車程約 29 分鐘。</p><a class="transport-jump-link" href="#transport-day2-hiroshima-miyajimaguchi">查看搭乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:40<br>— 08:50</time><span class="agenda-icon" aria-hidden="true">⛴️</span><div class="agenda-copy"><h4>坐渡輪前往宮島</h4><p>搭乘 JR 西日本宮島渡輪；船程約 10 分鐘。</p><a class="transport-jump-link" href="#transport-day2-ferry-outbound">查看搭乘資訊</a></div></li>
                             <li class="agenda-item"><time class="agenda-time">09:00<br>— 10:30</time><span class="agenda-icon" aria-hidden="true">⛩️</span><div class="agenda-copy"><h4>嚴島神社、退潮景觀</h4><p>參拜嚴島神社，觀察接近 10:27 乾潮時的灘地與大鳥居景色；當日最低潮位約 142 cm，無法步行至大鳥居底部。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">10:30<br>— 11:20</time><span class="agenda-icon" aria-hidden="true">🙏</span><div class="agenda-copy"><h4>大聖院</h4><p>參觀宮島歷史悠久的真言宗寺院，沿境內石階與佛堂散步。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">11:20<br>— 12:00</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>表參道商店街散步</h4><p>品嚐炸楓葉饅頭等小吃，先進行第一段伴手禮採買。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">12:00<br>— 13:00</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>午餐：牡蠣屋、梅山</h4><p>品嚐新鮮牡蠣料理與在地特色餐點。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">13:00<br>— 13:25</time><span class="agenda-icon" aria-hidden="true">🚶</span><div class="agenda-copy"><h4>前往紅葉谷纜車站</h4><p>由商店街一帶步行穿過紅葉谷公園，前往纜車山麓站。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">13:25<br>— 14:45</time><span class="agenda-icon" aria-hidden="true">🚠</span><div class="agenda-copy"><h4>宮島纜車、獅子岩展望台</h4><p>搭乘纜車至獅子岩站欣賞瀨戶內海後原路返回；不繼續步行前往彌山山頂。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">13:25<br>— 14:45</time><span class="agenda-icon" aria-hidden="true">🚠</span><div class="agenda-copy"><h4>宮島纜車、獅子岩展望台</h4><p>搭乘纜車至獅子岩站欣賞瀨戶內海後原路返回；不繼續步行前往彌山山頂。</p><a class="transport-jump-link" href="#transport-day2-ropeway">查看搭乘資訊</a></div></li>
                             <li class="agenda-item"><time class="agenda-time">14:45<br>— 15:15</time><span class="agenda-icon" aria-hidden="true">🚶</span><div class="agenda-copy"><h4>返回神社、商店街一帶</h4><p>由紅葉谷纜車站下行，返回嚴島神社周邊。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">15:15<br>— 15:45</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>商店街採買</h4><p>利用漲潮前的空檔補買伴手禮。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">15:45<br>— 16:20</time><span class="agenda-icon" aria-hidden="true">🌊</span><div class="agenda-copy"><h4>嚴島神社、漲潮海上景觀</h4><p>再次回到神社與大鳥居周邊；16:00 潮位約 264 cm，可在日落前欣賞海上景觀。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">16:20<br>— 17:00</time><span class="agenda-icon" aria-hidden="true">🎁</span><div class="agenda-copy"><h4>最後採買、前往宮島碼頭</h4><p>完成最後一段採買後，步行返回宮島碼頭。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">17:00<br>之後</time><span class="agenda-icon" aria-hidden="true">⛴️</span><div class="agenda-copy"><h4>搭船返回廣島</h4><p>搭乘渡輪返回宮島口，再依當日班次轉乘 JR 山陽本線回廣島。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">17:00<br>之後</time><span class="agenda-icon" aria-hidden="true">⛴️</span><div class="agenda-copy"><h4>搭船返回廣島</h4><p>搭乘渡輪返回宮島口，再依當日班次轉乘 JR 山陽本線回廣島。</p><a class="transport-jump-link" href="#transport-day2-ferry-return">查看回程交通</a></div></li>
                         </ol>
                     </div>
                 </article>
@@ -1092,12 +1144,12 @@
                     <div class="collapsible-content">
                         <ol class="agenda-list">
                             <li class="agenda-item"><time class="agenda-time">07:40</time><span class="agenda-icon" aria-hidden="true">🚶</span><div class="agenda-copy"><h4>飯店出發前往廣島站</h4><p>提早出發，預留步行與進站時間。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">08:00<br>— 08:45</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>廣島 → 吳</h4><p>搭乘 JR 吳線前往吳站；依當日班次調整出發時間。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">09:00<br>— 10:20</time><span class="agenda-icon" aria-hidden="true">⚓</span><div class="agenda-copy"><h4>大和博物館</h4><p>參觀戰艦大和模型，認識吳市造船與海軍歷史。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:05<br>— 08:58</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>廣島 → 吳</h4><p>搭乘 JR 山陽線普通列車，於海田市後直通吳線，不需換車。</p><a class="transport-jump-link" href="#transport-day3-hiroshima-kure">查看搭乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">09:05<br>— 10:20</time><span class="agenda-icon" aria-hidden="true">⚓</span><div class="agenda-copy"><h4>大和博物館</h4><p>參觀戰艦大和模型，認識吳市造船與海軍歷史。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">10:25<br>— 11:25</time><span class="agenda-icon" aria-hidden="true">🚢</span><div class="agenda-copy"><h4>海上自衛隊吳史料館「鐵鯨館」</h4><p>參觀掃雷與潛水艇展覽，進入實體潛水艇「秋潮」。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">11:30<br>— 12:30</time><span class="agenda-icon" aria-hidden="true">🍛</span><div class="agenda-copy"><h4>午餐：吳海自咖哩</h4><p>在吳站或博物館周邊品嚐吳市特色海自咖哩。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">12:40<br>— 13:30</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>吳 → 廣島</h4><p>搭乘 JR 吳線返回廣島站。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">13:30<br>— 14:00</time><span class="agenda-icon" aria-hidden="true">🚃</span><div class="agenda-copy"><h4>前往和平紀念公園</h4><p>由廣島站搭乘路面電車或觀光循環巴士前往。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">12:46<br>— 13:23</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>吳 → 廣島</h4><p>搭乘 JR 吳線快速安藝路 Liner 返回廣島站。</p><a class="transport-jump-link" href="#transport-day3-kure-hiroshima">查看搭乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">13:30<br>— 14:00</time><span class="agenda-icon" aria-hidden="true">🚃</span><div class="agenda-copy"><h4>前往和平紀念公園</h4><p>由廣島站搭乘廣島電鐵 1 號線前往袋町，再步行前往和平紀念公園。</p><a class="transport-jump-link" href="#transport-day3-tram">查看搭乘資訊</a></div></li>
                             <li class="agenda-item"><time class="agenda-time">14:00<br>— 15:50</time><span class="agenda-icon" aria-hidden="true">🕊️</span><div class="agenda-copy"><h4>和平紀念資料館、原爆圓頂屋</h4><p>了解歷史、緬懷和平，參觀和平紀念公園與世界遺產原爆圓頂屋。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">15:50<br>— 16:50</time><span class="agenda-icon" aria-hidden="true">🗼</span><div class="agenda-copy"><h4>紙鶴塔</h4><p>登上展望台眺望原爆圓頂屋與廣島市景。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">17:00<br>— 18:00</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>本通商店街、紙屋町逛街</h4><p>縮短購物時間，集中採買藥妝、百貨與伴手禮。</p></div></li>
@@ -1114,8 +1166,8 @@
                     </button>
                     <div class="collapsible-content">
                         <ol class="agenda-list">
-                            <li class="agenda-item"><time class="agenda-time">08:11<br>— 09:39</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>廣島站前往尾道站（山陽本線）</h4><p>搭乘 JR 山陽本線；車程約 1 小時 28 分鐘。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">10:00<br>— 12:00</time><span class="agenda-icon" aria-hidden="true">🚠</span><div class="agenda-copy"><h4>搭乘纜車上山（千光寺公園、展望台）</h4><p>搭乘千光寺山纜車；欣賞尾道市區與瀨戶內海美景。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:11<br>— 09:39</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>廣島站前往尾道站（山陽本線）</h4><p>在糸崎站轉乘 JR 山陽本線；全程約 1 小時 28 分鐘。</p><a class="transport-jump-link" href="#transport-day4-hiroshima-itozaki">查看轉乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">10:00<br>— 12:00</time><span class="agenda-icon" aria-hidden="true">🚠</span><div class="agenda-copy"><h4>搭乘纜車上山（千光寺公園、展望台）</h4><p>搭乘千光寺山纜車；欣賞尾道市區與瀨戶內海美景。</p><a class="transport-jump-link" href="#transport-day4-ropeway">查看搭乘資訊</a></div></li>
                             <li class="agenda-item"><time class="agenda-time">12:00<br>— 13:30</time><span class="agenda-icon" aria-hidden="true">🍜</span><div class="agenda-copy"><h4>午餐：尾道拉麵</h4><p>在地特色美食；推薦老字號拉麵店。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">14:00<br>— 17:00</time><span class="agenda-icon" aria-hidden="true">🚶</span><div class="agenda-copy"><h4>漫步尾道老街，或找家靠海的咖啡廳放空</h4><p>散步於古色古香的坂道小巷；享受悠閒的海景與咖啡時光。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">17:00</time><span class="agenda-icon" aria-hidden="true">🏨</span><div class="agenda-copy"><h4>入住尾道綠丘飯店</h4><p>辦理入住手續，稍作休息；享受飯店設施與瀨戶內海美景。</p></div></li>
@@ -1131,19 +1183,19 @@
                     </button>
                     <div class="collapsible-content">
                         <ol class="agenda-list">
-                            <li class="agenda-item"><time class="agenda-time">06:47<br>— 08:13</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>尾道 → 岡山</h4><p>搭乘 JR 山陽本線普通列車前往岡山站。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">08:13<br>— 08:25</time><span class="agenda-icon" aria-hidden="true">🧳</span><div class="agenda-copy"><h4>岡山站寄放行李</h4><p>先將行李放入岡山站置物櫃，輕裝前往新幹線月台。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">08:33<br>— 08:52</time><span class="agenda-icon" aria-hidden="true">🚅</span><div class="agenda-copy"><h4>岡山 → 姬路</h4><p>搭乘山陽新幹線 Nozomi 84 號前往姬路站。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">08:52<br>— 09:15</time><span class="agenda-icon" aria-hidden="true">🚶</span><div class="agenda-copy"><h4>步行前往姬路城</h4><p>從姬路站北口沿大手前通步行前往姬路城，預留出站與步行時間。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">09:15<br>— 11:45</time><span class="agenda-icon" aria-hidden="true">🏯</span><div class="agenda-copy"><h4>姬路城</h4><p>參觀日本國寶與世界文化遺產姬路城。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">07:01<br>— 08:26</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>尾道 → 岡山</h4><p>搭乘 JR 山陽本線普通列車直達岡山站；車程 1 小時 25 分鐘。</p><a class="transport-jump-link" href="#transport-day5-onomichi-okayama">查看搭乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:26<br>— 08:35</time><span class="agenda-icon" aria-hidden="true">🧳</span><div class="agenda-copy"><h4>岡山站寄放行李</h4><p>先將行李放入岡山站置物櫃，輕裝前往新幹線月臺。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:42<br>— 09:08</time><span class="agenda-icon" aria-hidden="true">🚅</span><div class="agenda-copy"><h4>岡山 → 姬路</h4><p>搭乘山陽新幹線 Hikari 702 號前往姬路站。</p><a class="transport-jump-link" href="#transport-day5-okayama-himeji">查看搭乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">09:08<br>— 09:30</time><span class="agenda-icon" aria-hidden="true">🚶</span><div class="agenda-copy"><h4>步行前往姬路城</h4><p>從姬路站北口沿大手前通步行前往姬路城，預留出站與步行時間。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">09:30<br>— 11:45</time><span class="agenda-icon" aria-hidden="true">🏯</span><div class="agenda-copy"><h4>姬路城</h4><p>參觀日本國寶與世界文化遺產姬路城。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">11:45<br>— 12:45</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>午餐</h4><p>在姬路城周邊用餐。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">12:45<br>— 13:10</time><span class="agenda-icon" aria-hidden="true">🚶</span><div class="agenda-copy"><h4>返回姬路站</h4><p>午餐後步行返回姬路站，預留約 26 分鐘準備搭乘新幹線。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">13:36<br>— 14:02</time><span class="agenda-icon" aria-hidden="true">🚅</span><div class="agenda-copy"><h4>姬路 → 岡山</h4><p>搭乘新幹線 Hikari 707 返回岡山站。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">13:36<br>— 14:02</time><span class="agenda-icon" aria-hidden="true">🚅</span><div class="agenda-copy"><h4>姬路 → 岡山</h4><p>搭乘新幹線 Hikari 707 返回岡山站。</p><a class="transport-jump-link" href="#transport-day5-himeji-okayama">查看搭乘資訊</a></div></li>
                             <li class="agenda-item"><time class="agenda-time">14:02<br>— 15:00</time><span class="agenda-icon" aria-hidden="true">☕</span><div class="agenda-copy"><h4>岡山站休息、準備轉乘</h4><p>在岡山站稍作休息，行李繼續寄放於站內置物櫃。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">15:13<br>— 15:34</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>岡山 → 兒島</h4><p>搭乘快速 Marine Liner 41 前往兒島站。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">15:34<br>— 15:55</time><span class="agenda-icon" aria-hidden="true">🚌</span><div class="agenda-copy"><h4>前往夕景巴士乘車處</h4><p>前往兒島站5號乘車處候車。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">16:00<br>— 18:10</time><span class="agenda-icon" aria-hidden="true">🌅</span><div class="agenda-copy"><h4>鷲羽山夕景鑑賞</h4><p>搭乘夕景鑑賞巴士，16:40停留三百山、17:15抵達鷲羽山展望台，欣賞約17:22的日落後返回兒島站。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">18:40<br>— 19:02</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>兒島 → 岡山</h4><p>搭乘快速 Marine Liner 54 返回岡山站。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">15:13<br>— 15:34</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>岡山 → 兒島</h4><p>搭乘快速 Marine Liner 41 前往兒島站。</p><a class="transport-jump-link" href="#transport-day5-okayama-kojima">查看搭乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">15:34<br>— 15:55</time><span class="agenda-icon" aria-hidden="true">🚌</span><div class="agenda-copy"><h4>前往夕景巴士乘車處</h4><p>前往兒島站 5 號乘車處候車。</p><a class="transport-jump-link" href="#transport-day5-sunset-bus">查看乘車位置</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">16:00<br>— 18:10</time><span class="agenda-icon" aria-hidden="true">🌅</span><div class="agenda-copy"><h4>鷲羽山夕景鑑賞</h4><p>搭乘夕景鑑賞巴士，16:40 停留三百山、17:15 抵達鷲羽山展望台，欣賞約 17:22 的日落後返回兒島站。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">18:40<br>— 19:02</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>兒島 → 岡山</h4><p>搭乘快速 Marine Liner 54 返回岡山站。</p><a class="transport-jump-link" href="#transport-day5-kojima-okayama">查看搭乘資訊</a></div></li>
                             <li class="agenda-item"><time class="agenda-time">19:02<br>— 19:15</time><span class="agenda-icon" aria-hidden="true">🧳</span><div class="agenda-copy"><h4>領取行李</h4><p>取回早上寄放於岡山站置物櫃的行李。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">約 19:30</time><span class="agenda-icon" aria-hidden="true">🏨</span><div class="agenda-copy"><h4>抵達東橫 INN 辦理入住</h4><p>前往東橫 INN 岡山站東口店辦理入住。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">19:45<br>之後</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>晚餐、岡山車站與周邊逛街</h4><p>晚餐後視體力前往岡山車站、一番街或唐吉訶德購物。</p></div></li>
@@ -1159,10 +1211,10 @@
                     </button>
                     <div class="collapsible-content">
                         <ol class="agenda-list">
-                            <li class="agenda-item"><time class="agenda-time">08:11<br>— 08:35</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>岡山車站搭乘「桃太郎線」到吉備津站</h4><p>搭乘 JR 桃太郎線；車程約 24 分鐘。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">08:40<br>— 10:30</time><span class="agenda-icon" aria-hidden="true">⛩️</span><div class="agenda-copy"><h4>參拜吉備津神社（看 360 公尺大長廊）</h4><p>國寶級神社建築；漫步著名的長廊，感受歷史氛圍。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">12:30<br>— 15:00</time><span class="agenda-icon" aria-hidden="true">🏯</span><div class="agenda-copy"><h4>岡山後樂園（日本三大名園）與岡山城</h4><p>欣賞日式庭園之美；參觀烏城岡山城，眺望岡山市景。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">15:30<br>— 16:30</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>逛表町商店街、晴天之國岡山館</h4><p>岡山最大商店街，品嚐在地美食；購買伴手禮與特色商品。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:11<br>— 08:27</time><span class="agenda-icon" aria-hidden="true">🚆</span><div class="agenda-copy"><h4>岡山車站搭乘「桃太郎線」到吉備津站</h4><p>搭乘 JR 桃太郎線；車程約 16 分鐘。</p><a class="transport-jump-link" href="#transport-day6-okayama-kibitsu">查看搭乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">08:40<br>— 10:30</time><span class="agenda-icon" aria-hidden="true">⛩️</span><div class="agenda-copy"><h4>參拜吉備津神社（看 360 公尺大長廊）</h4><p>國寶級神社建築；漫步著名的長廊，感受歷史氛圍。</p><a class="transport-jump-link" href="#transport-day6-kibitsu-okayama">查看返程交通</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">12:30<br>— 15:00</time><span class="agenda-icon" aria-hidden="true">🏯</span><div class="agenda-copy"><h4>岡山後樂園（日本三大名園）與岡山城</h4><p>欣賞日式庭園之美；參觀烏城岡山城，眺望岡山市景。</p><a class="transport-jump-link" href="#transport-day6-korakuen-bus">查看前往方式</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">15:30<br>— 16:30</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>逛表町商店街、晴天之國岡山館</h4><p>岡山最大商店街，品嚐在地美食；購買伴手禮與特色商品。</p><a class="transport-jump-link" href="#transport-day6-omotecho-okayama">查看回岡山站方式</a></div></li>
                             <li class="agenda-item"><time class="agenda-time">18:00</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>車站附近吃晚餐</h4><p>岡山車站周邊美食豐富；推薦岡山燒、海鮮料理或拉麵。</p></div></li>
                         </ol>
                     </div>
@@ -1178,15 +1230,252 @@
                         <ol class="agenda-list">
                             <li class="agenda-item"><time class="agenda-time">09:30<br>— 11:30</time><span class="agenda-icon" aria-hidden="true">🛍️</span><div class="agenda-copy"><h4>AEON MALL 岡山最後採買、藥妝補貨</h4><p>超市、伴手禮、藥妝一次買齊；為旅程畫下完美句點。</p></div></li>
                             <li class="agenda-item"><time class="agenda-time">11:30<br>— 12:30</time><span class="agenda-icon" aria-hidden="true">🍽️</span><div class="agenda-copy"><h4>午餐時間（需準時結束）</h4><p>享用岡山在地美食；請準時結束，預留搭車時間。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">12:50</time><span class="agenda-icon" aria-hidden="true">🚌</span><div class="agenda-copy"><h4>岡山車站西口搭乘機場巴士</h4><p>前往岡山桃太郎機場；車程約 40 分鐘。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">15:25<br>— 17:30</time><span class="agenda-icon" aria-hidden="true">✈️</span><div class="agenda-copy"><h4>岡山 → 桃園（虎航 IT215）</h4><p>航程約 3 小時 5 分鐘；抵達桃園國際機場。</p></div></li>
-                            <li class="agenda-item"><time class="agenda-time">19:00</time><span class="agenda-icon" aria-hidden="true">🚄</span><div class="agenda-copy"><h4>桃園高鐵站坐車回台南</h4><p>搭乘高鐵返回台南；結束愉快的旅程，平安回家。</p></div></li>
+                            <li class="agenda-item"><time class="agenda-time">12:50</time><span class="agenda-icon" aria-hidden="true">🚌</span><div class="agenda-copy"><h4>岡山車站西口搭乘機場巴士</h4><p>前往岡山桃太郎機場；車程約 40 分鐘。</p><a class="transport-jump-link" href="#transport-day7-airport-bus">查看搭乘資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">15:25<br>— 17:30</time><span class="agenda-icon" aria-hidden="true">✈️</span><div class="agenda-copy"><h4>岡山 → 桃園（虎航 IT215）</h4><p>航程約 3 小時 5 分鐘；抵達桃園國際機場。</p><a class="transport-jump-link" href="#transport-day7-flight">查看航班資訊</a></div></li>
+                            <li class="agenda-item"><time class="agenda-time">19:00</time><span class="agenda-icon" aria-hidden="true">🚄</span><div class="agenda-copy"><h4>桃園高鐵站坐車回台南</h4><p>搭乘高鐵返回台南；結束愉快的旅程，平安回家。</p><a class="transport-jump-link" href="#transport-day7-thsr">查看轉乘資訊</a></div></li>
                         </ol>
                     </div>
                 </article>
             </section>
 
-            <!-- 4. Travel Map Section -->
+            <!-- 4. Transportation Section -->
+            <section id="content-transport" class="tab-content">
+                <header class="transport-section-header">
+                    <h2>交通方式</h2>
+                    <p>依日期整理列車、渡輪、纜車與巴士的班次、方向及乘車位置。從詳細行程點選「查看搭乘資訊」，可直接跳到對應交通段。</p>
+                </header>
+                <p class="transport-notice">列車月臺可能臨時變更。出發當天請再次確認車站電子看板、列車方向與現場廣播；標示「當日確認」或「時間估算」的項目請保留彈性。</p>
+
+                <article class="transport-day" id="transport-day1">
+                    <header class="transport-day-header"><h3>DAY 1　10 月 19 日</h3><p>岡山機場 → 岡山 → 廣島</p></header>
+                    <ol class="transport-list">
+                        <li class="transport-row" id="transport-day1-airport-bus">
+                            <time class="transport-time">約 17:05<br>— 17:35</time>
+                            <div class="transport-route"><strong>岡山機場 → 岡山站</strong><span>機場巴士</span></div>
+                            <div class="transport-detail"><strong>航班銜接加班車</strong><span>依入境速度與當日班次調整</span></div>
+                            <div><span class="transport-place">機場 2 號乘車處<br>岡山站西口 21 號下車</span><span class="transport-status check">時間估算</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day1-okayama-hiroshima">
+                            <time class="transport-time">18:32<br>— 19:11</time>
+                            <div class="transport-route"><strong>岡山 → 廣島</strong><span>山陽新幹線</span></div>
+                            <div class="transport-detail"><strong>Sakura 767</strong><span class="train-display">さくら767号 鹿児島中央行</span></div>
+                            <div><span class="transport-place">岡山 22 號月臺<br>廣島 11 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                    </ol>
+                </article>
+
+                <article class="transport-day" id="transport-day2">
+                    <header class="transport-day-header"><h3>DAY 2　10 月 20 日</h3><p>廣島 ↔ 宮島</p></header>
+                    <ol class="transport-list">
+                        <li class="transport-row" id="transport-day2-hiroshima-miyajimaguchi">
+                            <time class="transport-time">07:50<br>— 08:19</time>
+                            <div class="transport-route"><strong>廣島 → 宮島口</strong><span>JR 山陽線普通</span></div>
+                            <div class="transport-detail"><strong>宮島口站下車</strong><span class="train-display">普通 岩国行</span></div>
+                            <div><span class="transport-place">廣島 1 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day2-walk-to-pier">
+                            <time class="transport-time">08:19<br>— 08:22</time>
+                            <div class="transport-route"><strong>宮島口站 → 渡輪碼頭</strong><span>步行約 290 公尺</span></div>
+                            <div class="transport-detail"><strong>依站內指標前往</strong><span>預留過馬路與進入碼頭時間</span></div>
+                            <div><span class="transport-place">宮島口站出發</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day2-ferry-outbound">
+                            <time class="transport-time">08:40<br>— 08:50</time>
+                            <div class="transport-route"><strong>宮島口 → 宮島</strong><span>JR 西日本宮島渡輪</span></div>
+                            <div class="transport-detail"><strong>船程約 10 分鐘</strong><span>候船位置依現場指示</span></div>
+                            <div><span class="transport-place">宮島口渡輪碼頭</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day2-ropeway">
+                            <time class="transport-time">13:25<br>— 14:45</time>
+                            <div class="transport-route"><strong>紅葉谷 ↔ 獅子岩</strong><span>宮島纜車往返</span></div>
+                            <div class="transport-detail"><strong>紅葉谷 → 榧谷轉乘 → 獅子岩</strong><span>包含轉乘與回程</span></div>
+                            <div><span class="transport-place">紅葉谷站</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day2-ferry-return">
+                            <time class="transport-time">17:10<br>— 17:20</time>
+                            <div class="transport-route"><strong>宮島 → 宮島口</strong><span>JR 西日本宮島渡輪</span></div>
+                            <div class="transport-detail"><strong>配合後續 JR 班次</strong><span>抵達後步行前往宮島口站</span></div>
+                            <div><span class="transport-place">宮島碼頭</span><span class="transport-status flexible">建議班次</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day2-miyajimaguchi-hiroshima">
+                            <time class="transport-time">17:42</time>
+                            <div class="transport-route"><strong>宮島口 → 廣島</strong><span>JR 山陽線普通</span></div>
+                            <div class="transport-detail"><strong>往廣島方向</strong><span>方向與月臺請看現場電子看板</span></div>
+                            <div><span class="transport-place">宮島口 3 或 4 號月臺</span><span class="transport-status check">當日確認</span></div>
+                        </li>
+                    </ol>
+                </article>
+
+                <article class="transport-day" id="transport-day3">
+                    <header class="transport-day-header"><h3>DAY 3　10 月 21 日</h3><p>廣島 → 吳 → 廣島市區</p></header>
+                    <ol class="transport-list">
+                        <li class="transport-row" id="transport-day3-hiroshima-kure">
+                            <time class="transport-time">08:05<br>— 08:58</time>
+                            <div class="transport-route"><strong>廣島 → 吳</strong><span>JR 山陽線普通</span></div>
+                            <div class="transport-detail"><strong>海田市後直通吳線</strong><span class="train-display">普通 広行</span></div>
+                            <div><span class="transport-place">廣島 7 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day3-through-service">
+                            <time class="transport-time">同一班列車</time>
+                            <div class="transport-route"><strong>海田市 → 吳</strong><span>直通 JR 吳線</span></div>
+                            <div class="transport-detail"><strong>留在原車續乘</strong><span class="train-display">呉線 普通 広行</span></div>
+                            <div><span class="transport-place">不需在海田市換車</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day3-kure-hiroshima">
+                            <time class="transport-time">12:46<br>— 13:23</time>
+                            <div class="transport-route"><strong>吳 → 廣島</strong><span>JR 吳線快速</span></div>
+                            <div class="transport-detail"><strong>安藝路 Liner</strong><span class="train-display">快速 安芸路ライナー 広島行</span></div>
+                            <div><span class="transport-place">吳站通常 2 號月臺<br>有時可能改用 3 號</span><span class="transport-status check">當日確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day3-tram">
+                            <time class="transport-time">約 13:30<br>— 14:00</time>
+                            <div class="transport-route"><strong>廣島站 → 袋町</strong><span>廣島電鐵 1 號線</span></div>
+                            <div class="transport-detail"><strong>袋町下車後步行</strong><span class="train-display">広島港行</span></div>
+                            <div><span class="transport-place">廣島站 2 樓電車乘車區</span><span class="transport-status flexible">建議路線</span></div>
+                        </li>
+                    </ol>
+                </article>
+
+                <article class="transport-day" id="transport-day4">
+                    <header class="transport-day-header"><h3>DAY 4　10 月 22 日</h3><p>廣島 → 糸崎 → 尾道</p></header>
+                    <ol class="transport-list">
+                        <li class="transport-row" id="transport-day4-hiroshima-itozaki">
+                            <time class="transport-time">08:11<br>— 09:31</time>
+                            <div class="transport-route"><strong>廣島 → 糸崎</strong><span>JR 山陽線普通</span></div>
+                            <div class="transport-detail"><strong>抵達後立即準備轉乘</strong><span class="train-display">普通 糸崎行</span></div>
+                            <div><span class="transport-place">廣島 5 號月臺<br>糸崎 2 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day4-itozaki-transfer">
+                            <time class="transport-time">09:31<br>— 09:32</time>
+                            <div class="transport-route"><strong>糸崎站內轉乘</strong><span>步行轉換月臺</span></div>
+                            <div class="transport-detail"><strong>2 號 → 1 號月臺</strong><span>轉乘只有 1 分鐘，依列車準點狀況</span></div>
+                            <div><span class="transport-place">糸崎站內</span><span class="transport-status check">緊密轉乘</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day4-itozaki-onomichi">
+                            <time class="transport-time">09:32<br>— 09:39</time>
+                            <div class="transport-route"><strong>糸崎 → 尾道</strong><span>JR 山陽線普通</span></div>
+                            <div class="transport-detail"><strong>若未趕上，改搭約 10:08 班次</strong><span class="train-display">普通 相生行</span></div>
+                            <div><span class="transport-place">糸崎 1 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day4-walk-ropeway">
+                            <time class="transport-time">09:39<br>— 約 09:55</time>
+                            <div class="transport-route"><strong>尾道站 → 纜車山麓站</strong><span>步行</span></div>
+                            <div class="transport-detail"><strong>依號誌與行走速度調整</strong><span>由尾道站前出發</span></div>
+                            <div><span class="transport-place">步行前往</span><span class="transport-status flexible">時間估算</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day4-ropeway">
+                            <time class="transport-time">約 10:00</time>
+                            <div class="transport-route"><strong>山麓站 → 山頂站</strong><span>千光寺山纜車</span></div>
+                            <div class="transport-detail"><strong>約每 15 分鐘一班</strong><span>車程約 3 分鐘</span></div>
+                            <div><span class="transport-place">山麓站</span><span class="transport-status flexible">依現場候車</span></div>
+                        </li>
+                    </ol>
+                </article>
+
+                <article class="transport-day" id="transport-day5">
+                    <header class="transport-day-header"><h3>DAY 5　10 月 23 日</h3><p>尾道 → 岡山 → 姬路 → 兒島 → 岡山</p></header>
+                    <ol class="transport-list">
+                        <li class="transport-row" id="transport-day5-onomichi-okayama">
+                            <time class="transport-time">07:01<br>— 08:26</time>
+                            <div class="transport-route"><strong>尾道 → 岡山</strong><span>JR 山陽線普通</span></div>
+                            <div class="transport-detail"><strong>直達岡山，無需換車</strong><span class="train-display">普通 岡山行</span></div>
+                            <div><span class="transport-place">尾道月臺看現場看板<br>岡山 3 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day5-okayama-himeji">
+                            <time class="transport-time">08:42<br>— 09:08</time>
+                            <div class="transport-route"><strong>岡山 → 姬路</strong><span>山陽新幹線</span></div>
+                            <div class="transport-detail"><strong>Hikari 702</strong><span class="train-display">ひかり702号 東京行</span></div>
+                            <div><span class="transport-place">岡山 23 號月臺<br>姬路 11 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day5-himeji-okayama">
+                            <time class="transport-time">13:36<br>— 14:02</time>
+                            <div class="transport-route"><strong>姬路 → 岡山</strong><span>山陽新幹線</span></div>
+                            <div class="transport-detail"><strong>Hikari 707</strong><span class="train-display">ひかり707号 岡山行</span></div>
+                            <div><span class="transport-place">姬路 12 號月臺<br>岡山 21 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day5-okayama-kojima">
+                            <time class="transport-time">15:13<br>— 15:34</time>
+                            <div class="transport-route"><strong>岡山 → 兒島</strong><span>快速 Marine Liner 41</span></div>
+                            <div class="transport-detail"><strong>兒島站下車</strong><span class="train-display">快速 マリンライナー41号 高松行</span></div>
+                            <div><span class="transport-place">岡山 8 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day5-sunset-bus">
+                            <time class="transport-time">16:00<br>— 18:10</time>
+                            <div class="transport-route"><strong>兒島 ↔ 鷲羽山夕景</strong><span>下電巴士</span></div>
+                            <div class="transport-detail"><strong>鷲羽山夕景巴士</strong><span>行經三百山與鷲羽山展望台後返回</span></div>
+                            <div><span class="transport-place">兒島站巴士總站 5 號</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day5-kojima-okayama">
+                            <time class="transport-time">18:40<br>— 19:02</time>
+                            <div class="transport-route"><strong>兒島 → 岡山</strong><span>快速 Marine Liner 54</span></div>
+                            <div class="transport-detail"><strong>返回岡山站</strong><span class="train-display">マリンライナー54号 岡山行</span></div>
+                            <div><span class="transport-place">兒島 1 或 2 號月臺<br>岡山 8 號月臺</span><span class="transport-status check">當日確認</span></div>
+                        </li>
+                    </ol>
+                </article>
+
+                <article class="transport-day" id="transport-day6">
+                    <header class="transport-day-header"><h3>DAY 6　10 月 24 日</h3><p>岡山 → 吉備津 → 岡山市區</p></header>
+                    <ol class="transport-list">
+                        <li class="transport-row" id="transport-day6-okayama-kibitsu">
+                            <time class="transport-time">08:11<br>— 08:27</time>
+                            <div class="transport-route"><strong>岡山 → 吉備津</strong><span>JR 桃太郎線普通</span></div>
+                            <div class="transport-detail"><strong>吉備津站下車</strong><span class="train-display">普通 総社行</span></div>
+                            <div><span class="transport-place">岡山 10 號月臺</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day6-kibitsu-okayama">
+                            <time class="transport-time">建議 10:46<br>— 11:01</time>
+                            <div class="transport-route"><strong>吉備津 → 岡山</strong><span>JR 桃太郎線普通</span></div>
+                            <div class="transport-detail"><strong>返回岡山站</strong><span class="train-display">普通 岡山行</span></div>
+                            <div><span class="transport-place">吉備津站<br>岡山 10 號月臺</span><span class="transport-status flexible">建議班次</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day6-korakuen-bus">
+                            <time class="transport-time">建議約 12:15</time>
+                            <div class="transport-route"><strong>岡山站 → 後樂園</strong><span>路線巴士</span></div>
+                            <div class="transport-detail"><strong>車程約 10 分鐘</strong><span>班次以當日為準</span></div>
+                            <div><span class="transport-place">岡山站東口巴士總站 1 號</span><span class="transport-status flexible">建議路線</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day6-omotecho-okayama">
+                            <time class="transport-time">16:30 後</time>
+                            <div class="transport-route"><strong>表町一帶 → 岡山站</strong><span>岡山電軌東山線或步行</span></div>
+                            <div class="transport-detail"><strong>往岡山駅前方向</strong><span>依購物地點與體力選擇</span></div>
+                            <div><span class="transport-place">城下或県庁通り附近</span><span class="transport-status flexible">彈性選擇</span></div>
+                        </li>
+                    </ol>
+                </article>
+
+                <article class="transport-day" id="transport-day7">
+                    <header class="transport-day-header"><h3>DAY 7　10 月 25 日</h3><p>岡山 → 桃園 → 台南</p></header>
+                    <ol class="transport-list">
+                        <li class="transport-row" id="transport-day7-airport-bus">
+                            <time class="transport-time">12:50</time>
+                            <div class="transport-route"><strong>岡山站 → 岡山機場</strong><span>岡山機場巴士</span></div>
+                            <div class="transport-detail"><strong>DAY 7 暫不修正</strong><span>日期接近後再次確認正式時刻</span></div>
+                            <div><span class="transport-place">岡山站西口 21 號</span><span class="transport-status check">待後續確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day7-flight">
+                            <time class="transport-time">15:25<br>— 17:30</time>
+                            <div class="transport-route"><strong>岡山 → 台北桃園</strong><span>台灣虎航 IT215</span></div>
+                            <div class="transport-detail"><strong>OKJ → TPE 第二航廈</strong><span>航班時間依訂位資料</span></div>
+                            <div><span class="transport-place">登機門當日確認</span><span class="transport-status confirmed">已確認</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day7-airport-mrt">
+                            <time class="transport-time">入境後</time>
+                            <div class="transport-route"><strong>桃園機場 → 高鐵桃園站</strong><span>桃園機場捷運</span></div>
+                            <div class="transport-detail"><strong>A13 → A18</strong><span>依入境與領取行李時間調整</span></div>
+                            <div><span class="transport-place">第二航廈站 A13</span><span class="transport-status flexible">彈性銜接</span></div>
+                        </li>
+                        <li class="transport-row" id="transport-day7-thsr">
+                            <time class="transport-time">約 19:00 後</time>
+                            <div class="transport-route"><strong>高鐵桃園 → 台南</strong><span>台灣高鐵</span></div>
+                            <div class="transport-detail"><strong>班次待售票開放後確認</strong><span>依入境與機捷抵達時間選車</span></div>
+                            <div><span class="transport-place">高鐵桃園站</span><span class="transport-status check">待後續確認</span></div>
+                        </li>
+                    </ol>
+                </article>
+            </section>
+
+            <!-- 5. Travel Map Section -->
             <section id="content-map" class="tab-content">
                 <div class="map-section-header">
                     <div>
@@ -1921,6 +2210,31 @@
                 }
             }
             tabs.forEach(tab => tab.addEventListener('click', () => setActiveTab(tab.id)));
+
+            function showTransportTarget(targetId) {
+                const target = document.getElementById(targetId);
+                if (!target) return;
+                setActiveTab('tab-transport');
+                document.querySelectorAll('.transport-focus').forEach(item => item.classList.remove('transport-focus'));
+                window.setTimeout(() => {
+                    target.classList.add('transport-focus');
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    window.setTimeout(() => target.classList.remove('transport-focus'), 2200);
+                }, 180);
+            }
+
+            document.querySelectorAll('.transport-jump-link').forEach(link => {
+                link.addEventListener('click', event => {
+                    event.preventDefault();
+                    const targetId = link.getAttribute('href').slice(1);
+                    history.replaceState(null, '', `#${targetId}`);
+                    showTransportTarget(targetId);
+                });
+            });
+
+            if (window.location.hash.startsWith('#transport-')) {
+                showTransportTarget(window.location.hash.slice(1));
+            }
 
             // 預算入口卡片點擊，引導跳轉至費用統計 Tab
             const miniChartCard = document.getElementById('mini-chart-card');
