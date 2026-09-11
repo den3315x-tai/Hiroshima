@@ -893,7 +893,7 @@
                                     <svg id="overview-mini-chart" width="80" height="80" class="overflow-visible"></svg>
                                 </div>
                                 <div>
-                                    <p class="text-2xl font-black text-slate-800">NT$ 27,974</p>
+                                    <p class="text-2xl font-black text-slate-800">NT$ 29,274</p>
                                 </div>
                             </div>
                         </div>
@@ -2007,7 +2007,7 @@
                                 <svg id="expense-chart" viewBox="0 0 320 320" class="w-full h-full overflow-visible"></svg>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                                     <span class="text-xs font-black text-slate-400 uppercase">總支出</span>
-                                    <span class="text-2xl md:text-3xl font-black text-slate-900">$27,974</span>
+                                    <span class="text-2xl md:text-3xl font-black text-slate-900">$29,274</span>
                                 </div>
                             </div>
                         </div>
@@ -2071,7 +2071,7 @@
                                     <span class="text-[10px] font-black text-amber-600 uppercase tracking-widest bg-amber-50 px-2 py-1 rounded">TRANSPORT</span>
                                     <h3 class="text-xl font-bold text-slate-800 mt-2">交通費用</h3>
                                 </div>
-                                <span class="text-2xl font-black text-slate-900">$6,011</span>
+                                <span class="text-2xl font-black text-slate-900">$7,311</span>
                             </div>
                             <div class="space-y-2">
                                 <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
@@ -2085,6 +2085,10 @@
                                 <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
                                     <span class="text-slate-500 font-medium">台南桃園高鐵單程</span>
                                     <span class="font-bold text-slate-700">$1,550</span>
+                                </div>
+                                <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center text-sm">
+                                    <span class="text-slate-500 font-medium">交通雜項</span>
+                                    <span class="font-bold text-slate-700">$1,300</span>
                                 </div>
                             </div>
                         </div>
@@ -2122,7 +2126,7 @@
                                 <p class="text-slate-400 text-xs font-black uppercase tracking-widest mb-1">TOTAL ESTIMATED EXPENSE</p>
                                 <h3 class="text-2xl font-bold">每人預計總支出</h3>
                             </div>
-                            <div class="text-4xl font-black tracking-tight">NT$ 27,974</div>
+                            <div class="text-4xl font-black tracking-tight">NT$ 29,274</div>
                         </div>
                     </div>
                 </div>
@@ -2383,7 +2387,7 @@
             function drawChart(id, lId, s, ir, enableTooltip = false) {
                 const data = [
                     { l: "機票", v: 11297, c: COLORS[0] },
-                    { l: "交通", v: (1190 + 3271 + 1550), c: COLORS[1] },
+                    { l: "交通", v: (1190 + 3271 + 1550 + 1300), c: COLORS[1] },
                     { l: "住宿", v: (3429 + 2329 + 3022), c: COLORS[2] },
                     { l: "雜項", v: 1886, c: COLORS[3] }
                 ];
