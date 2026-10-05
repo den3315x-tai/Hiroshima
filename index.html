@@ -542,10 +542,27 @@
             letter-spacing: .12em;
         }
         .map-open-link svg { width: 18px; height: 18px; }
+        .map-route { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin: 0; padding: 22px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); list-style: none; }
+        .map-route li { display: flex; align-items: center; gap: 16px; font: 500 15px/1.7 var(--serif); }
+        .map-route li:not(:last-child)::after { content: '→'; color: var(--muted); }
+        .map-route span { border-bottom: 1px solid var(--orange); }
+        .map-preview-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; margin: 28px 0 16px; }
+        .map-preview-toolbar label { color: var(--muted); font-size: 12px; letter-spacing: .08em; }
+        .map-preview-toolbar select { min-height: 46px; max-width: 100%; flex: 1 1 240px; padding: 10px 36px 10px 14px; border: 1px solid var(--line); border-radius: 0; background: var(--paper); color: var(--ink); font: 13px/1.6 var(--sans); }
+        .map-place-open { min-height: 46px; padding: 10px 18px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--sea); color: var(--sea); font-size: 12px; text-decoration: none; }
+        .map-places-heading { margin: 36px 0 16px; font: 400 27px/1.4 var(--serif); letter-spacing: .06em; }
+        .map-place-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+        .map-place-card { min-width: 0; padding: 22px; border: 1px solid var(--line); background: rgba(255,255,255,.28); }
+        .map-place-card.is-selected { border-color: var(--orange); background: rgba(199,122,53,.06); }
+        .map-place-day { margin: 0 0 8px; color: var(--muted); font-size: 10px; letter-spacing: .14em; }
+        .map-place-card h4 { margin: 0 0 14px; font: 400 20px/1.5 var(--serif); }
+        .map-place-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+        .map-place-actions button, .map-place-actions a { min-height: 44px; display: inline-flex; align-items: center; padding: 0; border: 0; background: transparent; color: var(--sea); font: 12px/1.5 var(--sans); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+        .map-preview-toolbar select:focus-visible, .map-place-open:focus-visible, .map-place-actions button:focus-visible, .map-place-actions a:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; }
         .travel-map-frame {
             width: 100%;
-            height: min(72vh, 760px);
-            min-height: 580px;
+            height: min(65vh, 620px);
+            min-height: 420px;
             overflow: hidden;
             background: #e7e9e4;
             border: 1px solid var(--line);
@@ -585,6 +602,7 @@
         footer { margin-top: 0 !important; padding: 34px 24px !important; background: var(--sea-deep); color: #9bb1b6 !important; }
 
         @media (max-width: 900px) {
+            .map-place-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .hero-layout { grid-template-columns: 48% 52%; }
             #navigation-tabs { justify-content: flex-start; }
             #handbook-sections-wrapper { width: min(100% - 36px, 760px); padding-top: 46px; }
@@ -622,7 +640,15 @@
             .map-section-header { margin-bottom: 20px; align-items: stretch; flex-direction: column; gap: 20px; }
             .map-section-header h2 { font-size: 34px; }
             .map-open-link { width: 100%; }
-            .travel-map-frame { height: 68vh; min-height: 520px; max-height: 680px; }
+            .map-route { gap: 10px 12px; padding: 18px 0; }
+            .map-route li { font-size: 13px; gap: 12px; }
+            .map-preview-toolbar { align-items: stretch; gap: 10px; }
+            .map-preview-toolbar label { width: 100%; }
+            .map-preview-toolbar select { flex-basis: 100%; width: 100%; min-width: 0; }
+            .map-place-open { width: 100%; }
+            .map-place-grid { grid-template-columns: 1fr; gap: 12px; }
+            .map-place-card { padding: 18px 20px; }
+            .travel-map-frame { height: 58vh; min-height: 360px; max-height: 560px; }
             .map-note { font-size: 10px; }
             .station-guide { margin-top: 40px; }
             .station-guide-header { align-items: stretch; flex-direction: column; gap: 10px; }
@@ -1480,15 +1506,25 @@
                 <div class="map-section-header">
                     <div>
                         <h2>旅行地圖</h2>
-                        <p>將廣島、宮島、吳、尾道、姬路、兒島與岡山的行程景點、交通、餐廳、住宿與購物地點集中在同一張地圖，旅途中可直接縮放與點選標記。</p>
+                        <p>沿著鐵道與瀨戶內海，走訪廣島、宮島、吳、尾道、姬路、兒島與岡山。選擇行程景點預覽位置，或另開 Google 地圖規劃路線。</p>
                     </div>
                     <a class="map-open-link" href="https://www.google.com/maps/d/viewer?mid=1L-arojTMRrImkdGhdPAr63s7eBQSYAQ" target="_blank" rel="noopener noreferrer">
-                        在 Google 地圖開啟
+                        開啟完整旅程地圖
                         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 5h5v5M19 5l-9 9" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>
+                <ol class="map-route" aria-label="七天旅程路線示意">
+                    <li><span>岡山</span></li><li><span>廣島・宮島・吳</span></li><li><span>福山・尾道</span></li><li><span>岡山・姬路・兒島</span></li><li><span>岡山</span></li>
+                </ol>
+                <p class="map-note">路線為旅程順序示意，不代表地理距離。完整旅程地圖保留景點、交通、餐廳、住宿與購物標記。</p>
+                <div class="map-preview-toolbar">
+                    <label for="travel-map-place">地圖預覽</label>
+                    <select id="travel-map-place"><option value="full">完整旅程｜我的地圖</option></select>
+                    <a id="travel-map-open" class="map-place-open" href="https://www.google.com/maps/d/viewer?mid=1L-arojTMRrImkdGhdPAr63s7eBQSYAQ" target="_blank" rel="noopener noreferrer">開啟此景點地圖 ↗</a>
+                </div>
                 <div class="travel-map-frame">
                     <iframe
+                        id="travel-map-preview"
                         src="https://www.google.com/maps/d/embed?mid=1L-arojTMRrImkdGhdPAr63s7eBQSYAQ&ehbc=2E312F"
                         title="2026 廣島、尾道與岡山旅行地圖"
                         loading="lazy"
@@ -1496,7 +1532,10 @@
                         referrerpolicy="no-referrer-when-downgrade"
                     ></iframe>
                 </div>
-                <p class="map-note">若內嵌地圖受到瀏覽器或網路限制，可使用上方按鈕改由 Google 地圖完整頁面開啟。</p>
+                <p class="map-note">若預覽未載入，可使用上方按鈕開啟 Google 地圖；也可在選單選擇「完整旅程｜我的地圖」，查看全部標記。</p>
+                <h3 class="map-places-heading">沿途景點</h3>
+                <p class="map-note">按「預覽位置」切換上方地圖，按「地圖另開」查看位置與導航。</p>
+                <div id="travel-map-places" class="map-place-grid" style="margin-top: 16px;"></div>
                 <div class="station-guide">
                     <div class="station-guide-header">
                         <h3>主要交通地點對照</h3>
@@ -2240,6 +2279,93 @@
                 }
             }
             tabs.forEach(tab => tab.addEventListener('click', () => setActiveTab(tab.id)));
+
+            // 地圖景點沿用詳細行程；僅切換位置預覽，不更動已確認的活動或時間。
+            const travelMapPlaces = [
+                { day: 'DAY 1・5・6・7', name: '岡山站', query: '岡山駅' },
+                { day: 'DAY 1・2・3・4', name: '廣島站', query: '広島駅' },
+                { day: 'DAY 2', name: '嚴島神社', query: '厳島神社 宮島' },
+                { day: 'DAY 2', name: '大聖院', query: '大聖院 宮島' },
+                { day: 'DAY 2', name: '獅子岩展望台', query: '獅子岩展望台 宮島' },
+                { day: 'DAY 3', name: '大和博物館', query: '大和ミュージアム 呉' },
+                { day: 'DAY 3', name: '鐵鯨館', query: '海上自衛隊呉史料館 てつのくじら館' },
+                { day: 'DAY 3', name: '和平紀念公園・資料館', query: '広島平和記念資料館' },
+                { day: 'DAY 3', name: '原爆圓頂屋', query: '原爆ドーム' },
+                { day: 'DAY 3', name: '紙鶴塔', query: 'おりづるタワー' },
+                { day: 'DAY 4・5', name: '尾道站', query: '尾道駅' },
+                { day: 'DAY 4', name: '千光寺公園・展望台', query: '千光寺頂上展望台 PEAK' },
+                { day: 'DAY 4', name: '貓之細道', query: '猫の細道 尾道' },
+                { day: 'DAY 5', name: '姬路城', query: '姫路城' },
+                { day: 'DAY 5', name: '兒島站', query: '児島駅' },
+                { day: 'DAY 5', name: '三百山展望台', query: '三百山 倉敷' },
+                { day: 'DAY 5', name: '鷲羽山展望台', query: '鷲羽山展望台' },
+                { day: 'DAY 6', name: '吉備津神社', query: '吉備津神社 岡山' },
+                { day: 'DAY 6', name: '岡山後樂園', query: '岡山後楽園' },
+                { day: 'DAY 6', name: '岡山城', query: '岡山城' },
+                { day: 'DAY 6', name: '表町商店街', query: '岡山 表町商店街' },
+                { day: 'DAY 7', name: 'AEON MALL 岡山', query: 'イオンモール岡山' }
+            ];
+            const mapPlaceSelect = document.getElementById('travel-map-place');
+            const mapPreview = document.getElementById('travel-map-preview');
+            const mapOpen = document.getElementById('travel-map-open');
+            const mapPlaceGrid = document.getElementById('travel-map-places');
+            const fullMapViewer = 'https://www.google.com/maps/d/viewer?mid=1L-arojTMRrImkdGhdPAr63s7eBQSYAQ';
+            const fullMapEmbed = 'https://www.google.com/maps/d/embed?mid=1L-arojTMRrImkdGhdPAr63s7eBQSYAQ&ehbc=2E312F';
+            const placeMapUrl = place => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.query)}`;
+
+            function selectMapPlace(value) {
+                const place = value === 'full' ? null : travelMapPlaces[Number(value)];
+                if (value !== 'full' && !place) return;
+                mapPlaceSelect.value = value;
+                mapPreview.src = place ? `https://maps.google.com/maps?q=${encodeURIComponent(place.query)}&output=embed&hl=zh-TW` : fullMapEmbed;
+                mapPreview.title = place ? `${place.name}位置地圖` : '2026 廣島、尾道與岡山旅行地圖';
+                mapOpen.href = place ? placeMapUrl(place) : fullMapViewer;
+                mapOpen.textContent = place ? '開啟此景點地圖 ↗' : '開啟完整旅程地圖 ↗';
+                mapPlaceGrid.querySelectorAll('.map-place-card').forEach(card => {
+                    const selected = card.dataset.place === value;
+                    card.classList.toggle('is-selected', selected);
+                    card.querySelector('button').setAttribute('aria-pressed', String(selected));
+                });
+            }
+
+            travelMapPlaces.forEach((place, index) => {
+                const value = String(index);
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = `${place.day}｜${place.name}`;
+                mapPlaceSelect.appendChild(option);
+                const card = document.createElement('article');
+                card.className = 'map-place-card';
+                card.dataset.place = value;
+                const day = document.createElement('p');
+                day.className = 'map-place-day';
+                day.textContent = place.day;
+                const heading = document.createElement('h4');
+                heading.textContent = place.name;
+                const actions = document.createElement('div');
+                actions.className = 'map-place-actions';
+                const preview = document.createElement('button');
+                preview.type = 'button';
+                preview.textContent = '預覽位置';
+                preview.setAttribute('aria-label', `預覽${place.name}位置`);
+                preview.setAttribute('aria-controls', 'travel-map-preview');
+                preview.setAttribute('aria-pressed', 'false');
+                preview.addEventListener('click', () => {
+                    selectMapPlace(value);
+                    document.querySelector('.map-preview-toolbar').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+                const link = document.createElement('a');
+                link.href = placeMapUrl(place);
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = '地圖另開 ↗';
+                link.setAttribute('aria-label', `在 Google 地圖開啟${place.name}`);
+                actions.append(preview, link);
+                card.append(day, heading, actions);
+                mapPlaceGrid.appendChild(card);
+            });
+            mapPlaceSelect.addEventListener('change', () => selectMapPlace(mapPlaceSelect.value));
+            selectMapPlace('2');
 
             function showTransportTarget(targetId) {
                 const target = document.getElementById(targetId);
