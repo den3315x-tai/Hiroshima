@@ -582,6 +582,13 @@
         .station-table tbody tr:hover { background: rgba(11,67,85,.045); }
         .station-table td:first-child { color: var(--orange); text-align: center; font: 500 12px var(--serif); letter-spacing: .06em; }
         .station-table .station-ja { font-weight: 600; letter-spacing: .04em; }
+        .shopping-header { margin-bottom: 28px; }
+        .shopping-header h2 { margin: 0; font: 400 clamp(34px, 4vw, 52px)/1.2 var(--serif); letter-spacing: .1em; }
+        .shopping-header p { margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.9; }
+        .shopping-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+        .shopping-card { min-width: 0; overflow: hidden; border: 1px solid var(--line); background: rgba(255,255,255,.4); }
+        .shopping-card img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; padding: 16px; background: #fff; }
+        .shopping-card h3 { margin: 0; padding: 20px; border-top: 1px solid var(--line); color: var(--ink); font: 500 18px/1.6 var(--serif); overflow-wrap: anywhere; }
         .ticket-video {
             margin-top: 22px;
             display: grid;
@@ -602,6 +609,7 @@
         footer { margin-top: 0 !important; padding: 34px 24px !important; background: var(--sea-deep); color: #9bb1b6 !important; }
 
         @media (max-width: 900px) {
+            .shopping-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .map-place-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .hero-layout { grid-template-columns: 48% 52%; }
             #navigation-tabs { justify-content: flex-start; }
@@ -609,6 +617,9 @@
         }
 
         @media (max-width: 640px) {
+            .shopping-header h2 { font-size: 34px; }
+            .shopping-grid { grid-template-columns: 1fr; gap: 18px; }
+            .shopping-card img { max-height: 360px; }
             .brand-row { min-height: 66px; padding: 0 20px; }
             .travel-brand strong { font-size: 16px; }
             .travel-brand small { font-size: 8px; }
@@ -701,6 +712,7 @@
             <button id="tab-transport" class="pill-tab-button">交通方式</button>
             <button id="tab-map" class="pill-tab-button">旅行地圖</button>
             <button id="tab-food" class="pill-tab-button">推薦餐廳</button>
+            <button id="tab-shopping" class="pill-tab-button">購買清單</button>
             <button id="tab-expenses" class="pill-tab-button">費用統計</button>
             <button id="tab-lodging" class="pill-tab-button">住宿地點</button>
         </nav>
@@ -2050,6 +2062,47 @@
                     </div>
                 </div>
             </div>
+            </section>
+
+            <section id="content-shopping" class="tab-content">
+                <header class="shopping-header">
+                    <h2>購買清單</h2>
+                    <p>旅途中採買時，對照商品圖片與品名確認包裝。</p>
+                </header>
+                <div class="shopping-grid">
+                    <article class="shopping-card">
+                        <img src="images/shopping/dhc-vitamin-b.jpg" alt="DHC 持續型綜合維生素B群 60天" width="600" height="600" loading="lazy" decoding="async">
+                        <h3>DHC 持續型綜合維生素B群 60天</h3>
+                    </article>
+                    <article class="shopping-card">
+                        <img src="images/shopping/taisho-mouth-patch.jpg" alt="大正製藥 口內炎貼片" width="600" height="600" loading="lazy" decoding="async">
+                        <h3>大正製藥 口內炎貼片</h3>
+                    </article>
+                    <article class="shopping-card">
+                        <img src="images/shopping/taisho-mouth-ointment.jpg" alt="大正製藥-口內炎軟膏" width="600" height="600" loading="lazy" decoding="async">
+                        <h3>大正製藥-口內炎軟膏</h3>
+                    </article>
+                    <article class="shopping-card">
+                        <img src="images/shopping/kobayashi-throat-spray.jpg" alt="小林製藥 喉嚨噴劑" width="600" height="600" loading="lazy" decoding="async">
+                        <h3>小林製藥 喉嚨噴劑</h3>
+                    </article>
+                    <article class="shopping-card">
+                        <img src="images/shopping/alinamin-ex-plus-alpha.jpg" alt="合利他命 EX PLUS α" width="600" height="600" loading="lazy" decoding="async">
+                        <h3>合利他命 EX PLUS α</h3>
+                    </article>
+                    <article class="shopping-card">
+                        <img src="images/shopping/hyakusogan.jpg" alt="百草丸" width="410" height="410" loading="lazy" decoding="async">
+                        <h3>百草丸</h3>
+                    </article>
+                    <article class="shopping-card">
+                        <img src="images/shopping/strong-wakamoto.jpg" alt="強力若元錠" width="800" height="800" loading="lazy" decoding="async">
+                        <h3>強力若元錠</h3>
+                    </article>
+                    <article class="shopping-card">
+                        <img src="images/shopping/anessa-sunscreen-na.jpg" alt="資生堂 安耐曬 金鑽高效防曬露 NA" width="834" height="554" loading="lazy" decoding="async">
+                        <h3>資生堂 安耐曬 金鑽高效防曬露 NA</h3>
+                    </article>
+                </div>
             </section>
 
             <!-- 5. Expenses Section -->
