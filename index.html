@@ -589,6 +589,24 @@
         .shopping-card { min-width: 0; overflow: hidden; border: 1px solid var(--line); background: rgba(255,255,255,.4); }
         .shopping-card img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; padding: 16px; background: #fff; }
         .shopping-card h3 { margin: 0; padding: 20px; border-top: 1px solid var(--line); color: var(--ink); font: 500 18px/1.6 var(--serif); overflow-wrap: anywhere; }
+        .shopping-coupons { margin-top: 54px; padding-top: 32px; border-top: 1px solid var(--line); }
+        .shopping-coupons h3 { margin: 0 0 14px; font: 500 28px/1.4 var(--serif); letter-spacing: .06em; }
+        .coupon-note { margin: 0 0 22px; color: var(--muted); font-size: 12px; line-height: 1.9; }
+        .coupon-note a { color: var(--sea); text-decoration: underline; text-underline-offset: 3px; }
+        .coupon-group-title { margin: 28px 0 16px; font: 500 20px/1.5 var(--serif); }
+        .coupon-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+        .coupon-card { min-width: 0; display: flex; flex-direction: column; border: 1px solid var(--line); background: rgba(255,255,255,.4); }
+        .coupon-preview { display: flex; height: 250px; padding: 16px; align-items: center; justify-content: center; background: #fff; border-bottom: 1px solid var(--line); }
+        .coupon-preview img { display: block; width: 100%; height: 100%; object-fit: contain; }
+        .coupon-live { color: var(--orange); background: var(--paper-soft); font: 500 25px/1.5 var(--serif); text-align: center; }
+        .coupon-body { flex: 1; display: flex; flex-direction: column; padding: 22px; }
+        .coupon-tag { align-self: flex-start; margin-bottom: 10px; padding: 4px 8px; background: rgba(11,67,85,.07); color: var(--sea); font-size: 10px; font-weight: 700; }
+        .coupon-body h5 { margin: 0 0 10px; color: var(--ink); font: 500 20px/1.5 var(--serif); }
+        .coupon-offer { margin: 0 0 12px; color: var(--orange); font-size: 14px; font-weight: 700; line-height: 1.7; }
+        .coupon-details, .coupon-expiry { margin: 0 0 12px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+        .coupon-button { margin-top: auto; min-height: 44px; padding: 10px 14px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--sea); color: var(--sea); font-size: 12px; font-weight: 700; text-decoration: none; }
+        .coupon-button:hover { background: var(--sea); color: #fff; }
+        .coupon-preview:focus-visible, .coupon-button:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
         .ticket-video {
             margin-top: 22px;
             display: grid;
@@ -609,6 +627,7 @@
         footer { margin-top: 0 !important; padding: 34px 24px !important; background: var(--sea-deep); color: #9bb1b6 !important; }
 
         @media (max-width: 900px) {
+            .coupon-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .shopping-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .map-place-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .hero-layout { grid-template-columns: 48% 52%; }
@@ -617,6 +636,8 @@
         }
 
         @media (max-width: 640px) {
+            .coupon-grid { grid-template-columns: 1fr; gap: 18px; }
+            .shopping-coupons { margin-top: 36px; }
             .shopping-header h2 { font-size: 34px; }
             .shopping-grid { grid-template-columns: 1fr; gap: 18px; }
             .shopping-card img { max-height: 360px; }
@@ -2103,6 +2124,123 @@
                         <h3>資生堂 安耐曬 金鑽高效防曬露 NA</h3>
                     </article>
                 </div>
+                <section class="shopping-coupons" aria-labelledby="shopping-coupon-heading">
+                    <h3 id="shopping-coupon-heading">購物優惠券</h3>
+                    <p class="coupon-note">來源：<a href="https://app.likejapan.com/zh-tw" target="_blank" rel="noopener noreferrer">LikeJapan 日本旅遊優惠券</a>｜資料核對：2026-10-06。下方圖片為預覽，結帳前請點「開啟優惠券」並出示原始券面；頁面與圖片需連網。免稅資格、折扣門檻、除外商品及能否合併優惠，以最新券面及門市規定為準；免稅與折扣不是直接相加。</p>
+                    <h4 class="coupon-group-title">藥妝店</h4>
+                    <div class="coupon-grid">
+                        <article class="coupon-card">
+                            <a class="coupon-preview" href="https://app.likejapan.com/zh-tw/coupon/%E8%97%A5%E5%A6%9D%E5%BA%97%E6%9D%BE%E6%9C%AC%E6%B8%85%E5%84%AA%E6%83%A0%E5%88%B8" target="_blank" rel="noopener noreferrer" aria-label="開啟松本清原始優惠券">
+                                <img src="https://cdn.likejapan.com/japan-coupon/2026/03/646ccbe6-7bae-4e43-8f7c-67cd33648c96.jpg" alt="松本清 LikeJapan 優惠券預覽" loading="lazy" decoding="async">
+                            </a>
+                            <div class="coupon-body">
+                                <span class="coupon-tag">松本清</span>
+                                <h5>松本清 Matsumoto Kiyoshi</h5>
+                                <p class="coupon-offer">依消費金額享 3%／5%／7% OFF</p>
+                                <p class="coupon-details">滿 ¥10,000 未滿 ¥30,000：3%；滿 ¥30,000 未滿 ¥50,000：5%；滿 ¥50,000：7%。金額計算依券面規定。部分專櫃商品及 Outlet 等除外，不可與其他優惠併用。</p>
+                                <p class="coupon-expiry">有效至 2027-03-31</p>
+                                <a class="coupon-button" href="https://app.likejapan.com/zh-tw/coupon/%E8%97%A5%E5%A6%9D%E5%BA%97%E6%9D%BE%E6%9C%AC%E6%B8%85%E5%84%AA%E6%83%A0%E5%88%B8" target="_blank" rel="noopener noreferrer">開啟優惠券 ↗</a>
+                            </div>
+                        </article>
+                        <article class="coupon-card">
+                            <a class="coupon-preview" href="https://app.likejapan.com/zh-tw/coupon/sundrug-coupon-7percent-off" target="_blank" rel="noopener noreferrer" aria-label="開啟 SUNDRUG 原始優惠券">
+                                <img src="https://cdn.likejapan.com/japan-coupon/2025/03/e05798ae-1226-489c-91c0-e6dfadac2109.jpg" alt="SUNDRUG LikeJapan 優惠券預覽" loading="lazy" decoding="async">
+                            </a>
+                            <div class="coupon-body">
+                                <span class="coupon-tag">SUNDRUG</span>
+                                <h5>SUNDRUG サンドラッグ</h5>
+                                <p class="coupon-offer">未稅金額達門檻，最高 7% OFF</p>
+                                <p class="coupon-details">未稅 ¥10,000–29,999：3%；¥30,000–49,999：5%；¥50,000 以上：7%。限符合免稅條件的購物，部分商品除外，不可與其他優惠併用。</p>
+                                <p class="coupon-expiry">有效期限請確認原始券面</p>
+                                <a class="coupon-button" href="https://app.likejapan.com/zh-tw/coupon/sundrug-coupon-7percent-off" target="_blank" rel="noopener noreferrer">開啟優惠券 ↗</a>
+                            </div>
+                        </article>
+                        <article class="coupon-card">
+                            <a class="coupon-preview" href="https://app.likejapan.com/zh-tw/coupon/cocokarafine-coupon" target="_blank" rel="noopener noreferrer" aria-label="開啟 Cocokara Fine 原始優惠券">
+                                <img src="https://cdn.likejapan.com/japan-coupon/2026/03/8f97af58-43f3-4701-a92e-cf56e348f3a0.jpg" alt="Cocokara Fine LikeJapan 優惠券預覽" loading="lazy" decoding="async">
+                            </a>
+                            <div class="coupon-body">
+                                <span class="coupon-tag">Cocokara Fine</span>
+                                <h5>Cocokara Fine ココカラファイン</h5>
+                                <p class="coupon-offer">依消費金額享 3%／5%／7% OFF</p>
+                                <p class="coupon-details">滿 ¥10,000 未滿 ¥30,000：3%；滿 ¥30,000 未滿 ¥50,000：5%；滿 ¥50,000：7%。金額計算依券面規定。部分專櫃商品、酒類等除外，不可與其他優惠併用。</p>
+                                <p class="coupon-expiry">有效至 2027-03-31</p>
+                                <a class="coupon-button" href="https://app.likejapan.com/zh-tw/coupon/cocokarafine-coupon" target="_blank" rel="noopener noreferrer">開啟優惠券 ↗</a>
+                            </div>
+                        </article>
+                        <article class="coupon-card">
+                            <a class="coupon-preview" href="https://app.likejapan.com/zh-tw/coupon/tsuruha-drug" target="_blank" rel="noopener noreferrer" aria-label="開啟鶴羽原始優惠券">
+                                <img src="https://cdn.likejapan.com/japan-coupon/2026/05/8b8e1c03-b4a9-4e2c-84b3-c6c627d0ac03.jpg" alt="鶴羽 TSURUHA LikeJapan 優惠券預覽" loading="lazy" decoding="async">
+                            </a>
+                            <div class="coupon-body">
+                                <span class="coupon-tag">適用品牌需確認</span>
+                                <h5>鶴羽 TSURUHA Drug</h5>
+                                <p class="coupon-offer">含稅金額達門檻，最高 7% OFF</p>
+                                <p class="coupon-details">含稅滿 ¥10,000：3%；滿 ¥30,000：5%；滿 ¥50,000：7%。限免稅購物。此券未明確列出 Wants／Himawari，請先向門市確認，不可視為同集團通用。</p>
+                                <p class="coupon-expiry">有效至 2027-12-31</p>
+                                <a class="coupon-button" href="https://app.likejapan.com/zh-tw/coupon/tsuruha-drug" target="_blank" rel="noopener noreferrer">開啟優惠券 ↗</a>
+                            </div>
+                        </article>
+                    </div>
+                    <p class="coupon-note" style="margin-top:16px">本次未在 LikeJapan 找到明確以 Wants、Himawari 或 ZAG ZAG 名義提供的對應券；以上不保證每間門市或購買清單中的每項商品都適用。</p>
+                    <h4 class="coupon-group-title">唐吉訶德・家電量販店</h4>
+                    <div class="coupon-grid">
+                        <article class="coupon-card">
+                            <a class="coupon-preview coupon-live" href="https://bit.ly/42yv9zi" target="_blank" rel="noopener noreferrer" aria-label="開啟唐吉訶德即時電子優惠券">DON QUIJOTE<br>即時電子優惠券 ↗</a>
+                            <div class="coupon-body">
+                                <span class="coupon-tag">不可使用截圖</span>
+                                <h5>唐吉訶德 Don Quijote</h5>
+                                <p class="coupon-offer">未稅滿 ¥10,000 折 5%<br>未稅滿 ¥30,000 折 7%</p>
+                                <p class="coupon-details">限符合免稅條件的交易，部分店家及商品除外。付款前出示即時電子券，不能使用截圖，也不能與 majica 或其他優惠併用。</p>
+                                <p class="coupon-expiry">金額及有效期限以即時券面為準</p>
+                                <a class="coupon-button" href="https://bit.ly/42yv9zi" target="_blank" rel="noopener noreferrer">開啟即時優惠券 ↗</a>
+                            </div>
+                        </article>
+                        <article class="coupon-card">
+                            <a class="coupon-preview" href="https://app.likejapan.com/zh-tw/coupon/BIC-CAMERA-%E5%84%AA%E6%83%A0%E5%88%B8" target="_blank" rel="noopener noreferrer" aria-label="開啟 BIC CAMERA 原始優惠券">
+                                <img src="https://cdn.likejapan.com/japan-coupon/2026/08/11f49d31-3a59-4f0c-9e43-bafa615545a3.jpg" alt="BIC CAMERA LikeJapan 優惠券預覽" loading="lazy" decoding="async">
+                            </a>
+                            <div class="coupon-body">
+                                <span class="coupon-tag">BIC CAMERA</span>
+                                <h5>BIC CAMERA ビックカメラ</h5>
+                                <p class="coupon-offer">指定商品最高 7% OFF</p>
+                                <p class="coupon-details">同店同日單筆未稅滿 ¥5,000，限符合免稅條件的購物。折扣依商品類別不同；Apple、遊戲機等多項商品除外，不可與其他優惠併用。</p>
+                                <p class="coupon-expiry">有效至 2026-10-31（涵蓋本次旅行）</p>
+                                <a class="coupon-button" href="https://app.likejapan.com/zh-tw/coupon/BIC-CAMERA-%E5%84%AA%E6%83%A0%E5%88%B8" target="_blank" rel="noopener noreferrer">開啟優惠券 ↗</a>
+                            </div>
+                        </article>
+                    </div>
+                    <h4 class="coupon-group-title">百貨公司｜行程外參考</h4>
+                    <p class="coupon-note">LikeJapan 上找到的以下百貨券不對應本次廣島、尾道、姬路與岡山的行程。保留作為備用參考，不能在福屋、天滿屋、高島屋、PARCO 等其他百貨通用。</p>
+                    <div class="coupon-grid">
+                        <article class="coupon-card">
+                            <a class="coupon-preview" href="https://app.likejapan.com/zh-tw/coupon/daimaru-departmentstore-5percent-off" target="_blank" rel="noopener noreferrer" aria-label="開啟大丸松坂屋原始優惠券">
+                                <img src="https://cdn.likejapan.com/japan-coupon/2026/08/7c6c3a28-4835-46ce-bdd3-fd614703326b.jpg" alt="大丸松坂屋 LikeJapan 優惠券預覽" loading="lazy" decoding="async">
+                            </a>
+                            <div class="coupon-body">
+                                <span class="coupon-tag">本次行程外</span>
+                                <h5>大丸・松坂屋</h5>
+                                <p class="coupon-offer">含稅滿 ¥3,000 享 5% OFF</p>
+                                <p class="coupon-details">適用門市、品牌及除外商品請查券面；不是所有百貨公司通用券。</p>
+                                <p class="coupon-expiry">有效至 2027-08-31</p>
+                                <a class="coupon-button" href="https://app.likejapan.com/zh-tw/coupon/daimaru-departmentstore-5percent-off" target="_blank" rel="noopener noreferrer">開啟優惠券 ↗</a>
+                            </div>
+                        </article>
+                        <article class="coupon-card">
+                            <a class="coupon-preview" href="https://app.likejapan.com/zh-tw/coupon/keio-coupon" target="_blank" rel="noopener noreferrer" aria-label="開啟京王百貨原始優惠券">
+                                <img src="https://cdn.likejapan.com/japan-coupon/2026/03/85cf387a-cb5e-4091-b2f9-a541b5415fa6.jpg" alt="京王百貨新宿店 LikeJapan 優惠券預覽" loading="lazy" decoding="async">
+                            </a>
+                            <div class="coupon-body">
+                                <span class="coupon-tag">東京新宿・本次行程外</span>
+                                <h5>京王百貨 新宿店</h5>
+                                <p class="coupon-offer">單筆未稅滿 ¥3,000 享 5% OFF</p>
+                                <p class="coupon-details">限訪日旅客，部分品牌及商品除外。僅供東京新宿採買參考，非廣島或岡山百貨優惠。</p>
+                                <p class="coupon-expiry">有效至 2027-03-31</p>
+                                <a class="coupon-button" href="https://app.likejapan.com/zh-tw/coupon/keio-coupon" target="_blank" rel="noopener noreferrer">開啟優惠券 ↗</a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
             </section>
 
             <!-- 5. Expenses Section -->
