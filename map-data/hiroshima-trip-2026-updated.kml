@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>2026 廣島・尾道・岡山七天六夜（更新版）</name><description>依目前七天行程更新；已加入吳市、兒島與鷲羽山，移除取消景點。</description><Folder><name>交通</name><Placemark><name>JR宮島口站</name><description>分類：交通
-依網站目前行程與推薦清單保留</description><Point><coordinates>132.302350000000,34.312280000000,0</coordinates></Point></Placemark><Placemark><name>兒島站</name><description>分類：交通
-Day 5 轉乘鷲羽山夕景鑑賞巴士</description><Point><coordinates>133.807665200000,34.462740800000,0</coordinates></Point></Placemark><Placemark><name>千光寺山纜車・山頂站</name><description>分類：交通
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>2026 廣島・尾道・岡山七天六夜（更新版）</name><description>依目前七天行程更新；已加入吳市與倉敷美觀地區，移除取消景點。</description><Folder><name>交通</name><Placemark><name>JR宮島口站</name><description>分類：交通
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.302350000000,34.312280000000,0</coordinates></Point></Placemark><Placemark><name>倉敷站</name><description>分類：交通
+Day 5 岡山往返倉敷；南口步行約15分鐘至美觀地區</description><Point><coordinates>133.765752000000,34.601962000000,0</coordinates></Point></Placemark><Placemark><name>千光寺山纜車・山頂站</name><description>分類：交通
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.197250000000,34.410400000000,0</coordinates></Point></Placemark><Placemark><name>千光寺山纜車・山麓站</name><description>分類：交通
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.202200000000,34.409650000000,0</coordinates></Point></Placemark><Placemark><name>吉備津站</name><description>分類：交通
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.846053000000,34.674411000000,0</coordinates></Point></Placemark><Placemark><name>吳站</name><description>分類：交通
@@ -13,8 +13,8 @@ Day 3 搭乘 JR 吳線往返廣島</description><Point><coordinates>132.55797450
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.853869000000,34.756973000000,0</coordinates></Point></Placemark><Placemark><name>岡山站西口巴士總站</name><description>分類：交通
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.915550000000,34.666680000000,0</coordinates></Point></Placemark><Placemark><name>岡山車站</name><description>分類：交通
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.917825000000,34.665409000000,0</coordinates></Point></Placemark><Placemark><name>廣島車站</name><description>分類：交通
-依網站目前行程與推薦清單保留</description><Point><coordinates>132.475577000000,34.397826000000,0</coordinates></Point></Placemark></Folder><Folder><name>景點</name><Placemark><name>三百山展望台</name><description>分類：景點
-Day 5 夕景鑑賞巴士停留點</description><Point><coordinates>133.780656266000,34.449565074000,0</coordinates></Point></Placemark><Placemark><name>千光寺公園・頂上展望台 PEAK</name><description>分類：景點
+依網站目前行程與推薦清單保留</description><Point><coordinates>132.475577000000,34.397826000000,0</coordinates></Point></Placemark></Folder><Folder><name>景點</name><Placemark><name>倉敷美觀地區</name><description>分類：景點
+Day 5 15:00–16:30 倉敷川與白壁老街散策</description><Point><coordinates>133.771765500000,34.595822700000,0</coordinates></Point></Placemark><Placemark><name>千光寺公園・頂上展望台 PEAK</name><description>分類：景點
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.196960000000,34.410686000000,0</coordinates></Point></Placemark><Placemark><name>原爆圓頂屋</name><description>分類：景點
 依網站目前行程與推薦清單保留</description><Point><coordinates>132.453524000000,34.395466000000,0</coordinates></Point></Placemark><Placemark><name>吉備津神社</name><description>分類：景點
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.850200000000,34.670130000000,0</coordinates></Point></Placemark><Placemark><name>嚴島神社</name><description>分類：景點
@@ -27,8 +27,8 @@ Day 3 09:00–10:20</description><Point><coordinates>132.555879900000,34.2411847
 依網站目前行程與推薦清單保留</description><Point><coordinates>132.319657000000,34.279781000000,0</coordinates></Point></Placemark><Placemark><name>海上自衛隊吳史料館（鐵鯨館）</name><description>分類：景點
 Day 3 10:25–11:25</description><Point><coordinates>132.555321100000,34.242161900000,0</coordinates></Point></Placemark><Placemark><name>紙鶴塔</name><description>分類：景點
 Day 3 15:50–16:50</description><Point><coordinates>132.454685600000,34.395670300000,0</coordinates></Point></Placemark><Placemark><name>貓之細道</name><description>分類：景點
-依網站目前行程與推薦清單保留</description><Point><coordinates>133.200455000000,34.410557000000,0</coordinates></Point></Placemark><Placemark><name>鷲羽山展望台</name><description>分類：景點
-Day 5 欣賞瀨戶內海日落</description><Point><coordinates>133.812463666000,34.435467016000,0</coordinates></Point></Placemark></Folder><Folder><name>餐廳</name><Placemark><name>Hitorinabe Megu</name><description>分類：餐廳
+依網站目前行程與推薦清單保留</description><Point><coordinates>133.200455000000,34.410557000000,0</coordinates></Point></Placemark><Placemark><name>倉敷 Ivy Square</name><description>分類：景點
+Day 5 16:30–17:30 咖啡休息與紅磚建築周邊散策</description><Point><coordinates>133.774161300000,34.595012600000,0</coordinates></Point></Placemark></Folder><Folder><name>餐廳</name><Placemark><name>Hitorinabe Megu</name><description>分類：餐廳
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.928176000000,34.666300000000,0</coordinates></Point></Placemark><Placemark><name>お食事處 梅山</name><description>分類：餐廳
 依網站目前行程與推薦清單保留</description><Point><coordinates>132.320350000000,34.297750000000,0</coordinates></Point></Placemark><Placemark><name>ごろ兵衛 岡山駅前店</name><description>分類：餐廳
 依網站目前行程與推薦清單保留</description><Point><coordinates>133.920349000000,34.664866000000,0</coordinates></Point></Placemark><Placemark><name>七味</name><description>分類：餐廳
